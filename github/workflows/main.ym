@@ -1,0 +1,36 @@
+name: 自动更新
+on:
+    schedule:
+        - cron: '0 * * * *'
+    workflow_dispatch:
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  ZONE_ID: ${{ secrets.ZONE_IDT }}
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 准备仓库文件
+              uses: actions/checkout@v2
+
+            - name: 准备Python
+              uses: actions/setup-python@main
+              with:
+                python-version: '3.11'
+            - name: 安装依赖
+              run: |
+                pip install -r requirements.txt
+            - name: set env
+              run: |
+                  echo "BASE_PATH=$(pwd)" >> $GITHUB_ENV && echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+            - name: 运行检查
+              run: |
+                python get.py
+            - name: 提交 cloudflare_hourly_stats.json
+              run: |
+                git config --global user.name "GitHub Actions"
+                git config --global user.email "actions@github.com"
+                git add cloudflare_hourly_stats.json
+                git commit -m "Update cloudflare_hourly_stats.json"
+                git push

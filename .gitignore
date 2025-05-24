@@ -123,4 +123,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-cloudflare_hourly_stats.json

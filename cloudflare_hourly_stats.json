@@ -1,13 +1,5 @@
 [
   {
-    "since": 1747983600,
-    "until": 1747987200,
-    "total_requests": 12,
-    "total_bytes": 76891,
-    "total_megabytes": 0.07,
-    "waf_mitigated_requests": 0
-  },
-  {
     "since": 1747987200,
     "until": 1747990800,
     "total_requests": 21,
@@ -190,5 +182,13 @@
     "total_bytes": 1672620,
     "total_megabytes": 1.6,
     "waf_mitigated_requests": 9
+  },
+  {
+    "since": 1748070000,
+    "until": 1748073600,
+    "total_requests": 13,
+    "total_bytes": 74831,
+    "total_megabytes": 0.07,
+    "waf_mitigated_requests": 5
   }
 ]

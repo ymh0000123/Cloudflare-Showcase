@@ -4,8 +4,8 @@ on:
         - cron: '0 * * * *'
     workflow_dispatch:
 env:
-  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  ZONE_ID: ${{ secrets.ZONE_ID }}
+    CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    ZONE_ID: ${{ secrets.ZONE_ID }}
 
 jobs:
     check:
@@ -18,23 +18,30 @@ jobs:
               uses: actions/setup-python@main
               with:
                 python-version: '3.11'
+
             - name: 安装依赖
               run: |
                 pip install -r requirements.txt
-            - name: set env
+
+            - name: 设置环境变量
               run: |
-                  echo "BASE_PATH=$(pwd)" >> $GITHUB_ENV && echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+                echo "BASE_PATH=$(pwd)" >> $GITHUB_ENV
+                echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+
             - name: 运行检查
               run: |
                 python get.py
-            - name: 同步index.html从主分支
+
+            - name: 同步index.html
               run: |
                 git fetch origin main
                 git checkout origin/main -- index.html
-            - name: 提交 cloudflare_hourly_stats.json
+
+            - name: 提交更改
               run: |
                 git config --global user.name "GitHub Actions"
                 git config --global user.email "actions@github.com"
+                git checkout -B stats
                 git add cloudflare_hourly_stats.json index.html
                 git commit -m "Update cloudflare_hourly_stats.json and sync index.html"
-                git push origin stats
+                git push -f origin stats

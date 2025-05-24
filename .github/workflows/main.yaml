@@ -29,7 +29,7 @@ jobs:
                 python get.py
             - name: 同步index.html从主分支
               run: |
-                git fetch origin main
+                git fetch origin master
                 git checkout origin/main -- index.html
             - name: 提交 cloudflare_hourly_stats.json
               run: |

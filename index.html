@@ -449,7 +449,7 @@
 
         function formatTimestamp(timestamp) {
             const date = new Date(timestamp * 1000);
-            return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) + ' ' + date.toLocaleDateString('zh-CN');
+            return date.toLocaleDateString('zh-CN') + ' ' + date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
         }
 
         function createKPIs(data) {
@@ -509,15 +509,17 @@
                     axisPointer: {
                         type: 'cross',
                         label: {
-                            backgroundColor: '#6a7985'
+                            backgroundColor: isDarkTheme ? '#6a7985' : '#fff'
                         }
                     },
                     borderRadius: 8,
                     padding: 10,
                     textStyle: {
                         fontSize: 12,
-                        color: textColor
-                    }
+                        color: isDarkTheme ? '#e9ecef' : '#333'
+                    },
+                    backgroundColor: isDarkTheme ? 'rgba(31, 41, 55, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+                    borderColor: isDarkTheme ? '#4d4d4d' : '#ddd'
                 },
                 legend: {
                     top: '5%',

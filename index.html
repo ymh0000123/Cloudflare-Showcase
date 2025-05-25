@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>分析面板</title>
     <!-- 引入 ECharts 库 -->
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <script src="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- 添加Font Awesome图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             /* 亮色模式变量 */
@@ -23,17 +24,17 @@
             --bg-gradient-start: #f5f7fa;
             --bg-gradient-end: #c3cfe2;
             --card-bg: white;
-            --card-shadow: rgba(0,0,0,0.05);
-            --card-shadow-hover: rgba(0,0,0,0.1);
+            --card-shadow: rgba(0, 0, 0, 0.05);
+            --card-shadow-hover: rgba(0, 0, 0, 0.1);
             --text-color: #333;
             --text-muted: #666;
             --border-color: #e0e0e0;
-            --chart-line-color: rgba(0,0,0,0.05);
+            --chart-line-color: rgba(0, 0, 0, 0.05);
             --header-text: white;
             --footer-bg: white;
             --transition-speed: 0.3s;
         }
-        
+
         /* 深色模式变量 */
         [data-theme="dark"] {
             --primary-color: #4cc9f0;
@@ -47,16 +48,16 @@
             --bg-gradient-start: #1a1a2e;
             --bg-gradient-end: #16213e;
             --card-bg: #1f2937;
-            --card-shadow: rgba(0,0,0,0.2);
-            --card-shadow-hover: rgba(0,0,0,0.4);
+            --card-shadow: rgba(0, 0, 0, 0.2);
+            --card-shadow-hover: rgba(0, 0, 0, 0.4);
             --text-color: #e9ecef;
             --text-muted: #adb5bd;
             --border-color: #4d4d4d;
-            --chart-line-color: rgba(255,255,255,0.05);
+            --chart-line-color: rgba(255, 255, 255, 0.05);
             --header-text: #f8f9fa;
             --footer-bg: #1f2937;
         }
-        
+
         /* 系统偏好深色模式自动切换 */
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) {
@@ -71,22 +72,22 @@
                 --bg-gradient-start: #1a1a2e;
                 --bg-gradient-end: #16213e;
                 --card-bg: #1f2937;
-                --card-shadow: rgba(0,0,0,0.2);
-                --card-shadow-hover: rgba(0,0,0,0.4);
+                --card-shadow: rgba(0, 0, 0, 0.2);
+                --card-shadow-hover: rgba(0, 0, 0, 0.4);
                 --text-color: #e9ecef;
                 --text-muted: #adb5bd;
                 --border-color: #4d4d4d;
-                --chart-line-color: rgba(255,255,255,0.05);
+                --chart-line-color: rgba(255, 255, 255, 0.05);
                 --header-text: #f8f9fa;
                 --footer-bg: #1f2937;
             }
         }
-        
+
         * {
             box-sizing: border-box;
             transition: all var(--transition-speed) ease;
         }
-        
+
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
@@ -97,25 +98,33 @@
             align-items: center;
             min-height: 100vh;
         }
-        
+
         .container {
             width: 95%;
             max-width: 1400px;
             margin: 20px auto;
             padding: 20px;
             animation: fadeIn 1s ease-in-out;
+            flex-grow: 1;
         }
-        
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
+
         header {
             width: 100%;
             background: linear-gradient(to right, var(--primary-color), var(--accent-color));
             padding: 25px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
             margin-bottom: 30px;
             border-radius: 0 0 15px 15px;
@@ -125,7 +134,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         header::before {
             content: '';
             position: absolute;
@@ -133,18 +142,18 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
             transform: rotate(30deg);
         }
-        
+
         header h1 {
             color: var(--header-text);
             margin: 0;
             font-size: 2.2em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             position: relative;
         }
-        
+
         /* 主题切换按钮 */
         .theme-toggle {
             position: absolute;
@@ -164,7 +173,7 @@
             font-size: 1.2em;
             transition: all 0.3s ease;
         }
-        
+
         .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.3);
         }
@@ -175,7 +184,7 @@
             gap: 25px;
             margin-bottom: 40px;
         }
-        
+
         .card {
             background-color: var(--card-bg);
             padding: 25px;
@@ -187,12 +196,12 @@
             overflow: hidden;
             border-top: 4px solid var(--primary-color);
         }
-        
+
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px var(--card-shadow-hover);
         }
-        
+
         .card::before {
             content: '';
             position: absolute;
@@ -200,15 +209,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
             pointer-events: none;
         }
-        
-        .card:nth-child(1) { border-top-color: var(--primary-color); }
-        .card:nth-child(2) { border-top-color: var(--accent-color); }
-        .card:nth-child(3) { border-top-color: var(--danger-color); }
-        .card:nth-child(4) { border-top-color: var(--warning-color); }
-        
+
+        .card:nth-child(1) {
+            border-top-color: var(--primary-color);
+        }
+
+        .card:nth-child(2) {
+            border-top-color: var(--accent-color);
+        }
+
+        .card:nth-child(3) {
+            border-top-color: var(--danger-color);
+        }
+
+        .card:nth-child(4) {
+            border-top-color: var(--warning-color);
+        }
+
         .card h3 {
             margin-top: 0;
             color: var(--text-color);
@@ -219,15 +239,15 @@
             justify-content: center;
             gap: 8px;
         }
-        
+
         .card .value {
             font-size: 2.2em;
             font-weight: 700;
             color: var(--text-color);
             margin: 15px 0;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
         }
-        
+
         .card .change {
             font-size: 0.9em;
             color: var(--text-muted);
@@ -256,12 +276,12 @@
             box-shadow: 0 10px 20px var(--card-shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .chart-container-wrapper:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px var(--card-shadow-hover);
         }
-        
+
         .chart-container-wrapper h2 {
             text-align: center;
             color: var(--text-color);
@@ -271,7 +291,7 @@
             position: relative;
             padding-bottom: 10px;
         }
-        
+
         .chart-container-wrapper h2::after {
             content: '';
             position: absolute;
@@ -283,14 +303,15 @@
             background: linear-gradient(to right, var(--primary-color), var(--accent-color));
             border-radius: 3px;
         }
-        
+
         .chart-container {
             width: 100%;
-            height: 380px; /* 增加高度 */
+            height: 380px;
+            /* 增加高度 */
             border-radius: 8px;
             overflow: hidden;
         }
-        
+
         .stats-raw {
             margin-top: 40px;
             max-height: 300px;
@@ -301,36 +322,36 @@
             box-shadow: 0 10px 20px var(--card-shadow);
             border: 1px solid var(--border-color);
         }
-        
+
         .stats-raw pre {
             white-space: pre-wrap;
             word-wrap: break-word;
             color: var(--text-color);
         }
-        
+
         /* 响应式调整 */
         @media (max-width: 768px) {
             .container {
                 width: 95%;
                 padding: 15px;
             }
-            
+
             header h1 {
                 font-size: 1.8em;
             }
-            
+
             .card {
                 padding: 20px;
             }
-            
+
             .card .value {
                 font-size: 1.8em;
             }
-            
+
             .chart-container {
                 height: 300px;
             }
-            
+
             .theme-toggle {
                 width: 35px;
                 height: 35px;
@@ -338,7 +359,7 @@
                 right: 10px;
             }
         }
-        
+
         /* 加载动画 */
         .loading {
             display: flex;
@@ -346,7 +367,7 @@
             align-items: center;
             height: 100px;
         }
-        
+
         .loading-spinner {
             width: 40px;
             height: 40px;
@@ -355,11 +376,13 @@
             border-top-color: var(--primary-color);
             animation: spin 1s ease-in-out infinite;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         /* 页脚样式 */
         footer {
             width: 100%;
@@ -382,14 +405,14 @@
             updateThemeIcon(newTheme);
             updateCharts();
         }
-        
+
         function updateThemeIcon(theme) {
             const themeToggle = document.getElementById('theme-toggle');
             if (themeToggle) {
                 themeToggle.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
             }
         }
-        
+
         // 初始化主题
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
@@ -401,44 +424,44 @@
                 updateThemeIcon('dark');
             }
         }
-        
+
         // 更新图表颜色
         function updateCharts() {
             if (window.requestsWafChart && window.trafficChart) {
                 createCharts(window.chartData || []);
             }
         }
-        
+
         async function loadStats() {
             try {
                 // 显示加载动画
                 document.querySelectorAll('.card .value').forEach(el => {
                     el.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
                 });
-                
+
                 document.querySelectorAll('.chart-container').forEach(el => {
                     el.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
                 });
-                
+
                 const response = await fetch('cloudflare_hourly_stats.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                
+
                 if (!Array.isArray(data) || data.length === 0) {
                     console.warn('No data or invalid data format received.');
                     document.getElementById('kpi-cards-container').innerHTML = '<p>无法加载统计数据或数据为空。</p>';
                     return;
                 }
-                
+
                 // 保存数据以便主题切换时重新渲染图表
                 window.chartData = data;
 
                 createKPIs(data);
                 createCharts(data);
                 // displayRawData(data); // Optional: if you want to show raw data
-                
+
                 // 更新页脚年份
                 updateFooterYear();
             } catch (error) {
@@ -464,7 +487,7 @@
             animateValue('waf-mitigated', 0, totalWafMitigated, 1500);
             animateValue('waf-rate', 0, averageWafRate, 1500, (value) => value.toFixed(2) + '%');
         }
-        
+
         function animateValue(id, start, end, duration, formatter = (value) => Math.round(value).toLocaleString()) {
             const obj = document.getElementById(id);
             let startTimestamp = null;
@@ -499,7 +522,7 @@
             if (window.trafficChart && typeof window.trafficChart.dispose === 'function') {
                 window.trafficChart.dispose();
             }
-            
+
             window.requestsWafChart = echarts.init(document.getElementById('requestsWafChart'));
             window.trafficChart = echarts.init(document.getElementById('trafficChart'));
 
@@ -692,12 +715,13 @@
         }
 
         // 初始化
-        window.onload = function() {
+        window.onload = function () {
             initTheme();
             loadStats();
         };
     </script>
 </head>
+
 <body>
     <header>
         <h1>网站分析面板</h1>
@@ -731,7 +755,7 @@
                 <h2>请求量与WAF拦截趋势</h2>
                 <div class="chart-container" id="requestsWafChart"></div>
             </div>
-            
+
             <div class="chart-container-wrapper">
                 <h2>流量变化趋势</h2>
                 <div class="chart-container" id="trafficChart"></div>
@@ -748,7 +772,10 @@
     </div>
 
     <footer>
-        <p>© <span id="current-year"></span> Cloudflare 数据分析面板 | 数据每小时更新一次</p>
+        <p>© <span id="current-year"></span> Powered by <a style="color: var(--text-color);"
+                href="https://github.com/ymh0000123/Cloudflare-Showcase">Cloudflare-Showcase</a></p>
     </footer>
 </body>
+</body>
+
 </html>

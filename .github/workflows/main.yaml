@@ -28,14 +28,14 @@ jobs:
                 echo "BASE_PATH=$(pwd)" >> $GITHUB_ENV
                 echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
-            - name: 运行检查
-              run: |
-                python get.py
-
-            - name: 同步index.html
+            - name: 同步master分支
               run: |
                 git fetch origin master
                 git checkout origin/master -- index.html
+
+            - name: 运行检查
+              run: |
+                python get.py
 
             - name: 提交更改
               run: |

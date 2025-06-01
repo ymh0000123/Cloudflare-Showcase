@@ -1,769 +1,968 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>分析面板</title>
     <!-- 引入 ECharts 库 -->
     <script src="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- 添加Font Awesome图标库 -->
-    <link rel="stylesheet" href="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
-        :root {
-            /* 亮色模式变量 */
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --success-color: #4cc9f0;
-            --danger-color: #f72585;
-            --warning-color: #f8961e;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-            --bg-gradient-start: #f5f7fa;
-            --bg-gradient-end: #c3cfe2;
-            --card-bg: white;
-            --card-shadow: rgba(0, 0, 0, 0.05);
-            --card-shadow-hover: rgba(0, 0, 0, 0.1);
-            --text-color: #333;
-            --text-muted: #666;
-            --border-color: #e0e0e0;
-            --chart-line-color: rgba(0, 0, 0, 0.05);
-            --header-text: white;
-            --footer-bg: white;
-            --transition-speed: 0.3s;
+      :root {
+        /* 亮色模式变量 */
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --success-color: #4cc9f0;
+        --danger-color: #f72585;
+        --warning-color: #f8961e;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --bg-gradient-start: #f5f7fa;
+        --bg-gradient-end: #c3cfe2;
+        --card-bg: white;
+        --card-shadow: rgba(0, 0, 0, 0.05);
+        --card-shadow-hover: rgba(0, 0, 0, 0.1);
+        --text-color: #333;
+        --text-muted: #666;
+        --border-color: #e0e0e0;
+        --chart-line-color: rgba(0, 0, 0, 0.05);
+        --header-text: white;
+        --footer-bg: white;
+        --transition-speed: 0.3s;
+      }
+
+      /* 深色模式变量 */
+      [data-theme="dark"] {
+        --primary-color: #4cc9f0;
+        --secondary-color: #4895ef;
+        --accent-color: #4361ee;
+        --success-color: #3f37c9;
+        --danger-color: #f72585;
+        --warning-color: #f8961e;
+        --light-color: #f8f9fa;
+        --dark-color: #e9ecef;
+        --bg-gradient-start: #1a1a2e;
+        --bg-gradient-end: #16213e;
+        --card-bg: #1f2937;
+        --card-shadow: rgba(0, 0, 0, 0.2);
+        --card-shadow-hover: rgba(0, 0, 0, 0.4);
+        --text-color: #e9ecef;
+        --text-muted: #adb5bd;
+        --border-color: #4d4d4d;
+        --chart-line-color: rgba(255, 255, 255, 0.05);
+        --header-text: #f8f9fa;
+        --footer-bg: #1f2937;
+      }
+
+      /* 系统偏好深色模式自动切换 */
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --primary-color: #4cc9f0;
+          --secondary-color: #4895ef;
+          --accent-color: #4361ee;
+          --success-color: #3f37c9;
+          --danger-color: #f72585;
+          --warning-color: #f8961e;
+          --light-color: #f8f9fa;
+          --dark-color: #e9ecef;
+          --bg-gradient-start: #1a1a2e;
+          --bg-gradient-end: #16213e;
+          --card-bg: #1f2937;
+          --card-shadow: rgba(0, 0, 0, 0.2);
+          --card-shadow-hover: rgba(0, 0, 0, 0.4);
+          --text-color: #e9ecef;
+          --text-muted: #adb5bd;
+          --border-color: #4d4d4d;
+          --chart-line-color: rgba(255, 255, 255, 0.05);
+          --header-text: #f8f9fa;
+          --footer-bg: #1f2937;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+        transition: all var(--transition-speed) ease;
+      }
+
+      body {
+        font-family: "Roboto", Arial, sans-serif;
+        margin: 0;
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start) 0%,
+          var(--bg-gradient-end) 100%
+        );
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        width: 95%;
+        max-width: 1400px;
+        margin: 20px auto;
+        padding: 20px;
+        animation: fadeIn 1s ease-in-out;
+        flex-grow: 1;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
 
-        /* 深色模式变量 */
-        [data-theme="dark"] {
-            --primary-color: #4cc9f0;
-            --secondary-color: #4895ef;
-            --accent-color: #4361ee;
-            --success-color: #3f37c9;
-            --danger-color: #f72585;
-            --warning-color: #f8961e;
-            --light-color: #f8f9fa;
-            --dark-color: #e9ecef;
-            --bg-gradient-start: #1a1a2e;
-            --bg-gradient-end: #16213e;
-            --card-bg: #1f2937;
-            --card-shadow: rgba(0, 0, 0, 0.2);
-            --card-shadow-hover: rgba(0, 0, 0, 0.4);
-            --text-color: #e9ecef;
-            --text-muted: #adb5bd;
-            --border-color: #4d4d4d;
-            --chart-line-color: rgba(255, 255, 255, 0.05);
-            --header-text: #f8f9fa;
-            --footer-bg: #1f2937;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        /* 系统偏好深色模式自动切换 */
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
-                --primary-color: #4cc9f0;
-                --secondary-color: #4895ef;
-                --accent-color: #4361ee;
-                --success-color: #3f37c9;
-                --danger-color: #f72585;
-                --warning-color: #f8961e;
-                --light-color: #f8f9fa;
-                --dark-color: #e9ecef;
-                --bg-gradient-start: #1a1a2e;
-                --bg-gradient-end: #16213e;
-                --card-bg: #1f2937;
-                --card-shadow: rgba(0, 0, 0, 0.2);
-                --card-shadow-hover: rgba(0, 0, 0, 0.4);
-                --text-color: #e9ecef;
-                --text-muted: #adb5bd;
-                --border-color: #4d4d4d;
-                --chart-line-color: rgba(255, 255, 255, 0.05);
-                --header-text: #f8f9fa;
-                --footer-bg: #1f2937;
-            }
+      header {
+        width: 100%;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        padding: 25px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-bottom: 30px;
+        border-radius: 0 0 15px 15px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        transform: rotate(30deg);
+      }
+
+      header h1 {
+        color: var(--header-text);
+        margin: 0;
+        font-size: 2.2em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      /* 主题切换按钮 */
+      .theme-toggle {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: var(--header-text);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .kpi-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px var(--card-shadow);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border-top: 4px solid var(--primary-color);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px var(--card-shadow-hover);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        pointer-events: none;
+      }
+
+      .card:nth-child(1) {
+        border-top-color: var(--primary-color);
+      }
+
+      .card:nth-child(2) {
+        border-top-color: var(--accent-color);
+      }
+
+      .card:nth-child(3) {
+        border-top-color: var(--danger-color);
+      }
+
+      .card:nth-child(4) {
+        border-top-color: var(--warning-color);
+      }
+
+      .card h3 {
+        margin-top: 0;
+        color: var(--text-color);
+        font-size: 1.1em;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .card .value {
+        font-size: 2.2em;
+        font-weight: 700;
+        color: var(--text-color);
+        margin: 15px 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .card .change {
+        font-size: 0.9em;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      @media (min-width: 992px) {
+        .charts-grid {
+          grid-template-columns: repeat(2, 1fr);
         }
+      }
 
-        * {
-            box-sizing: border-box;
-            transition: all var(--transition-speed) ease;
-        }
+      .chart-container-wrapper {
+        background-color: var(--card-bg);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px var(--card-shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+      .chart-container-wrapper:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px var(--card-shadow-hover);
+      }
 
+      .chart-container-wrapper h2 {
+        text-align: center;
+        color: var(--text-color);
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .chart-container-wrapper h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        border-radius: 3px;
+      }
+
+      .chart-container {
+        width: 100%;
+        height: 380px;
+        /* 增加高度 */
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .stats-raw {
+        margin-top: 40px;
+        max-height: 300px;
+        overflow: auto;
+        background-color: var(--card-bg);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px var(--card-shadow);
+        border: 1px solid var(--border-color);
+      }
+
+      .stats-raw pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        color: var(--text-color);
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
         .container {
-            width: 95%;
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 20px;
-            animation: fadeIn 1s ease-in-out;
-            flex-grow: 1;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        header {
-            width: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            padding: 25px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-bottom: 30px;
-            border-radius: 0 0 15px 15px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-            transform: rotate(30deg);
+          width: 95%;
+          padding: 15px;
         }
 
         header h1 {
-            color: var(--header-text);
-            margin: 0;
-            font-size: 2.2em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-
-        /* 主题切换按钮 */
-        .theme-toggle {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: var(--header-text);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .kpi-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+          font-size: 1.8em;
         }
 
         .card {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px var(--card-shadow);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border-top: 4px solid var(--primary-color);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px var(--card-shadow-hover);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-            pointer-events: none;
-        }
-
-        .card:nth-child(1) {
-            border-top-color: var(--primary-color);
-        }
-
-        .card:nth-child(2) {
-            border-top-color: var(--accent-color);
-        }
-
-        .card:nth-child(3) {
-            border-top-color: var(--danger-color);
-        }
-
-        .card:nth-child(4) {
-            border-top-color: var(--warning-color);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            color: var(--text-color);
-            font-size: 1.1em;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+          padding: 20px;
         }
 
         .card .value {
-            font-size: 2.2em;
-            font-weight: 700;
-            color: var(--text-color);
-            margin: 15px 0;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .card .change {
-            font-size: 0.9em;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-
-        @media (min-width: 992px) {
-            .charts-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .chart-container-wrapper {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px var(--card-shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .chart-container-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px var(--card-shadow-hover);
-        }
-
-        .chart-container-wrapper h2 {
-            text-align: center;
-            color: var(--text-color);
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .chart-container-wrapper h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            border-radius: 3px;
+          font-size: 1.8em;
         }
 
         .chart-container {
-            width: 100%;
-            height: 380px;
-            /* 增加高度 */
-            border-radius: 8px;
-            overflow: hidden;
+          height: 300px;
         }
 
-        .stats-raw {
-            margin-top: 40px;
-            max-height: 300px;
-            overflow: auto;
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px var(--card-shadow);
-            border: 1px solid var(--border-color);
+        .theme-toggle {
+          width: 35px;
+          height: 35px;
+          font-size: 1em;
+          right: 10px;
         }
+      }
 
-        .stats-raw pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            color: var(--text-color);
+      /* 加载动画 */
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
+      }
 
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 15px;
-            }
-
-            header h1 {
-                font-size: 1.8em;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            .card .value {
-                font-size: 1.8em;
-            }
-
-            .chart-container {
-                height: 300px;
-            }
-
-            .theme-toggle {
-                width: 35px;
-                height: 35px;
-                font-size: 1em;
-                right: 10px;
-            }
-        }
-
-        /* 加载动画 */
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* 页脚样式 */
-        footer {
-            width: 100%;
-            background-color: var(--footer-bg);
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            box-shadow: 0 -4px 10px var(--card-shadow);
-            color: var(--text-muted);
-            font-size: 0.9em;
-        }
+      /* 页脚样式 */
+      footer {
+        width: 100%;
+        background-color: var(--footer-bg);
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 40px;
+        box-shadow: 0 -4px 10px var(--card-shadow);
+        color: var(--text-muted);
+        font-size: 0.9em;
+      }
     </style>
     <script>
-        // 主题切换功能
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
-            updateCharts();
-        }
+      // 日志工具
+      const log = false; // 设置为 false 可禁用日志输出
+      const Logger = {
+        log: (message, data = null) => {
+          if (log) {
+            const timestamp = new Date().toISOString();
+            console.log(`[${timestamp}] ${message}`, data || "");
+          }
+        },
+        error: (message, error = null) => {
+          if (log) {
+            const timestamp = new Date().toISOString();
+            console.error(`[${timestamp}] ERROR: ${message}`, error || "");
+          }
+        },
+        warn: (message, data = null) => {
+          if (log) {
+            const timestamp = new Date().toISOString();
+            console.warn(`[${timestamp}] WARNING: ${message}`, data || "");
+          }
+        },
+        colors: (theme = null) => {
+          const timestamp = new Date().toISOString();
+          const currentTheme =
+            theme ||
+            document.documentElement.getAttribute("data-theme") ||
+            "light";
+          const colors = getThemeColors(currentTheme);
+          console.group(`[${timestamp}] 当前主题颜色配置 (${currentTheme})`);
+          Object.entries(colors).forEach(([key, value]) => {
+            console.log(
+              `%c${key}: ${value}`,
+              `color: ${value}; font-weight: bold;`
+            );
+          });
+          console.groupEnd();
+          return colors;
+        },
+      };
 
-        function updateThemeIcon(theme) {
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-            }
-        }
-
-        // 初始化主题
-        function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                updateThemeIcon(savedTheme);
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                updateThemeIcon('dark');
-            }
-        }
-
-        // 更新图表颜色
-        function updateCharts() {
-            if (window.requestsWafChart && window.trafficChart) {
-                createCharts(window.chartData || []);
-            }
-        }
-
-        async function loadStats() {
-            try {
-                // 显示加载动画
-                document.querySelectorAll('.card .value').forEach(el => {
-                    el.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
-                });
-
-                document.querySelectorAll('.chart-container').forEach(el => {
-                    el.innerHTML = '<div class="loading"><div class="loading-spinner"></div></div>';
-                });
-
-                const response = await fetch('cloudflare_hourly_stats.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-
-                if (!Array.isArray(data) || data.length === 0) {
-                    console.warn('No data or invalid data format received.');
-                    document.getElementById('kpi-cards-container').innerHTML = '<p>无法加载统计数据或数据为空。</p>';
-                    return;
-                }
-
-                // 保存数据以便主题切换时重新渲染图表
-                window.chartData = data;
-
-                createKPIs(data);
-                createCharts(data);
-                // displayRawData(data); // Optional: if you want to show raw data
-
-                // 更新页脚年份
-                updateFooterYear();
-            } catch (error) {
-                console.error('Error loading stats:', error);
-                document.getElementById('kpi-cards-container').innerHTML = `<p>加载统计数据失败: ${error.message}</p>`;
-            }
-        }
-
-        function formatTimestamp(timestamp) {
-            const date = new Date(timestamp * 1000);
-            return date.toLocaleDateString('zh-CN') + ' ' + date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
-        }
-
-        function createKPIs(data) {
-            const totalRequests = data.reduce((sum, item) => sum + item.total_requests, 0);
-            const totalTrafficMB = data.reduce((sum, item) => sum + item.total_megabytes, 0);
-            const totalWafMitigated = data.reduce((sum, item) => sum + item.waf_mitigated_requests, 0);
-            const averageWafRate = totalRequests > 0 ? (totalWafMitigated / totalRequests * 100) : 0;
-
-            // 添加数字增长动画
-            animateValue('total-requests', 0, totalRequests, 1500);
-            animateValue('total-traffic', 0, totalTrafficMB, 1500, (value) => value.toFixed(2) + ' MB');
-            animateValue('waf-mitigated', 0, totalWafMitigated, 1500);
-            animateValue('waf-rate', 0, averageWafRate, 1500, (value) => value.toFixed(2) + '%');
-        }
-
-        function animateValue(id, start, end, duration, formatter = (value) => Math.round(value).toLocaleString()) {
-            const obj = document.getElementById(id);
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = progress * (end - start) + start;
-                obj.textContent = formatter(value);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        function createCharts(data) {
-            const labels = data.map(item => formatTimestamp(item.since));
-            const requestsData = data.map(item => item.total_requests);
-            const trafficData = data.map(item => item.total_megabytes);
-            const wafData = data.map(item => item.waf_mitigated_requests);
-
-            // 获取当前主题
-            const isDarkTheme = document.documentElement.getAttribute('data-theme') === 'dark';
-            const textColor = isDarkTheme ? '#e9ecef' : '#333';
-            const axisLineColor = isDarkTheme ? '#4d4d4d' : '#ddd';
-            const splitLineColor = isDarkTheme ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
-
-            // 初始化 ECharts 实例
-            if (window.requestsWafChart && typeof window.requestsWafChart.dispose === 'function') {
-                window.requestsWafChart.dispose();
-            }
-            if (window.trafficChart && typeof window.trafficChart.dispose === 'function') {
-                window.trafficChart.dispose();
-            }
-
-            window.requestsWafChart = echarts.init(document.getElementById('requestsWafChart'));
-            window.trafficChart = echarts.init(document.getElementById('trafficChart'));
-
-            const commonOption = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross',
-                        label: {
-                            backgroundColor: isDarkTheme ? '#6a7985' : '#fff'
-                        }
-                    },
-                    borderRadius: 8,
-                    padding: 10,
-                    textStyle: {
-                        fontSize: 12,
-                        color: isDarkTheme ? '#e9ecef' : '#333'
-                    },
-                    backgroundColor: isDarkTheme ? 'rgba(31, 41, 55, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-                    borderColor: isDarkTheme ? '#4d4d4d' : '#ddd'
-                },
-                legend: {
-                    top: '5%',
-                    textStyle: {
-                        color: textColor
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: labels,
-                    axisLabel: {
-                        rotate: 45,
-                        fontSize: 10,
-                        color: textColor
-                    },
-                    axisLine: {
-                        lineStyle: {
-                            color: axisLineColor
-                        }
-                    }
-                },
-                yAxis: {
-                    type: 'value',
-                    axisLabel: {
-                        formatter: '{value}',
-                        color: textColor
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: splitLineColor
-                        }
-                    }
-                },
-                animation: true,
-                animationDuration: 1500,
-                animationEasing: 'cubicOut'
-            };
-
-            // 请求量与WAF拦截图表配置
-            const requestsWafOption = {
-                ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
-                legend: {
-                    data: ['总请求数', 'WAF拦截请求数'],
-                    top: '5%',
-                    textStyle: {
-                        color: textColor
-                    }
-                },
-                series: [
-                    {
-                        name: '总请求数',
-                        type: 'line',
-                        data: requestsData,
-                        smooth: true,
-                        symbol: 'emptyCircle',
-                        symbolSize: 6,
-                        itemStyle: {
-                            color: '#4361ee'
-                        },
-                        lineStyle: {
-                            width: 3
-                        },
-                        areaStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                {
-                                    offset: 0,
-                                    color: 'rgba(67, 97, 238, 0.5)'
-                                },
-                                {
-                                    offset: 1,
-                                    color: 'rgba(67, 97, 238, 0.05)'
-                                }
-                            ])
-                        }
-                    },
-                    {
-                        name: 'WAF拦截请求数',
-                        type: 'line',
-                        data: wafData,
-                        smooth: true,
-                        symbol: 'emptyCircle',
-                        symbolSize: 6,
-                        itemStyle: {
-                            color: '#f72585'
-                        },
-                        lineStyle: {
-                            width: 3
-                        },
-                        areaStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                {
-                                    offset: 0,
-                                    color: 'rgba(247, 37, 133, 0.5)'
-                                },
-                                {
-                                    offset: 1,
-                                    color: 'rgba(247, 37, 133, 0.05)'
-                                }
-                            ])
-                        }
-                    }
-                ]
-            };
-
-            // 流量图表配置
-            const trafficOption = {
-                ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
-                legend: {
-                    data: ['流量 (MB)'],
-                    top: '5%',
-                    textStyle: {
-                        color: textColor
-                    }
-                },
-                series: [{
-                    name: '流量 (MB)',
-                    type: 'line',
-                    data: trafficData,
-                    smooth: true,
-                    symbol: 'emptyCircle',
-                    symbolSize: 6,
-                    itemStyle: {
-                        color: '#4895ef'
-                    },
-                    lineStyle: {
-                        width: 3
-                    },
-                    areaStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                            {
-                                offset: 0,
-                                color: 'rgba(72, 149, 239, 0.5)'
-                            },
-                            {
-                                offset: 1,
-                                color: 'rgba(72, 149, 239, 0.05)'
-                            }
-                        ])
-                    }
-                }]
-            };
-
-            // 应用配置项
-            window.requestsWafChart.setOption(requestsWafOption);
-            window.trafficChart.setOption(trafficOption);
-
-            // 监听窗口大小变化，自适应图表
-            window.addEventListener('resize', () => {
-                if (window.requestsWafChart && window.trafficChart) {
-                    window.requestsWafChart.resize();
-                    window.trafficChart.resize();
-                }
-            });
-        }
-
-        // 更新页脚年份
-        function updateFooterYear() {
-            const currentYear = new Date().getFullYear();
-            const footerYearElement = document.getElementById('current-year');
-            if (footerYearElement) {
-                footerYearElement.textContent = currentYear;
-            }
-        }
-
-        // 初始化
-        window.onload = function () {
-            initTheme();
-            loadStats();
+      // 获取主题颜色配置
+      function getThemeColors(theme = "light") {
+        const isDark = theme === "dark";
+        return {
+          "primary-color": isDark ? "#4cc9f0" : "#4361ee",
+          "secondary-color": isDark ? "#4895ef" : "#3f37c9",
+          "accent-color": isDark ? "#4361ee" : "#4895ef",
+          "success-color": isDark ? "#3f37c9" : "#4cc9f0",
+          "danger-color": "#f72585",
+          "warning-color": "#f8961e",
+          "light-color": "#f8f9fa",
+          "dark-color": isDark ? "#e9ecef" : "#212529",
+          "bg-gradient-start": isDark ? "#1a1a2e" : "#f5f7fa",
+          "bg-gradient-end": isDark ? "#16213e" : "#c3cfe2",
+          "card-bg": isDark ? "#1f2937" : "white",
+          "text-color": isDark ? "#e9ecef" : "#333",
+          "text-muted": isDark ? "#adb5bd" : "#666",
+          "border-color": isDark ? "#4d4d4d" : "#e0e0e0",
+          "header-text": isDark ? "#f8f9fa" : "white",
+          "footer-bg": isDark ? "#1f2937" : "white",
         };
-    </script>
-</head>
+      } // 主题切换功能
+      function toggleTheme() {
+        Logger.log("开始切换主题");
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") || "light";
+        const newTheme = currentTheme === "light" ? "dark" : "light";
+        Logger.log(`主题切换: ${currentTheme} -> ${newTheme}`);
 
-<body>
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        updateThemeIcon(newTheme);
+        updateCharts();
+        Logger.log("主题切换完成");
+
+        // 输出颜色配置
+        Logger.colors(newTheme);
+      }
+      function updateThemeIcon(theme) {
+        Logger.log(`更新主题图标: ${theme}`);
+        const themeToggle = document.getElementById("theme-toggle");
+        if (themeToggle) {
+          themeToggle.innerHTML =
+            theme === "dark"
+              ? '<i class="fas fa-sun"></i>'
+              : '<i class="fas fa-moon"></i>';
+        }
+      } // 初始化主题
+      function initTheme() {
+        Logger.log("初始化主题设置");
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          Logger.log(`使用保存的主题: ${savedTheme}`);
+          document.documentElement.setAttribute("data-theme", savedTheme);
+          updateThemeIcon(savedTheme);
+        } else if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          Logger.log("检测到系统深色模式偏好，使用深色主题");
+          document.documentElement.setAttribute("data-theme", "dark");
+          updateThemeIcon("dark");
+        } else {
+          Logger.log("使用默认浅色主题");
+        }
+
+        // 输出初始主题颜色配置
+        Logger.colors();
+      } // 更新图表颜色
+      function updateCharts() {
+        Logger.log("开始更新图表颜色");
+        if (window.requestsWafChart && window.trafficChart) {
+          Logger.log("重新创建图表以应用新主题");
+          createCharts(window.chartData || []);
+        } else {
+          Logger.warn("图表实例不存在，跳过更新");
+        }
+      }
+      async function loadStats() {
+        try {
+          Logger.log("开始加载统计数据");
+          // 显示加载动画
+          document.querySelectorAll(".card .value").forEach((el) => {
+            el.innerHTML =
+              '<div class="loading"><div class="loading-spinner"></div></div>';
+          });
+
+          document.querySelectorAll(".chart-container").forEach((el) => {
+            el.innerHTML =
+              '<div class="loading"><div class="loading-spinner"></div></div>';
+          });
+
+          Logger.log("正在请求 cloudflare_hourly_stats.json 文件");
+          const response = await fetch("cloudflare_hourly_stats.json");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          Logger.log("成功获取数据", { dataLength: data.length });
+
+          if (!Array.isArray(data) || data.length === 0) {
+            Logger.warn("数据为空或格式无效");
+            document.getElementById("kpi-cards-container").innerHTML =
+              "<p>无法加载统计数据或数据为空。</p>";
+            return;
+          }
+
+          // 保存数据以便主题切换时重新渲染图表
+          window.chartData = data;
+
+          Logger.log("开始创建 KPI 卡片");
+          createKPIs(data);
+          Logger.log("开始创建图表");
+          createCharts(data);
+          // displayRawData(data); // Optional: if you want to show raw data
+
+          // 更新页脚年份
+          updateFooterYear();
+          Logger.log("统计数据加载完成");
+        } catch (error) {
+          Logger.error("加载统计数据失败", error);
+          document.getElementById(
+            "kpi-cards-container"
+          ).innerHTML = `<p>加载统计数据失败: ${error.message}</p>`;
+        }
+      }
+      function formatTimestamp(timestamp) {
+        const date = new Date(timestamp * 1000);
+        return (
+          date.toLocaleDateString("zh-CN") +
+          " " +
+          date.toLocaleTimeString("zh-CN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        );
+      }
+
+      function createKPIs(data) {
+        Logger.log("创建 KPI 卡片数据", { itemsCount: data.length });
+        const totalRequests = data.reduce(
+          (sum, item) => sum + item.total_requests,
+          0
+        );
+        const totalTrafficMB = data.reduce(
+          (sum, item) => sum + item.total_megabytes,
+          0
+        );
+        const totalWafMitigated = data.reduce(
+          (sum, item) => sum + item.waf_mitigated_requests,
+          0
+        );
+        const averageWafRate =
+          totalRequests > 0 ? (totalWafMitigated / totalRequests) * 100 : 0;
+
+        Logger.log("KPI 数据计算完成", {
+          totalRequests,
+          totalTrafficMB: totalTrafficMB.toFixed(2),
+          totalWafMitigated,
+          averageWafRate: averageWafRate.toFixed(2),
+        });
+
+        // 添加数字增长动画
+        animateValue("total-requests", 0, totalRequests, 1500);
+        animateValue(
+          "total-traffic",
+          0,
+          totalTrafficMB,
+          1500,
+          (value) => value.toFixed(2) + " MB"
+        );
+        animateValue("waf-mitigated", 0, totalWafMitigated, 1500);
+        animateValue(
+          "waf-rate",
+          0,
+          averageWafRate,
+          1500,
+          (value) => value.toFixed(2) + "%"
+        );
+      }
+      function animateValue(
+        id,
+        start,
+        end,
+        duration,
+        formatter = (value) => Math.round(value).toLocaleString()
+      ) {
+        Logger.log(`开始动画: ${id}, 从 ${start} 到 ${end}`);
+        const obj = document.getElementById(id);
+        if (!obj) {
+          Logger.error(`找不到元素: ${id}`);
+          return;
+        }
+
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const value = progress * (end - start) + start;
+          obj.textContent = formatter(value);
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            Logger.log(`动画完成: ${id}`);
+          }
+        };
+        window.requestAnimationFrame(step);
+      }
+      function createCharts(data) {
+        Logger.log("开始创建图表", { dataLength: data.length });
+        const labels = data.map((item) => formatTimestamp(item.since));
+        const requestsData = data.map((item) => item.total_requests);
+        const trafficData = data.map((item) => item.total_megabytes);
+        const wafData = data.map((item) => item.waf_mitigated_requests);
+
+        Logger.log("图表数据准备完成", {
+          labelsCount: labels.length,
+          maxRequests: Math.max(...requestsData),
+          maxTraffic: Math.max(...trafficData),
+          maxWaf: Math.max(...wafData),
+        });
+
+        // 获取当前主题
+        const isDarkTheme =
+          document.documentElement.getAttribute("data-theme") === "dark";
+        Logger.log(`使用主题: ${isDarkTheme ? "深色" : "浅色"}`);
+        const textColor = isDarkTheme ? "#e9ecef" : "#333";
+        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
+        const splitLineColor = isDarkTheme
+          ? "rgba(255,255,255,0.05)"
+          : "rgba(0,0,0,0.05)";
+
+        // 初始化 ECharts 实例
+        if (
+          window.requestsWafChart &&
+          typeof window.requestsWafChart.dispose === "function"
+        ) {
+          Logger.log("销毁旧的请求图表实例");
+          window.requestsWafChart.dispose();
+        }
+        if (
+          window.trafficChart &&
+          typeof window.trafficChart.dispose === "function"
+        ) {
+          Logger.log("销毁旧的流量图表实例");
+          window.trafficChart.dispose();
+        }
+
+        Logger.log("创建新的图表实例");
+        window.requestsWafChart = echarts.init(
+          document.getElementById("requestsWafChart")
+        );
+        window.trafficChart = echarts.init(
+          document.getElementById("trafficChart")
+        );
+
+        const commonOption = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "cross",
+              label: {
+                backgroundColor: isDarkTheme ? "#6a7985" : "#fff",
+                color: textColor,
+              },
+            },
+            borderRadius: 8,
+            padding: 10,
+            textStyle: {
+              fontSize: 12,
+              color: isDarkTheme ? "#e9ecef" : "#333",
+            },
+            backgroundColor: isDarkTheme
+              ? "rgba(31, 41, 55, 0.9)"
+              : "rgba(255, 255, 255, 0.9)",
+            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
+          },
+          legend: {
+            top: "5%",
+            textStyle: {
+              color: textColor,
+            },
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: labels,
+            axisLabel: {
+              rotate: 45,
+              fontSize: 10,
+              color: textColor,
+            },
+            axisLine: {
+              lineStyle: {
+                color: axisLineColor,
+              },
+            },
+          },
+          yAxis: {
+            type: "value",
+            axisLabel: {
+              formatter: "{value}",
+              color: textColor,
+            },
+            splitLine: {
+              lineStyle: {
+                color: splitLineColor,
+              },
+            },
+          },
+          animation: true,
+          animationDuration: 1500,
+          animationEasing: "cubicOut",
+        };
+
+        // 请求量与WAF拦截图表配置
+        const requestsWafOption = {
+          ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
+          legend: {
+            data: ["总请求数", "WAF拦截请求数"],
+            top: "5%",
+            textStyle: {
+              color: textColor,
+            },
+          },
+          series: [
+            {
+              name: "总请求数",
+              type: "line",
+              data: requestsData,
+              smooth: true,
+              symbol: "emptyCircle",
+              symbolSize: 6,
+              itemStyle: {
+                color: "#4361ee",
+              },
+              lineStyle: {
+                width: 3,
+              },
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "rgba(67, 97, 238, 0.5)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(67, 97, 238, 0.05)",
+                  },
+                ]),
+              },
+            },
+            {
+              name: "WAF拦截请求数",
+              type: "line",
+              data: wafData,
+              smooth: true,
+              symbol: "emptyCircle",
+              symbolSize: 6,
+              itemStyle: {
+                color: "#f72585",
+              },
+              lineStyle: {
+                width: 3,
+              },
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "rgba(247, 37, 133, 0.5)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(247, 37, 133, 0.05)",
+                  },
+                ]),
+              },
+            },
+          ],
+        };
+
+        // 流量图表配置
+        const trafficOption = {
+          ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
+          legend: {
+            data: ["流量 (MB)"],
+            top: "5%",
+            textStyle: {
+              color: textColor,
+            },
+          },
+          series: [
+            {
+              name: "流量 (MB)",
+              type: "line",
+              data: trafficData,
+              smooth: true,
+              symbol: "emptyCircle",
+              symbolSize: 6,
+              itemStyle: {
+                color: "#4895ef",
+              },
+              lineStyle: {
+                width: 3,
+              },
+              areaStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  {
+                    offset: 0,
+                    color: "rgba(72, 149, 239, 0.5)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgba(72, 149, 239, 0.05)",
+                  },
+                ]),
+              },
+            },
+          ],
+        }; // 应用配置项
+        window.requestsWafChart.setOption(requestsWafOption);
+        window.trafficChart.setOption(trafficOption);
+
+        Logger.log("图表创建完成");
+
+        // 监听窗口大小变化，自适应图表
+        window.addEventListener("resize", () => {
+          if (window.requestsWafChart && window.trafficChart) {
+            Logger.log("窗口大小变化，调整图表尺寸");
+            window.requestsWafChart.resize();
+            window.trafficChart.resize();
+          }
+        });
+      }
+
+      // 更新页脚年份
+      function updateFooterYear() {
+        const currentYear = new Date().getFullYear();
+        const footerYearElement = document.getElementById("current-year");
+        if (footerYearElement) {
+          footerYearElement.textContent = currentYear;
+          Logger.log(`页脚年份更新为: ${currentYear}`);
+        }
+      }
+
+      // 初始化
+      window.onload = function () {
+        Logger.log("页面加载完成，开始初始化");
+        initTheme();
+        loadStats();
+      };
+    </script>
+  </head>
+
+  <body>
     <header>
-        <h1>网站分析面板</h1>
-        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
-            <i class="fas fa-moon"></i>
-        </button>
+      <h1>网站分析面板</h1>
+      <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+      </button>
     </header>
 
     <div class="container">
-        <div class="kpi-cards" id="kpi-cards-container">
-            <div class="card">
-                <h3><i class="fas fa-globe"></i> 总请求数</h3>
-                <div class="value" id="total-requests">-</div>
-            </div>
-            <div class="card">
-                <h3><i class="fas fa-exchange-alt"></i> 总流量</h3>
-                <div class="value" id="total-traffic">-</div>
-            </div>
-            <div class="card">
-                <h3><i class="fas fa-shield-alt"></i> WAF拦截数</h3>
-                <div class="value" id="waf-mitigated">-</div>
-            </div>
-            <div class="card">
-                <h3><i class="fas fa-percentage"></i> 平均WAF拦截率</h3>
-                <div class="value" id="waf-rate">-</div>
-            </div>
+      <div class="kpi-cards" id="kpi-cards-container">
+        <div class="card">
+          <h3><i class="fas fa-globe"></i> 总请求数</h3>
+          <div class="value" id="total-requests">-</div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-exchange-alt"></i> 总流量</h3>
+          <div class="value" id="total-traffic">-</div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-shield-alt"></i> WAF拦截数</h3>
+          <div class="value" id="waf-mitigated">-</div>
+        </div>
+        <div class="card">
+          <h3><i class="fas fa-percentage"></i> 平均WAF拦截率</h3>
+          <div class="value" id="waf-rate">-</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-container-wrapper">
+          <h2>请求量与WAF拦截趋势</h2>
+          <div class="chart-container" id="requestsWafChart"></div>
         </div>
 
-        <div class="charts-grid">
-            <div class="chart-container-wrapper">
-                <h2>请求量与WAF拦截趋势</h2>
-                <div class="chart-container" id="requestsWafChart"></div>
-            </div>
-
-            <div class="chart-container-wrapper">
-                <h2>流量变化趋势</h2>
-                <div class="chart-container" id="trafficChart"></div>
-            </div>
+        <div class="chart-container-wrapper">
+          <h2>流量变化趋势</h2>
+          <div class="chart-container" id="trafficChart"></div>
         </div>
+      </div>
 
-        <!-- Optional: Raw data display -->
-        <!-- 
+      <!-- Optional: Raw data display -->
+      <!-- 
         <div class="stats-raw">
             <h2>原始数据</h2>
             <div id="raw-data">加载中...</div>
@@ -772,10 +971,14 @@
     </div>
 
     <footer>
-        <p>© <span id="current-year"></span> Powered by <a style="color: var(--text-color);"
-                href="https://github.com/ymh0000123/Cloudflare-Showcase">Cloudflare-Showcase</a></p>
+      <p>
+        © <span id="current-year"></span> Powered by
+        <a
+          style="color: var(--text-color)"
+          href="https://github.com/ymh0000123/Cloudflare-Showcase"
+          >Cloudflare-Showcase</a
+        >
+      </p>
     </footer>
-</body>
-</body>
-
+  </body>
 </html>

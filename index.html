@@ -597,6 +597,35 @@
             minute: "2-digit",
           })
         );
+      }      // 格式化流量单位
+      function formatTraffic(megabytes, precision = 2) {
+        if (megabytes >= 1024 * 1024) {
+          // TB
+          return (megabytes / (1024 * 1024)).toFixed(precision) + " TB";
+        } else if (megabytes >= 1024) {
+          // GB
+          return (megabytes / 1024).toFixed(precision) + " GB";
+        } else {
+          // MB
+          return megabytes.toFixed(precision) + " MB";
+        }
+      }
+
+      // 格式化请求数量单位
+      function formatRequests(count, precision = 1) {
+        if (count >= 100000000) {
+          // 亿
+          return (count / 100000000).toFixed(precision) + "BN";
+        } else if (count >= 10000) {
+          // 万
+          return (count / 10000).toFixed(precision) + "W";
+        } else if (count >= 1000) {
+          // 千
+          return (count / 1000).toFixed(precision) + "K";
+        } else {
+          // 原数值
+          return Math.round(count).toLocaleString();
+        }
       }
 
       function createKPIs(data) {
@@ -624,15 +653,27 @@
         });
 
         // 添加数字增长动画
-        animateValue("total-requests", 0, totalRequests, 1500);
+        animateValue(
+          "total-requests",
+          0,
+          totalRequests,
+          1500,
+          (value) => formatRequests(value)
+        );
         animateValue(
           "total-traffic",
           0,
           totalTrafficMB,
           1500,
-          (value) => value.toFixed(2) + " MB"
+          (value) => formatTraffic(value)
         );
-        animateValue("waf-mitigated", 0, totalWafMitigated, 1500);
+        animateValue(
+          "waf-mitigated",
+          0,
+          totalWafMitigated,
+          1500,
+          (value) => formatRequests(value)
+        );
         animateValue(
           "waf-rate",
           0,
@@ -792,6 +833,47 @@
               color: textColor,
             },
           },
+          yAxis: {
+            type: "value",
+            axisLabel: {
+              formatter: function(value) {
+                return formatRequests(value, 1);
+              },
+              color: textColor,
+            },
+            splitLine: {
+              lineStyle: {
+                color: splitLineColor,
+              },
+            },
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "cross",
+              label: {
+                backgroundColor: isDarkTheme ? "#6a7985" : "#fff",
+                color: textColor,
+              },
+            },
+            borderRadius: 8,
+            padding: 10,
+            textStyle: {
+              fontSize: 12,
+              color: isDarkTheme ? "#e9ecef" : "#333",
+            },
+            backgroundColor: isDarkTheme
+              ? "rgba(31, 41, 55, 0.9)"
+              : "rgba(255, 255, 255, 0.9)",
+            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
+            formatter: function(params) {
+              let result = `${params[0].name}<br/>`;
+              params.forEach(param => {
+                result += `${param.seriesName}: ${formatRequests(param.value)}<br/>`;
+              });
+              return result;
+            }
+          },
           series: [
             {
               name: "总请求数",
@@ -846,21 +928,57 @@
               },
             },
           ],
-        };
-
-        // 流量图表配置
+        };        // 流量图表配置
         const trafficOption = {
           ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
           legend: {
-            data: ["流量 (MB)"],
+            data: ["流量"],
             top: "5%",
             textStyle: {
               color: textColor,
             },
           },
+          yAxis: {
+            type: "value",
+            axisLabel: {
+              formatter: function(value) {
+                return formatTraffic(value, 1);
+              },
+              color: textColor,
+            },
+            splitLine: {
+              lineStyle: {
+                color: splitLineColor,
+              },
+            },
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "cross",
+              label: {
+                backgroundColor: isDarkTheme ? "#6a7985" : "#fff",
+                color: textColor,
+              },
+            },
+            borderRadius: 8,
+            padding: 10,
+            textStyle: {
+              fontSize: 12,
+              color: isDarkTheme ? "#e9ecef" : "#333",
+            },
+            backgroundColor: isDarkTheme
+              ? "rgba(31, 41, 55, 0.9)"
+              : "rgba(255, 255, 255, 0.9)",
+            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
+            formatter: function(params) {
+              const dataPoint = params[0];
+              return `${dataPoint.name}<br/>流量: ${formatTraffic(dataPoint.value)}`;
+            }
+          },
           series: [
             {
-              name: "流量 (MB)",
+              name: "流量",
               type: "line",
               data: trafficData,
               smooth: true,
@@ -886,7 +1004,7 @@
               },
             },
           ],
-        }; // 应用配置项
+        };// 应用配置项
         window.requestsWafChart.setOption(requestsWafOption);
         window.trafficChart.setOption(trafficOption);
 
@@ -959,6 +1077,7 @@
           <h2>流量变化趋势</h2>
           <div class="chart-container" id="trafficChart"></div>
         </div>
+
       </div>
 
       <!-- Optional: Raw data display -->

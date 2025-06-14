@@ -1,194 +1,194 @@
 [
   {
-    "since": 1747987200,
-    "until": 1747990800,
-    "total_requests": 21,
-    "total_bytes": 376493,
-    "total_megabytes": 0.36,
-    "waf_mitigated_requests": 3
-  },
-  {
-    "since": 1747990800,
-    "until": 1747994400,
-    "total_requests": 57,
-    "total_bytes": 454877,
-    "total_megabytes": 0.43,
-    "waf_mitigated_requests": 0
-  },
-  {
-    "since": 1747994400,
-    "until": 1747998000,
-    "total_requests": 137,
-    "total_bytes": 2058457,
-    "total_megabytes": 1.96,
-    "waf_mitigated_requests": 3
-  },
-  {
-    "since": 1747998000,
-    "until": 1748001600,
-    "total_requests": 125,
-    "total_bytes": 1469747,
-    "total_megabytes": 1.4,
-    "waf_mitigated_requests": 39
-  },
-  {
-    "since": 1748001600,
-    "until": 1748005200,
-    "total_requests": 22,
-    "total_bytes": 298165,
-    "total_megabytes": 0.28,
-    "waf_mitigated_requests": 4
-  },
-  {
-    "since": 1748005200,
-    "until": 1748008800,
-    "total_requests": 37,
-    "total_bytes": 1446749,
-    "total_megabytes": 1.38,
-    "waf_mitigated_requests": 3
-  },
-  {
-    "since": 1748008800,
-    "until": 1748012400,
-    "total_requests": 42,
-    "total_bytes": 1171532,
-    "total_megabytes": 1.12,
-    "waf_mitigated_requests": 10
-  },
-  {
-    "since": 1748012400,
-    "until": 1748016000,
-    "total_requests": 277,
-    "total_bytes": 15156520,
-    "total_megabytes": 14.45,
-    "waf_mitigated_requests": 6
-  },
-  {
-    "since": 1748016000,
-    "until": 1748019600,
-    "total_requests": 108,
-    "total_bytes": 794609,
-    "total_megabytes": 0.76,
-    "waf_mitigated_requests": 3
-  },
-  {
-    "since": 1748019600,
-    "until": 1748023200,
+    "since": 1749834000,
+    "until": 1749837600,
     "total_requests": 19,
-    "total_bytes": 357541,
-    "total_megabytes": 0.34,
-    "waf_mitigated_requests": 2
+    "total_bytes": 286446,
+    "total_megabytes": 0.27,
+    "waf_mitigated_requests": 7
   },
   {
-    "since": 1748023200,
-    "until": 1748026800,
-    "total_requests": 31,
-    "total_bytes": 296240,
-    "total_megabytes": 0.28,
-    "waf_mitigated_requests": 18
+    "since": 1749837600,
+    "until": 1749841200,
+    "total_requests": 3429,
+    "total_bytes": 16590809,
+    "total_megabytes": 15.82,
+    "waf_mitigated_requests": 1701
   },
   {
-    "since": 1748026800,
-    "until": 1748030400,
-    "total_requests": 2275,
-    "total_bytes": 11065057,
-    "total_megabytes": 10.55,
-    "waf_mitigated_requests": 1123
-  },
-  {
-    "since": 1748030400,
-    "until": 1748034000,
-    "total_requests": 523,
-    "total_bytes": 2690881,
-    "total_megabytes": 2.57,
-    "waf_mitigated_requests": 327
-  },
-  {
-    "since": 1748034000,
-    "until": 1748037600,
-    "total_requests": 10,
-    "total_bytes": 10216288,
-    "total_megabytes": 9.74,
-    "waf_mitigated_requests": 0
-  },
-  {
-    "since": 1748037600,
-    "until": 1748041200,
-    "total_requests": 23,
-    "total_bytes": 185333,
-    "total_megabytes": 0.18,
-    "waf_mitigated_requests": 0
-  },
-  {
-    "since": 1748041200,
-    "until": 1748044800,
-    "total_requests": 25,
-    "total_bytes": 354017,
-    "total_megabytes": 0.34,
-    "waf_mitigated_requests": 4
-  },
-  {
-    "since": 1748044800,
-    "until": 1748048400,
-    "total_requests": 80,
-    "total_bytes": 554564,
-    "total_megabytes": 0.53,
-    "waf_mitigated_requests": 2
-  },
-  {
-    "since": 1748048400,
-    "until": 1748052000,
-    "total_requests": 19,
-    "total_bytes": 487636,
-    "total_megabytes": 0.47,
-    "waf_mitigated_requests": 2
-  },
-  {
-    "since": 1748052000,
-    "until": 1748055600,
-    "total_requests": 13,
-    "total_bytes": 332099,
-    "total_megabytes": 0.32,
-    "waf_mitigated_requests": 4
-  },
-  {
-    "since": 1748055600,
-    "until": 1748059200,
-    "total_requests": 17,
-    "total_bytes": 216882,
-    "total_megabytes": 0.21,
-    "waf_mitigated_requests": 0
-  },
-  {
-    "since": 1748059200,
-    "until": 1748062800,
-    "total_requests": 67,
-    "total_bytes": 897977,
-    "total_megabytes": 0.86,
-    "waf_mitigated_requests": 2
-  },
-  {
-    "since": 1748062800,
-    "until": 1748066400,
-    "total_requests": 1878,
-    "total_bytes": 10190366,
-    "total_megabytes": 9.72,
-    "waf_mitigated_requests": 898
-  },
-  {
-    "since": 1748066400,
-    "until": 1748070000,
-    "total_requests": 147,
-    "total_bytes": 1672620,
-    "total_megabytes": 1.6,
-    "waf_mitigated_requests": 9
-  },
-  {
-    "since": 1748070000,
-    "until": 1748073600,
-    "total_requests": 13,
-    "total_bytes": 74831,
-    "total_megabytes": 0.07,
+    "since": 1749841200,
+    "until": 1749844800,
+    "total_requests": 24,
+    "total_bytes": 325581,
+    "total_megabytes": 0.31,
     "waf_mitigated_requests": 5
+  },
+  {
+    "since": 1749844800,
+    "until": 1749848400,
+    "total_requests": 16,
+    "total_bytes": 262004,
+    "total_megabytes": 0.25,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749848400,
+    "until": 1749852000,
+    "total_requests": 17,
+    "total_bytes": 307408,
+    "total_megabytes": 0.29,
+    "waf_mitigated_requests": 0
+  },
+  {
+    "since": 1749852000,
+    "until": 1749855600,
+    "total_requests": 12,
+    "total_bytes": 249789,
+    "total_megabytes": 0.24,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749855600,
+    "until": 1749859200,
+    "total_requests": 31,
+    "total_bytes": 334614,
+    "total_megabytes": 0.32,
+    "waf_mitigated_requests": 24
+  },
+  {
+    "since": 1749859200,
+    "until": 1749862800,
+    "total_requests": 29,
+    "total_bytes": 257401,
+    "total_megabytes": 0.25,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749862800,
+    "until": 1749866400,
+    "total_requests": 12,
+    "total_bytes": 44826,
+    "total_megabytes": 0.04,
+    "waf_mitigated_requests": 2
+  },
+  {
+    "since": 1749866400,
+    "until": 1749870000,
+    "total_requests": 30,
+    "total_bytes": 512605,
+    "total_megabytes": 0.49,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749870000,
+    "until": 1749873600,
+    "total_requests": 12,
+    "total_bytes": 48352,
+    "total_megabytes": 0.05,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749873600,
+    "until": 1749877200,
+    "total_requests": 1203,
+    "total_bytes": 5275831,
+    "total_megabytes": 5.03,
+    "waf_mitigated_requests": 341
+  },
+  {
+    "since": 1749877200,
+    "until": 1749880800,
+    "total_requests": 58,
+    "total_bytes": 662657,
+    "total_megabytes": 0.63,
+    "waf_mitigated_requests": 2
+  },
+  {
+    "since": 1749880800,
+    "until": 1749884400,
+    "total_requests": 138,
+    "total_bytes": 1635597,
+    "total_megabytes": 1.56,
+    "waf_mitigated_requests": 5
+  },
+  {
+    "since": 1749884400,
+    "until": 1749888000,
+    "total_requests": 46,
+    "total_bytes": 563877,
+    "total_megabytes": 0.54,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749888000,
+    "until": 1749891600,
+    "total_requests": 59,
+    "total_bytes": 487778,
+    "total_megabytes": 0.47,
+    "waf_mitigated_requests": 0
+  },
+  {
+    "since": 1749891600,
+    "until": 1749895200,
+    "total_requests": 42,
+    "total_bytes": 534582,
+    "total_megabytes": 0.51,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749895200,
+    "until": 1749898800,
+    "total_requests": 66,
+    "total_bytes": 1140813,
+    "total_megabytes": 1.09,
+    "waf_mitigated_requests": 0
+  },
+  {
+    "since": 1749898800,
+    "until": 1749902400,
+    "total_requests": 60,
+    "total_bytes": 752172,
+    "total_megabytes": 0.72,
+    "waf_mitigated_requests": 1
+  },
+  {
+    "since": 1749902400,
+    "until": 1749906000,
+    "total_requests": 65,
+    "total_bytes": 649952,
+    "total_megabytes": 0.62,
+    "waf_mitigated_requests": 3
+  },
+  {
+    "since": 1749906000,
+    "until": 1749909600,
+    "total_requests": 100,
+    "total_bytes": 948511,
+    "total_megabytes": 0.9,
+    "waf_mitigated_requests": 11
+  },
+  {
+    "since": 1749909600,
+    "until": 1749913200,
+    "total_requests": 7,
+    "total_bytes": 47837,
+    "total_megabytes": 0.05,
+    "waf_mitigated_requests": 0
+  },
+  {
+    "since": 1749913200,
+    "until": 1749916800,
+    "total_requests": 123,
+    "total_bytes": 1882222,
+    "total_megabytes": 1.8,
+    "waf_mitigated_requests": 0
+  },
+  {
+    "since": 1749916800,
+    "until": 1749920400,
+    "total_requests": 289,
+    "total_bytes": 4268118,
+    "total_megabytes": 4.07,
+    "waf_mitigated_requests": 2
   }
 ]

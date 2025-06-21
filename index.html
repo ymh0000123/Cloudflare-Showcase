@@ -276,9 +276,7 @@
         align-items: center;
         justify-content: center;
         gap: 5px;
-      }
-
-      .charts-grid {
+      }      .charts-grid {
         display: grid;
         grid-template-columns: 1fr;
         gap: 30px;
@@ -288,14 +286,25 @@
         .charts-grid {
           grid-template-columns: repeat(2, 1fr);
         }
-      }
-
-      .chart-container-wrapper {
+      }      @media (min-width: 1200px) {
+        .charts-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .chart-container-wrapper:nth-child(3) {
+          grid-column: 1 / -1;
+        }
+      }      .chart-container-wrapper {
         background-color: var(--card-bg);
         padding: 25px;
         border-radius: 12px;
         box-shadow: 0 10px 20px var(--card-shadow);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 400px;
+        max-height: 400px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
       }
 
       .chart-container-wrapper:hover {
@@ -327,12 +336,11 @@
           var(--accent-color)
         );
         border-radius: 3px;
-      }
-
-      .chart-container {
+      }      .chart-container {
         width: 100%;
-        height: 380px;
-        /* 增加高度 */
+        height: 320px;
+        max-height: 320px;
+        flex: 1;
         border-radius: 8px;
         overflow: hidden;
       }
@@ -371,10 +379,14 @@
 
         .card .value {
           font-size: 1.8em;
+        }        .chart-container {
+          height: 250px;
+          max-height: 250px;
         }
 
-        .chart-container {
-          height: 300px;
+        .chart-container-wrapper {
+          height: 320px;
+          max-height: 320px;
         }
 
         .theme-toggle {
@@ -529,10 +541,10 @@
 
         // 输出初始主题颜色配置
         Logger.colors();
-      } // 更新图表颜色
+      }      // 更新图表颜色
       function updateCharts() {
         Logger.log("开始更新图表颜色");
-        if (window.requestsWafChart && window.trafficChart) {
+        if (window.requestsWafChart && window.trafficChart && window.userAgentChart) {
           Logger.log("重新创建图表以应用新主题");
           createCharts(window.chartData || []);
         } else {
@@ -732,9 +744,7 @@
         const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
         const splitLineColor = isDarkTheme
           ? "rgba(255,255,255,0.05)"
-          : "rgba(0,0,0,0.05)";
-
-        // 初始化 ECharts 实例
+          : "rgba(0,0,0,0.05)";        // 初始化 ECharts 实例
         if (
           window.requestsWafChart &&
           typeof window.requestsWafChart.dispose === "function"
@@ -749,6 +759,13 @@
           Logger.log("销毁旧的流量图表实例");
           window.trafficChart.dispose();
         }
+        if (
+          window.userAgentChart &&
+          typeof window.userAgentChart.dispose === "function"
+        ) {
+          Logger.log("销毁旧的用户代理图表实例");
+          window.userAgentChart.dispose();
+        }
 
         Logger.log("创建新的图表实例");
         window.requestsWafChart = echarts.init(
@@ -756,6 +773,9 @@
         );
         window.trafficChart = echarts.init(
           document.getElementById("trafficChart")
+        );
+        window.userAgentChart = echarts.init(
+          document.getElementById("userAgentChart")
         );
 
         const commonOption = {
@@ -1004,19 +1024,160 @@
               },
             },
           ],
-        };// 应用配置项
+        };        // 应用配置项
         window.requestsWafChart.setOption(requestsWafOption);
-        window.trafficChart.setOption(trafficOption);
+        window.trafficChart.setOption(trafficOption);        // 创建用户代理(浏览器)统计图表 - 使用所有24小时的数据
+        createUserAgentChart(data, isDarkTheme, textColor);
 
         Logger.log("图表创建完成");
 
         // 监听窗口大小变化，自适应图表
         window.addEventListener("resize", () => {
-          if (window.requestsWafChart && window.trafficChart) {
+          if (window.requestsWafChart && window.trafficChart && window.userAgentChart) {
             Logger.log("窗口大小变化，调整图表尺寸");
             window.requestsWafChart.resize();
             window.trafficChart.resize();
+            window.userAgentChart.resize();
           }
+        });
+      }      // 创建用户代理统计图表
+      function createUserAgentChart(data, isDarkTheme, textColor) {
+        Logger.log("创建用户代理统计图表", { dataLength: data.length });
+        
+        // 合并所有24小时的用户代理数据
+        const allBrowserCounts = {};
+        
+        data.forEach(hourData => {
+          if (hourData.top_user_agents && Array.isArray(hourData.top_user_agents)) {
+            hourData.top_user_agents.forEach(item => {
+              const browser = item.browser;
+              const requests = item.requests;
+              allBrowserCounts[browser] = (allBrowserCounts[browser] || 0) + requests;
+            });
+          }
+        });
+        
+        // 转换为数组并排序
+        const allUserAgents = Object.entries(allBrowserCounts)
+          .map(([browser, requests]) => ({ browser, requests }))
+          .sort((a, b) => b.requests - a.requests);
+        
+        Logger.log("合并后的用户代理数据", { totalTypes: allUserAgents.length });
+        
+        if (allUserAgents.length === 0) {
+          Logger.warn("没有用户代理数据可显示");
+          document.getElementById("userAgentChart").innerHTML = 
+            '<div style="text-align: center; padding: 50px; color: var(--text-muted);">暂无用户代理数据</div>';
+          return;
+        }
+
+        // 准备排行榜数据（显示所有浏览器）
+        const browserNames = allUserAgents.map(item => item.browser);
+        const browserValues = allUserAgents.map(item => item.requests);
+        
+        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
+        const splitLineColor = isDarkTheme ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
+
+        const userAgentOption = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            },
+            formatter: function(params) {
+              const dataPoint = params[0];
+              return `${dataPoint.name}<br/>请求数: ${formatRequests(dataPoint.value)}`;
+            },
+            textStyle: {
+              color: isDarkTheme ? "#e9ecef" : "#333",
+            },
+            backgroundColor: isDarkTheme
+              ? "rgba(31, 41, 55, 0.9)"
+              : "rgba(255, 255, 255, 0.9)",
+            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
+          },
+          grid: {
+            left: '25%',
+            right: '4%',
+            bottom: '3%',
+            top: '3%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            axisLabel: {
+              formatter: function(value) {
+                return formatRequests(value, 1);
+              },
+              color: textColor,
+            },
+            axisLine: {
+              lineStyle: {
+                color: axisLineColor,
+              },
+            },
+            splitLine: {
+              lineStyle: {
+                color: splitLineColor,
+              },
+            },
+          },
+          yAxis: {
+            type: 'category',
+            data: browserNames,
+            axisLabel: {
+              color: textColor,
+              fontSize: 10
+            },
+            axisLine: {
+              lineStyle: {
+                color: axisLineColor,
+              },
+            },
+            inverse: true  // 倒序显示，让排名第一的在顶部
+          },
+          series: [
+            {
+              name: '浏览器请求数',
+              type: 'bar',
+              data: browserValues,
+              itemStyle: {
+                color: function(params) {
+                  // 为不同排名设置不同颜色，循环使用颜色数组
+                  const colors = [
+                    '#4361ee', '#4895ef', '#4cc9f0', '#f8961e', '#f72585',
+                    '#3f37c9', '#7209b7', '#f77f00', '#fcbf49', '#06ffa5',
+                    '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57',
+                    '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'
+                  ];
+                  return colors[params.dataIndex % colors.length];
+                },
+                borderRadius: [0, 4, 4, 0]
+              },
+              label: {
+                show: true,
+                position: 'right',
+                formatter: function(params) {
+                  return formatRequests(params.value);
+                },
+                color: textColor,
+                fontSize: 9
+              },
+              animationDelay: function (idx) {
+                return idx * 50; // 减少延迟，因为可能有很多项
+              },
+              animationEasing: 'elasticOut'
+            }
+          ],
+          animation: true,
+          animationDuration: 1500
+        };
+
+        window.userAgentChart.setOption(userAgentOption);
+        Logger.log("用户代理排行图表创建完成", { 
+          totalBrowsers: allUserAgents.length,
+          topBrowser: allUserAgents[0]?.browser,
+          topRequests: allUserAgents[0]?.requests
         });
       }
 
@@ -1065,9 +1226,7 @@
           <h3><i class="fas fa-percentage"></i> 平均WAF拦截率</h3>
           <div class="value" id="waf-rate">-</div>
         </div>
-      </div>
-
-      <div class="charts-grid">
+      </div>      <div class="charts-grid">
         <div class="chart-container-wrapper">
           <h2>请求量与WAF拦截趋势</h2>
           <div class="chart-container" id="requestsWafChart"></div>
@@ -1076,6 +1235,9 @@
         <div class="chart-container-wrapper">
           <h2>流量变化趋势</h2>
           <div class="chart-container" id="trafficChart"></div>
+        </div>        <div class="chart-container-wrapper">
+          <h2>浏览器使用排行</h2>
+          <div class="chart-container" id="userAgentChart"></div>
         </div>
 
       </div>

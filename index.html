@@ -276,7 +276,8 @@
         align-items: center;
         justify-content: center;
         gap: 5px;
-      }      .charts-grid {
+      }
+      .charts-grid {
         display: grid;
         grid-template-columns: 1fr;
         gap: 30px;
@@ -286,11 +287,12 @@
         .charts-grid {
           grid-template-columns: repeat(2, 1fr);
         }
-      }      @media (min-width: 1200px) {
+      }
+      @media (min-width: 1200px) {
         .charts-grid {
           grid-template-columns: repeat(2, 1fr);
         }
-        
+
         .chart-container-wrapper:nth-child(3) {
           grid-column: 1 / -1;
         }
@@ -305,6 +307,7 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        position: relative;
       }
 
       .chart-container-wrapper:hover {
@@ -320,9 +323,7 @@
         font-size: 1.5em;
         position: relative;
         padding-bottom: 10px;
-      }
-
-      .chart-container-wrapper h2::after {
+      }      .chart-container-wrapper h2::after {
         content: "";
         position: absolute;
         bottom: 0;
@@ -336,7 +337,46 @@
           var(--accent-color)
         );
         border-radius: 3px;
-      }      .chart-container {
+      }      /* 图表类型切换按钮样式 */
+      .chart-type-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        display: inline-flex;
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border-color);
+        z-index: 10;
+      }
+
+      .chart-type-btn {
+        background: transparent;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 16px;
+        cursor: pointer;
+        color: var(--text-muted);
+        transition: all 0.3s ease;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+      }
+
+      .chart-type-btn:hover {
+        color: var(--primary-color);
+        background: rgba(67, 97, 238, 0.1);
+      }
+
+      .chart-type-btn.active {
+        background: var(--primary-color);
+        color: white;
+        box-shadow: 0 2px 4px rgba(67, 97, 238, 0.3);
+      }
+      .chart-container {
         width: 100%;
         height: 320px;
         max-height: 320px;
@@ -379,7 +419,8 @@
 
         .card .value {
           font-size: 1.8em;
-        }        .chart-container {
+        }
+        .chart-container {
           height: 250px;
           max-height: 250px;
         }
@@ -432,9 +473,13 @@
         font-size: 0.9em;
       }
     </style>
-    <script>
-      // 日志工具
+    <script>      // 日志工具
       const log = false; // 设置为 false 可禁用日志输出
+      
+      // 全局变量存储用户代理数据和图表类型
+      let currentUserAgentData = [];
+      let currentChartType = 'bar'; // 'bar' 或 'pie'
+      
       const Logger = {
         log: (message, data = null) => {
           if (log) {
@@ -461,13 +506,15 @@
             document.documentElement.getAttribute("data-theme") ||
             "light";
           const colors = getThemeColors(currentTheme);
-          console.group(`[${timestamp}] 当前主题颜色配置 (${currentTheme})`);
-          Object.entries(colors).forEach(([key, value]) => {
-            console.log(
-              `%c${key}: ${value}`,
-              `color: ${value}; font-weight: bold;`
-            );
-          });
+          if (!log) {
+            console.group(`[${timestamp}] 当前主题颜色配置 (${currentTheme})`);
+            Object.entries(colors).forEach(([key, value]) => {
+              console.log(
+                `%c${key}: ${value}`,
+                `color: ${value}; font-weight: bold;`
+              );
+            });
+          }
           console.groupEnd();
           return colors;
         },
@@ -541,10 +588,14 @@
 
         // 输出初始主题颜色配置
         Logger.colors();
-      }      // 更新图表颜色
+      } // 更新图表颜色
       function updateCharts() {
         Logger.log("开始更新图表颜色");
-        if (window.requestsWafChart && window.trafficChart && window.userAgentChart) {
+        if (
+          window.requestsWafChart &&
+          window.trafficChart &&
+          window.userAgentChart
+        ) {
           Logger.log("重新创建图表以应用新主题");
           createCharts(window.chartData || []);
         } else {
@@ -609,7 +660,7 @@
             minute: "2-digit",
           })
         );
-      }      // 格式化流量单位
+      } // 格式化流量单位
       function formatTraffic(megabytes, precision = 2) {
         if (megabytes >= 1024 * 1024) {
           // TB
@@ -665,26 +716,14 @@
         });
 
         // 添加数字增长动画
-        animateValue(
-          "total-requests",
-          0,
-          totalRequests,
-          1500,
-          (value) => formatRequests(value)
+        animateValue("total-requests", 0, totalRequests, 1500, (value) =>
+          formatRequests(value)
         );
-        animateValue(
-          "total-traffic",
-          0,
-          totalTrafficMB,
-          1500,
-          (value) => formatTraffic(value)
+        animateValue("total-traffic", 0, totalTrafficMB, 1500, (value) =>
+          formatTraffic(value)
         );
-        animateValue(
-          "waf-mitigated",
-          0,
-          totalWafMitigated,
-          1500,
-          (value) => formatRequests(value)
+        animateValue("waf-mitigated", 0, totalWafMitigated, 1500, (value) =>
+          formatRequests(value)
         );
         animateValue(
           "waf-rate",
@@ -744,7 +783,7 @@
         const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
         const splitLineColor = isDarkTheme
           ? "rgba(255,255,255,0.05)"
-          : "rgba(0,0,0,0.05)";        // 初始化 ECharts 实例
+          : "rgba(0,0,0,0.05)"; // 初始化 ECharts 实例
         if (
           window.requestsWafChart &&
           typeof window.requestsWafChart.dispose === "function"
@@ -856,7 +895,7 @@
           yAxis: {
             type: "value",
             axisLabel: {
-              formatter: function(value) {
+              formatter: function (value) {
                 return formatRequests(value, 1);
               },
               color: textColor,
@@ -886,13 +925,15 @@
               ? "rgba(31, 41, 55, 0.9)"
               : "rgba(255, 255, 255, 0.9)",
             borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-            formatter: function(params) {
+            formatter: function (params) {
               let result = `${params[0].name}<br/>`;
-              params.forEach(param => {
-                result += `${param.seriesName}: ${formatRequests(param.value)}<br/>`;
+              params.forEach((param) => {
+                result += `${param.seriesName}: ${formatRequests(
+                  param.value
+                )}<br/>`;
               });
               return result;
-            }
+            },
           },
           series: [
             {
@@ -948,7 +989,7 @@
               },
             },
           ],
-        };        // 流量图表配置
+        }; // 流量图表配置
         const trafficOption = {
           ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
           legend: {
@@ -961,7 +1002,7 @@
           yAxis: {
             type: "value",
             axisLabel: {
-              formatter: function(value) {
+              formatter: function (value) {
                 return formatTraffic(value, 1);
               },
               color: textColor,
@@ -991,10 +1032,12 @@
               ? "rgba(31, 41, 55, 0.9)"
               : "rgba(255, 255, 255, 0.9)",
             borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-            formatter: function(params) {
+            formatter: function (params) {
               const dataPoint = params[0];
-              return `${dataPoint.name}<br/>流量: ${formatTraffic(dataPoint.value)}`;
-            }
+              return `${dataPoint.name}<br/>流量: ${formatTraffic(
+                dataPoint.value
+              )}`;
+            },
           },
           series: [
             {
@@ -1024,16 +1067,20 @@
               },
             },
           ],
-        };        // 应用配置项
+        }; // 应用配置项
         window.requestsWafChart.setOption(requestsWafOption);
-        window.trafficChart.setOption(trafficOption);        // 创建用户代理(浏览器)统计图表 - 使用所有24小时的数据
+        window.trafficChart.setOption(trafficOption); // 创建用户代理(浏览器)统计图表 - 使用所有24小时的数据
         createUserAgentChart(data, isDarkTheme, textColor);
 
         Logger.log("图表创建完成");
 
         // 监听窗口大小变化，自适应图表
         window.addEventListener("resize", () => {
-          if (window.requestsWafChart && window.trafficChart && window.userAgentChart) {
+          if (
+            window.requestsWafChart &&
+            window.trafficChart &&
+            window.userAgentChart
+          ) {
             Logger.log("窗口大小变化，调整图表尺寸");
             window.requestsWafChart.resize();
             window.trafficChart.resize();
@@ -1043,142 +1090,266 @@
       }      // 创建用户代理统计图表
       function createUserAgentChart(data, isDarkTheme, textColor) {
         Logger.log("创建用户代理统计图表", { dataLength: data.length });
-        
+
         // 合并所有24小时的用户代理数据
         const allBrowserCounts = {};
-        
-        data.forEach(hourData => {
-          if (hourData.top_user_agents && Array.isArray(hourData.top_user_agents)) {
-            hourData.top_user_agents.forEach(item => {
+
+        data.forEach((hourData) => {
+          if (
+            hourData.top_user_agents &&
+            Array.isArray(hourData.top_user_agents)
+          ) {
+            hourData.top_user_agents.forEach((item) => {
               const browser = item.browser;
               const requests = item.requests;
-              allBrowserCounts[browser] = (allBrowserCounts[browser] || 0) + requests;
+              allBrowserCounts[browser] =
+                (allBrowserCounts[browser] || 0) + requests;
             });
           }
         });
-        
+
         // 转换为数组并排序
         const allUserAgents = Object.entries(allBrowserCounts)
           .map(([browser, requests]) => ({ browser, requests }))
           .sort((a, b) => b.requests - a.requests);
-        
-        Logger.log("合并后的用户代理数据", { totalTypes: allUserAgents.length });
-        
+
+        Logger.log("合并后的用户代理数据", {
+          totalTypes: allUserAgents.length,
+        });
+
         if (allUserAgents.length === 0) {
           Logger.warn("没有用户代理数据可显示");
-          document.getElementById("userAgentChart").innerHTML = 
+          document.getElementById("userAgentChart").innerHTML =
             '<div style="text-align: center; padding: 50px; color: var(--text-muted);">暂无用户代理数据</div>';
           return;
         }
 
-        // 准备排行榜数据（显示所有浏览器）
-        const browserNames = allUserAgents.map(item => item.browser);
-        const browserValues = allUserAgents.map(item => item.requests);
-        
-        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
-        const splitLineColor = isDarkTheme ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)";
+        // 保存数据供切换图表类型使用
+        currentUserAgentData = allUserAgents;
 
-        const userAgentOption = {
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            },
-            formatter: function(params) {
-              const dataPoint = params[0];
-              return `${dataPoint.name}<br/>请求数: ${formatRequests(dataPoint.value)}`;
-            },
-            textStyle: {
-              color: isDarkTheme ? "#e9ecef" : "#333",
-            },
-            backgroundColor: isDarkTheme
-              ? "rgba(31, 41, 55, 0.9)"
-              : "rgba(255, 255, 255, 0.9)",
-            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-          },
-          grid: {
-            left: '25%',
-            right: '4%',
-            bottom: '3%',
-            top: '3%',
-            containLabel: true
-          },
-          xAxis: {
-            type: 'value',
-            axisLabel: {
-              formatter: function(value) {
-                return formatRequests(value, 1);
+        // 根据当前图表类型渲染图表
+        renderUserAgentChart(allUserAgents, isDarkTheme, textColor);
+      }
+
+      // 渲染用户代理图表（根据类型）
+      function renderUserAgentChart(allUserAgents, isDarkTheme, textColor) {
+        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
+        const splitLineColor = isDarkTheme
+          ? "rgba(255,255,255,0.05)"
+          : "rgba(0,0,0,0.05)";
+
+        if (currentChartType === 'pie') {
+          // 饼图配置
+          const pieData = allUserAgents.map((item, index) => ({
+            name: item.browser,
+            value: item.requests,
+            itemStyle: {
+              color: getBrowserColor(index)
+            }
+          }));
+
+          const pieOption = {
+            tooltip: {
+              trigger: 'item',
+              formatter: function(params) {
+                const percentage = params.percent;
+                return `${params.name}<br/>请求数: ${formatRequests(params.value)}<br/>占比: ${percentage}%`;
               },
-              color: textColor,
-            },
-            axisLine: {
-              lineStyle: {
-                color: axisLineColor,
+              textStyle: {
+                color: isDarkTheme ? "#e9ecef" : "#333",
               },
+              backgroundColor: isDarkTheme
+                ? "rgba(31, 41, 55, 0.9)"
+                : "rgba(255, 255, 255, 0.9)",
+              borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
             },
-            splitLine: {
-              lineStyle: {
-                color: splitLineColor,
+            legend: {
+              type: 'scroll',
+              orient: 'vertical',
+              right: 10,
+              top: 20,
+              bottom: 20,
+              textStyle: {
+                color: textColor,
+                fontSize: 10
               },
+              pageIconColor: textColor,
+              pageIconInactiveColor: isDarkTheme ? "#666" : "#ccc",
+              pageTextStyle: {
+                color: textColor
+              }
             },
-          },
-          yAxis: {
-            type: 'category',
-            data: browserNames,
-            axisLabel: {
-              color: textColor,
-              fontSize: 10
-            },
-            axisLine: {
-              lineStyle: {
-                color: axisLineColor,
-              },
-            },
-            inverse: true  // 倒序显示，让排名第一的在顶部
-          },
-          series: [
-            {
-              name: '浏览器请求数',
-              type: 'bar',
-              data: browserValues,
-              itemStyle: {
-                color: function(params) {
-                  // 为不同排名设置不同颜色，循环使用颜色数组
-                  const colors = [
-                    '#4361ee', '#4895ef', '#4cc9f0', '#f8961e', '#f72585',
-                    '#3f37c9', '#7209b7', '#f77f00', '#fcbf49', '#06ffa5',
-                    '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57',
-                    '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43'
-                  ];
-                  return colors[params.dataIndex % colors.length];
+            series: [
+              {
+                name: '浏览器使用统计',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                center: ['40%', '50%'],
+                avoidLabelOverlap: false,
+                label: {
+                  show: false,
+                  position: 'center'
                 },
-                borderRadius: [0, 4, 4, 0]
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: '14',
+                    fontWeight: 'bold',
+                    color: textColor,
+                    formatter: function(params) {
+                      return `${params.name}\n${formatRequests(params.value)}`;
+                    }
+                  }
+                },
+                labelLine: {
+                  show: false
+                },
+                data: pieData,
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                  return Math.random() * 200;
+                }
+              }
+            ],
+            animation: true,
+            animationDuration: 1500,
+          };
+
+          window.userAgentChart.setOption(pieOption, true);
+        } else {
+          // 柱状图配置（原有的）
+          const browserNames = allUserAgents.map((item) => item.browser);
+          const browserValues = allUserAgents.map((item) => item.requests);
+
+          const barOption = {
+            tooltip: {
+              trigger: "axis",
+              axisPointer: {
+                type: "shadow",
               },
-              label: {
-                show: true,
-                position: 'right',
-                formatter: function(params) {
-                  return formatRequests(params.value);
+              formatter: function (params) {
+                const dataPoint = params[0];
+                return `${dataPoint.name}<br/>请求数: ${formatRequests(
+                  dataPoint.value
+                )}`;
+              },
+              textStyle: {
+                color: isDarkTheme ? "#e9ecef" : "#333",
+              },
+              backgroundColor: isDarkTheme
+                ? "rgba(31, 41, 55, 0.9)"
+                : "rgba(255, 255, 255, 0.9)",
+              borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
+            },
+            grid: {
+              left: "25%",
+              right: "4%",
+              bottom: "3%",
+              top: "3%",
+              containLabel: true,
+            },
+            xAxis: {
+              type: "value",
+              axisLabel: {
+                formatter: function (value) {
+                  return formatRequests(value, 1);
                 },
                 color: textColor,
-                fontSize: 9
               },
-              animationDelay: function (idx) {
-                return idx * 50; // 减少延迟，因为可能有很多项
+              axisLine: {
+                lineStyle: {
+                  color: axisLineColor,
+                },
               },
-              animationEasing: 'elasticOut'
-            }
-          ],
-          animation: true,
-          animationDuration: 1500
-        };
+              splitLine: {
+                lineStyle: {
+                  color: splitLineColor,
+                },
+              },
+            },
+            yAxis: {
+              type: "category",
+              data: browserNames,
+              axisLabel: {
+                color: textColor,
+                fontSize: 10,
+              },
+              axisLine: {
+                lineStyle: {
+                  color: axisLineColor,
+                },
+              },
+              inverse: true,
+            },
+            series: [
+              {
+                name: "浏览器请求数",
+                type: "bar",
+                data: browserValues,
+                itemStyle: {
+                  color: function (params) {
+                    return getBrowserColor(params.dataIndex);
+                  },
+                  borderRadius: [0, 4, 4, 0],
+                },
+                label: {
+                  show: true,
+                  position: "right",
+                  formatter: function (params) {
+                    return formatRequests(params.value);
+                  },
+                  color: textColor,
+                  fontSize: 9,
+                },
+                animationDelay: function (idx) {
+                  return idx * 50;
+                },
+                animationEasing: "elasticOut",
+              },
+            ],
+            animation: true,
+            animationDuration: 1500,
+          };
 
-        window.userAgentChart.setOption(userAgentOption);
-        Logger.log("用户代理排行图表创建完成", { 
+          window.userAgentChart.setOption(barOption, true);
+        }
+
+        Logger.log(`用户代理${currentChartType === 'pie' ? '饼' : '柱状'}图创建完成`, {
           totalBrowsers: allUserAgents.length,
           topBrowser: allUserAgents[0]?.browser,
-          topRequests: allUserAgents[0]?.requests
+          topRequests: allUserAgents[0]?.requests,
         });
+      }
+
+      // 获取浏览器颜色
+      function getBrowserColor(index) {
+        const colors = [
+          "#4361ee", "#4895ef", "#4cc9f0", "#f8961e", "#f72585",
+          "#3f37c9", "#7209b7", "#f77f00", "#fcbf49", "#06ffa5",
+          "#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57",
+          "#ff9ff3", "#54a0ff", "#5f27cd", "#00d2d3", "#ff9f43",
+        ];
+        return colors[index % colors.length];
+      }
+
+      // 切换图表类型
+      function toggleChartType(type) {
+        if (type === currentChartType) return;
+        
+        Logger.log(`切换图表类型: ${currentChartType} -> ${type}`);
+        currentChartType = type;
+
+        // 更新按钮状态
+        document.getElementById('chart-type-bar').classList.toggle('active', type === 'bar');
+        document.getElementById('chart-type-pie').classList.toggle('active', type === 'pie');
+
+        // 重新渲染图表
+        if (currentUserAgentData.length > 0) {
+          const isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
+          const textColor = isDarkTheme ? "#e9ecef" : "#333";
+          renderUserAgentChart(currentUserAgentData, isDarkTheme, textColor);
+        }
       }
 
       // 更新页脚年份
@@ -1189,13 +1360,15 @@
           footerYearElement.textContent = currentYear;
           Logger.log(`页脚年份更新为: ${currentYear}`);
         }
-      }
-
-      // 初始化
+      }      // 初始化
       window.onload = function () {
         Logger.log("页面加载完成，开始初始化");
         initTheme();
         loadStats();
+        
+        // 绑定图表类型切换事件
+        document.getElementById('chart-type-bar').addEventListener('click', () => toggleChartType('bar'));
+        document.getElementById('chart-type-pie').addEventListener('click', () => toggleChartType('pie'));
       };
     </script>
   </head>
@@ -1226,7 +1399,8 @@
           <h3><i class="fas fa-percentage"></i> 平均WAF拦截率</h3>
           <div class="value" id="waf-rate">-</div>
         </div>
-      </div>      <div class="charts-grid">
+      </div>
+      <div class="charts-grid">
         <div class="chart-container-wrapper">
           <h2>请求量与WAF拦截趋势</h2>
           <div class="chart-container" id="requestsWafChart"></div>
@@ -1236,10 +1410,17 @@
           <h2>流量变化趋势</h2>
           <div class="chart-container" id="trafficChart"></div>
         </div>        <div class="chart-container-wrapper">
+          <div class="chart-type-toggle">
+            <button id="chart-type-bar" class="chart-type-btn active">
+              <i class="fas fa-chart-bar"></i>
+            </button>
+            <button id="chart-type-pie" class="chart-type-btn">
+              <i class="fas fa-chart-pie"></i>
+            </button>
+          </div>
           <h2>浏览器使用排行</h2>
           <div class="chart-container" id="userAgentChart"></div>
         </div>
-
       </div>
 
       <!-- Optional: Raw data display -->

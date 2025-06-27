@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 import os
 import sys
 import json
+from user_agent_parser import process_user_agent_stats
 
 API_TOKEN = os.getenv('CLOUDFLARE_API_TOKEN')
 ZONE_ID = os.getenv('ZONE_ID')
@@ -68,84 +69,13 @@ query GetNormalUserAgentStats($zoneTag: String!, $since: DateTime!, $until: Date
         userAgent
         datetime
         edgeResponseStatus
+        clientRequestHTTPHost
       }
     }
   }
 }
 """
 
-def parse_user_agent(ua_string):
-    """解析User-Agent字符串，返回浏览器类型"""
-    if not ua_string or ua_string == "Unknown":
-        return "Unknown"
-    
-    ua = ua_string.lower()
-      # 机器人和爬虫
-    if any(bot in ua for bot in ['bot', 'crawler', 'spider', 'scraper']):
-        if 'googlebot' in ua:
-            return "Googlebot"
-        elif 'ahrefsbot' in ua:
-            return "AhrefsBot"
-        elif 'bingbot' in ua:
-            return "BingBot"
-        elif 'gptbot' in ua:
-            return "GPTBot"
-        elif 'bytespider' in ua:
-            return "ByteSpider"
-        elif 'prerender' in ua:
-            return "Prerender Bot"
-        elif 'headlesschrome' in ua:
-            return "Headless Chrome"
-        else:
-            return "Other Bot"
-    
-    # 特殊客户端
-    if 'go-http-client' in ua:
-        return "Go HTTP Client"
-    elif 'curl' in ua:
-        return "cURL"
-    elif 'nginx-ssl early hints' in ua:
-        return "Nginx Early Hints"
-    elif 'fasthttp' in ua:
-        return "FastHTTP"
-    elif 'ktor' in ua:
-        return "Ktor Client"
-    elif 'python' in ua and 'aiohttp' in ua:
-        return "Python aiohttp"
-    elif 'restsharp' in ua:
-        return "RestSharp"
-    elif 'imgproxy' in ua:
-        return "ImgProxy"
-    
-    # 浏览器识别
-    if 'edg/' in ua or 'edge/' in ua:
-        return "Microsoft Edge"
-    elif 'chrome/' in ua and 'safari/' in ua:
-        if 'opr/' in ua or 'opera' in ua:
-            return "Opera"
-        elif 'vivaldi' in ua:
-            return "Vivaldi"
-        else:
-            return "Chrome"
-    elif 'firefox/' in ua:
-        return "Firefox"
-    elif 'safari/' in ua and 'chrome/' not in ua:
-        return "Safari"
-    elif 'msie' in ua or 'trident' in ua:
-        return "Internet Explorer"
-    
-    # 移动设备浏览器
-    if 'mobile' in ua:
-        if 'chrome' in ua:
-            return "Chrome Mobile"
-        elif 'safari' in ua:
-            return "Safari Mobile"
-        elif 'firefox' in ua:
-            return "Firefox Mobile"
-        else:
-            return "Mobile Browser"
-    
-    return "Uncharted"
 
 def fetch_graphql(query, variables):
     try:
@@ -202,28 +132,23 @@ for i in range(24, 0, -1):
         if ua_data.get("errors"):
             print(f"GraphQL错误: {ua_data['errors']}")
             top_user_agents = []
+            top_domains = []
         elif not ua_data.get("data") or not ua_data["data"]["viewer"]["zones"]:
             print("UA数据为空或zone不存在")
             top_user_agents = []
+            top_domains = []
         else:
             user_agent_events = ua_data["data"]["viewer"]["zones"][0]["httpRequestsAdaptive"]
-            # 统计每个浏览器类型的出现次数（这些都是正常响应的请求）
-            browser_counts = {}
+            # 使用新的处理函数
+            top_user_agents = process_user_agent_stats(user_agent_events)
+            # 统计域名排行
+            domain_counts = {}
             for event in user_agent_events:
-                ua = event.get("userAgent", "Unknown")
-                if not ua or ua.strip() == "":
-                    continue
-                    
-                browser = parse_user_agent(ua)
-                browser_counts[browser] = browser_counts.get(browser, 0) + 1
-            
-            # 按出现次数排序并取前10个
-            top_user_agents = [
-                {
-                    "browser": browser,
-                    "requests": count
-                }
-                for browser, count in sorted(browser_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+                host = event.get("clientRequest", {}).get("host", "Unknown")
+                domain_counts[host] = domain_counts.get(host, 0) + 1
+            top_domains = [
+                {"domain": domain, "requests": count}
+                for domain, count in sorted(domain_counts.items(), key=lambda x: x[1], reverse=True)[:10]
             ]
     except Exception as e:
         print(f"获取UA数据时出错: {e}")
@@ -231,6 +156,7 @@ for i in range(24, 0, -1):
         if 'ua_data' in locals():
             print(f"UA数据结构: {ua_data}")
         top_user_agents = []
+        top_domains = []
 
     result = {
         "since": since_ts,
@@ -239,7 +165,8 @@ for i in range(24, 0, -1):
         "total_bytes": total_bytes,
         "total_megabytes": round(total_bytes / (1024 ** 2), 2),
         "waf_mitigated_requests": waf_mitigated_requests,
-        "top_user_agents": top_user_agents
+        "top_user_agents": top_user_agents,
+        "top_domains": top_domains
     }
     results.append(result)
 

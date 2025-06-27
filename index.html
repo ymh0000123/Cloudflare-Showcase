@@ -459,6 +459,95 @@
         to {
           transform: rotate(360deg);
         }
+      }      /* 水印样式 */
+      .watermark {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 8px 12px;
+        font-size: 12px;
+        color: var(--text-muted);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 250px;
+        line-height: 1.4;
+      }
+
+      .watermark:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.02);
+      }
+
+      [data-theme="dark"] .watermark {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      [data-theme="dark"] .watermark:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }      .watermark .update-time {
+        font-weight: 500;
+        color: var(--primary-color);
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .watermark .data-info {
+        font-size: 11px;
+        opacity: 0.8;
+      }
+
+      .refresh-btn {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        cursor: pointer;
+        padding: 2px 4px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-size: 12px;
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 20px;
+        height: 20px;
+      }
+
+      .refresh-btn:hover {
+        background: rgba(67, 97, 238, 0.1);
+        transform: scale(1.1);
+      }
+
+      .refresh-btn.loading {
+        animation: refreshSpin 1s linear infinite;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+
+      @keyframes refreshSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* 响应式调整 - 移动端水印 */
+      @media (max-width: 768px) {
+        .watermark {
+          bottom: 10px;
+          left: 10px;
+          right: 10px;
+          max-width: none;
+          text-align: center;
+          font-size: 11px;
+        }
       }
 
       /* 页脚样式 */
@@ -632,13 +721,14 @@
           }
 
           // 保存数据以便主题切换时重新渲染图表
-          window.chartData = data;
-
-          Logger.log("开始创建 KPI 卡片");
+          window.chartData = data;          Logger.log("开始创建 KPI 卡片");
           createKPIs(data);
           Logger.log("开始创建图表");
           createCharts(data);
           // displayRawData(data); // Optional: if you want to show raw data
+
+          // 更新水印信息
+          updateWatermark(data);
 
           // 更新页脚年份
           updateFooterYear();
@@ -1349,6 +1439,69 @@
           const isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
           const textColor = isDarkTheme ? "#e9ecef" : "#333";
           renderUserAgentChart(currentUserAgentData, isDarkTheme, textColor);
+        }      }
+
+      // 更新水印信息
+      function updateWatermark(data) {
+        const watermarkElement = document.getElementById('watermark');
+        if (!watermarkElement || !data || data.length === 0) return;
+
+        // 获取最新数据的时间戳
+        const latestData = data[data.length - 1];
+        const lastUpdateTime = new Date(latestData.since * 1000);
+        
+        // 格式化时间
+        const formattedTime = lastUpdateTime.toLocaleString('zh-CN', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+
+        // 计算数据覆盖的时间范围
+        const firstData = data[0];
+        const timeSpan = latestData.since - firstData.since;
+        const hoursSpan = Math.round(timeSpan / 3600);        watermarkElement.innerHTML = `
+          <div class="update-time">
+            <span>最后更新: ${formattedTime}</span>
+            <button class="refresh-btn" onclick="refreshData()" title="刷新数据">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          <div class="data-info">数据覆盖: ${hoursSpan}小时 | ${data.length}个数据点</div>
+        `;
+
+        Logger.log('水印信息已更新', {
+          lastUpdate: formattedTime,
+          dataPoints: data.length,
+          timeSpanHours: hoursSpan
+        });      }
+
+      // 刷新数据功能
+      async function refreshData() {
+        Logger.log("手动刷新数据");
+        const refreshBtn = document.querySelector('.refresh-btn');
+        
+        // 添加加载状态
+        if (refreshBtn) {
+          refreshBtn.classList.add('loading');
+        }
+
+        try {
+          // 重新加载统计数据
+          await loadStats();
+          Logger.log("手动刷新完成");
+        } catch (error) {
+          Logger.error("手动刷新失败", error);
+        } finally {
+          // 移除加载状态
+          if (refreshBtn) {
+            setTimeout(() => {
+              refreshBtn.classList.remove('loading');
+            }, 500); // 延迟移除，让用户看到刷新动画
+          }
         }
       }
 
@@ -1429,7 +1582,15 @@
             <h2>原始数据</h2>
             <div id="raw-data">加载中...</div>
         </div>
-        -->
+        -->    </div>    <!-- 水印 -->
+    <div id="watermark" class="watermark">
+      <div class="update-time">
+        <span>加载中...</span>
+        <button class="refresh-btn" onclick="refreshData()" title="刷新数据">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+      <div class="data-info">正在获取数据...</div>
     </div>
 
     <footer>

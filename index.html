@@ -239,11 +239,10 @@
       }      /* 亚克力风格卡片 */
       body.bg-image .card,
       body.bg-image .chart-container-wrapper,
-      body.bg-image .watermark,
       body.bg-image footer {
         background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(13px);
+        -webkit-backdrop-filter: blur(13px);
         border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
       }
@@ -253,8 +252,8 @@
       [data-theme="dark"] body.bg-image .watermark,
       [data-theme="dark"] body.bg-image footer {
         background: rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(13px);
+        -webkit-backdrop-filter: blur(13px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       }
@@ -275,21 +274,63 @@
       }      /* 亚克力风格下的文字增强 */
       body.bg-image .card h3,
       body.bg-image .card .value,
-      body.bg-image .chart-container-wrapper h2,
-      body.bg-image .watermark .update-time,
-      body.bg-image .watermark .data-info {
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      body.bg-image .chart-container-wrapper h2 {
+        text-shadow: 1px 1px 3px rgba(102, 102, 102, 0.3);
         color: var(--text-color);
         font-weight: 600;
+      }
+
+      /* 文字特殊突出样式 */
+      body.bg-image .footer-text,
+      body.bg-image .watermark .update-time,
+      body.bg-image .watermark .data-info {
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+        color: #ffffff !important;
+        font-weight: 700;
+      }
+
+      /* 页脚链接在背景图片模式下的特殊样式 */
+      body.bg-image .footer-text a {
+        color: #ffffff !important;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-color: rgba(255, 255, 255, 0.7);
+      }
+
+      body.bg-image .footer-text a:hover {
+        color: #e0e0e0 !important;
+        text-decoration-color: #e0e0e0;
       }
 
       [data-theme="dark"] body.bg-image .card h3,
       [data-theme="dark"] body.bg-image .card .value,
       [data-theme="dark"] body.bg-image .chart-container-wrapper h2,
-      [data-theme="dark"] body.bg-image .watermark .update-time,
+      [data-theme="dark"] body.bg-image .watermark,
       [data-theme="dark"] body.bg-image .watermark .data-info {
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         color: var(--text-color);
+      }
+
+      /* 深色主题下页脚文字特殊突出样式 */
+      [data-theme="dark"] body.bg-image .footer-text {
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.6);
+        color: #f0f0f0 !important;
+        font-weight: 700;
+      }
+
+      /* 深色主题下页脚链接的特殊样式 */
+      [data-theme="dark"] body.bg-image .footer-text a {
+        color: #f0f0f0 !important;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.6);
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-color: rgba(240, 240, 240, 0.7);
+      }
+
+      [data-theme="dark"] body.bg-image .footer-text a:hover {
+        color: #d0d0d0 !important;
+        text-decoration-color: #d0d0d0;
       }
 
       /* 亚克力风格下的图表类型切换按钮 */
@@ -686,6 +727,24 @@
         box-shadow: 0 -4px 10px var(--card-shadow);
         color: var(--text-muted);
         font-size: 0.9em;
+      }
+
+      /* 页脚文字基础样式 */
+      .footer-text {
+        font-weight: 500;
+        margin: 0;
+      }
+
+      .footer-text a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .footer-text a:hover {
+        text-decoration: underline;
+        opacity: 0.8;
       }
     </style>
     <script>      // 日志工具
@@ -1797,13 +1856,9 @@
     </div>
 
     <footer>
-      <p>
+      <p class="footer-text">
         © <span id="current-year"></span> Powered by
-        <a
-          style="color: var(--text-color)"
-          href="https://github.com/ymh0000123/Cloudflare-Showcase"
-          >Cloudflare-Showcase</a
-        >
+        <a href="https://github.com/ymh0000123/Cloudflare-Showcase">Cloudflare-Showcase</a>
       </p>
     </footer>
   </body>

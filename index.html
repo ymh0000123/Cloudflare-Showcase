@@ -169,12 +169,10 @@
         font-size: 2.2em;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         position: relative;
-      }
-
-      /* 主题切换按钮 */
+      }      /* 主题切换按钮 */
       .theme-toggle {
         position: absolute;
-        right: 20px;
+        right: 80px;
         top: 50%;
         transform: translateY(-50%);
         background: rgba(255, 255, 255, 0.2);
@@ -193,6 +191,128 @@
 
       .theme-toggle:hover {
         background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* 背景切换按钮 */
+      .bg-toggle {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: var(--header-text);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+      }
+
+      .bg-toggle:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* 背景图片样式 */
+      body.bg-image {
+        background: var(--bg-image-url) no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+      }
+
+      body.bg-image::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: -1;
+        pointer-events: none;
+      }      [data-theme="dark"] body.bg-image::before {
+        background: rgba(0, 0, 0, 0.5);
+      }      /* 亚克力风格卡片 */
+      body.bg-image .card,
+      body.bg-image .chart-container-wrapper,
+      body.bg-image .watermark,
+      body.bg-image footer {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      }
+
+      [data-theme="dark"] body.bg-image .card,
+      [data-theme="dark"] body.bg-image .chart-container-wrapper,
+      [data-theme="dark"] body.bg-image .watermark,
+      [data-theme="dark"] body.bg-image footer {
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+
+      /* 亚克力风格下的悬停效果 */
+      body.bg-image .card:hover,
+      body.bg-image .chart-container-wrapper:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      [data-theme="dark"] body.bg-image .card:hover,
+      [data-theme="dark"] body.bg-image .chart-container-wrapper:hover {
+        background: rgba(0, 0, 0, 0.35);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      }      /* 亚克力风格下的文字增强 */
+      body.bg-image .card h3,
+      body.bg-image .card .value,
+      body.bg-image .chart-container-wrapper h2,
+      body.bg-image .watermark .update-time,
+      body.bg-image .watermark .data-info {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        color: var(--text-color);
+        font-weight: 600;
+      }
+
+      [data-theme="dark"] body.bg-image .card h3,
+      [data-theme="dark"] body.bg-image .card .value,
+      [data-theme="dark"] body.bg-image .chart-container-wrapper h2,
+      [data-theme="dark"] body.bg-image .watermark .update-time,
+      [data-theme="dark"] body.bg-image .watermark .data-info {
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        color: var(--text-color);
+      }
+
+      /* 亚克力风格下的图表类型切换按钮 */
+      body.bg-image .chart-type-toggle {
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+
+      [data-theme="dark"] body.bg-image .chart-type-toggle {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* 亚克力风格下的水印 */
+      body.bg-image .watermark:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: scale(1.02);
+      }
+
+      [data-theme="dark"] body.bg-image .watermark:hover {
+        background: rgba(0, 0, 0, 0.35);
       }
 
       .kpi-cards {
@@ -402,8 +522,7 @@
         color: var(--text-color);
       }
 
-      /* 响应式调整 */
-      @media (max-width: 768px) {
+      /* 响应式调整 */        @media (max-width: 768px) {
         .container {
           width: 95%;
           padding: 15px;
@@ -431,6 +550,13 @@
         }
 
         .theme-toggle {
+          width: 35px;
+          height: 35px;
+          font-size: 1em;
+          right: 60px;
+        }
+
+        .bg-toggle {
           width: 35px;
           height: 35px;
           font-size: 1em;
@@ -569,6 +695,18 @@
       let currentUserAgentData = [];
       let currentChartType = 'bar'; // 'bar' 或 'pie'
       
+      // 背景图片配置
+      const backgroundImages = [
+        //'url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")', // 数字科技背景
+        //'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80")', // 地球科技
+        //'url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")', // 抽象科技
+        //'url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80")', // 网络连接
+        //'url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")', // 数据流
+        'url("https://ymh-picture.pages.dev/list/2x-ly.webp")'
+      ];
+      let currentBackgroundIndex = 0;
+      let isBackgroundEnabled = false;
+      
       const Logger = {
         log: (message, data = null) => {
           if (log) {
@@ -630,7 +768,7 @@
           "header-text": isDark ? "#f8f9fa" : "white",
           "footer-bg": isDark ? "#1f2937" : "white",
         };
-      } // 主题切换功能
+      }      // 主题切换功能
       function toggleTheme() {
         Logger.log("开始切换主题");
         const currentTheme =
@@ -647,6 +785,7 @@
         // 输出颜色配置
         Logger.colors(newTheme);
       }
+      
       function updateThemeIcon(theme) {
         Logger.log(`更新主题图标: ${theme}`);
         const themeToggle = document.getElementById("theme-toggle");
@@ -656,7 +795,56 @@
               ? '<i class="fas fa-sun"></i>'
               : '<i class="fas fa-moon"></i>';
         }
-      } // 初始化主题
+      }
+
+      // 背景切换功能
+      function toggleBackground() {
+        Logger.log("切换背景图片");
+        isBackgroundEnabled = !isBackgroundEnabled;
+        
+        if (isBackgroundEnabled) {
+          applyBackgroundImage();
+          localStorage.setItem("backgroundEnabled", "true");
+          localStorage.setItem("backgroundIndex", currentBackgroundIndex.toString());
+        } else {
+          removeBackgroundImage();
+          localStorage.setItem("backgroundEnabled", "false");
+        }
+        
+        updateBackgroundIcon();
+        Logger.log(`背景图片已${isBackgroundEnabled ? '启用' : '禁用'}`);
+      }
+
+      function applyBackgroundImage() {
+        const bgUrl = backgroundImages[currentBackgroundIndex];
+        document.documentElement.style.setProperty('--bg-image-url', bgUrl);
+        document.body.classList.add('bg-image');
+        Logger.log(`应用背景图片: ${currentBackgroundIndex + 1}/${backgroundImages.length}`);
+      }
+
+      function removeBackgroundImage() {
+        document.body.classList.remove('bg-image');
+        document.documentElement.style.removeProperty('--bg-image-url');
+        Logger.log("移除背景图片");
+      }
+
+      function updateBackgroundIcon() {
+        const bgToggle = document.getElementById("bg-toggle");
+        if (bgToggle) {
+          bgToggle.innerHTML = isBackgroundEnabled
+            ? '<i class="fas fa-image"></i>'
+            : '<i class="far fa-image"></i>';
+        }
+      }
+
+      function nextBackgroundImage() {
+        if (isBackgroundEnabled) {
+          currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
+          applyBackgroundImage();
+          localStorage.setItem("backgroundIndex", currentBackgroundIndex.toString());
+          Logger.log(`切换到背景图片: ${currentBackgroundIndex + 1}/${backgroundImages.length}`);
+        }
+      }      // 初始化主题
       function initTheme() {
         Logger.log("初始化主题设置");
         const savedTheme = localStorage.getItem("theme");
@@ -675,9 +863,22 @@
           Logger.log("使用默认浅色主题");
         }
 
+        // 初始化背景设置
+        const savedBackgroundEnabled = localStorage.getItem("backgroundEnabled");
+        const savedBackgroundIndex = localStorage.getItem("backgroundIndex");
+        
+        if (savedBackgroundEnabled === "true") {
+          isBackgroundEnabled = true;
+          if (savedBackgroundIndex) {
+            currentBackgroundIndex = parseInt(savedBackgroundIndex) || 0;
+          }
+          applyBackgroundImage();
+        }
+        updateBackgroundIcon();
+
         // 输出初始主题颜色配置
         Logger.colors();
-      } // 更新图表颜色
+      }// 更新图表颜色
       function updateCharts() {
         Logger.log("开始更新图表颜色");
         if (
@@ -1526,11 +1727,13 @@
     </script>
   </head>
 
-  <body>
-    <header>
+  <body>    <header>
       <h1>网站分析面板</h1>
       <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
+      </button>
+      <button id="bg-toggle" class="bg-toggle" onclick="toggleBackground()" oncontextmenu="nextBackgroundImage(); return false;" title="左键开关背景，右键切换图片">
+        <i class="far fa-image"></i>
       </button>
     </header>
 

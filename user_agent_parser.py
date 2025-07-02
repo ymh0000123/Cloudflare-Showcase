@@ -21,6 +21,8 @@ def parse_user_agent(ua_string):
             return "Prerender Bot"
         elif 'headlesschrome' in ua:
             return "Headless Chrome"
+        elif 'Applebot' in ua:
+            return "Applebot"
         else:
             return "Other Bot"
     

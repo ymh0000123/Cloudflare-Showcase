@@ -1,356 +1,730 @@
 [
   {
-    "since": 1750402800,
-    "until": 1750406400,
-    "total_requests": 21,
-    "total_bytes": 612554,
-    "total_megabytes": 0.58,
-    "waf_mitigated_requests": 0,
+    "since": 1751648400,
+    "until": 1751652000,
+    "total_requests": 54,
+    "total_bytes": 693858,
+    "total_megabytes": 0.66,
+    "waf_mitigated_requests": 13,
     "top_user_agents": [
       {
         "browser": "AhrefsBot",
-        "requests": 11
+        "requests": 10
       },
       {
-        "browser": "Microsoft Edge",
-        "requests": 4
-      },
-      {
-        "browser": "Safari",
-        "requests": 3
+        "browser": "cURL",
+        "requests": 8
       },
       {
         "browser": "Chrome",
+        "requests": 8
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 4
+      },
+      {
+        "browser": "Microsoft Edge",
         "requests": 1
       },
       {
-        "browser": "ImgProxy",
+        "browser": "Safari",
         "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 32
       }
     ]
   },
   {
-    "since": 1750406400,
-    "until": 1750410000,
-    "total_requests": 85,
-    "total_bytes": 2256104,
-    "total_megabytes": 2.15,
-    "waf_mitigated_requests": 2,
+    "since": 1751652000,
+    "until": 1751655600,
+    "total_requests": 47,
+    "total_bytes": 339770,
+    "total_megabytes": 0.32,
+    "waf_mitigated_requests": 0,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 34
+        "requests": 33
       },
       {
-        "browser": "AhrefsBot",
-        "requests": 12
+        "browser": "Other Bot",
+        "requests": 7
       },
       {
-        "browser": "Googlebot",
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      },
+      {
+        "browser": "Firefox",
+        "requests": 2
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 46
+      }
+    ]
+  },
+  {
+    "since": 1751655600,
+    "until": 1751659200,
+    "total_requests": 490,
+    "total_bytes": 5250819,
+    "total_megabytes": 5.01,
+    "waf_mitigated_requests": 14,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 256
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 5
+      },
+      {
+        "browser": "Safari",
         "requests": 2
       },
       {
         "browser": "Uncharted",
-        "requests": 1
+        "requests": 2
       },
       {
-        "browser": "Microsoft Edge",
+        "browser": "AhrefsBot",
         "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 267
       }
     ]
   },
   {
-    "since": 1750410000,
-    "until": 1750413600,
-    "total_requests": 195,
-    "total_bytes": 3602727,
-    "total_megabytes": 3.44,
-    "waf_mitigated_requests": 5,
+    "since": 1751659200,
+    "until": 1751662800,
+    "total_requests": 131,
+    "total_bytes": 1957462,
+    "total_megabytes": 1.87,
+    "waf_mitigated_requests": 1,
     "top_user_agents": [
       {
-        "browser": "Microsoft Edge",
-        "requests": 48
+        "browser": "Firefox",
+        "requests": 32
       },
       {
         "browser": "Chrome",
-        "requests": 26
+        "requests": 24
       },
       {
-        "browser": "AhrefsBot",
-        "requests": 11
+        "browser": "Uncharted",
+        "requests": 6
       },
       {
         "browser": "Safari",
         "requests": 5
       },
       {
-        "browser": "Uncharted",
-        "requests": 2
-      },
-      {
-        "browser": "Firefox",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1750413600,
-    "until": 1750417200,
-    "total_requests": 45,
-    "total_bytes": 794577,
-    "total_megabytes": 0.76,
-    "waf_mitigated_requests": 5,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 12
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 11
-      },
-      {
-        "browser": "Chrome",
-        "requests": 11
-      },
-      {
-        "browser": "Firefox",
-        "requests": 3
-      }
-    ]
-  },
-  {
-    "since": 1750417200,
-    "until": 1750420800,
-    "total_requests": 2978,
-    "total_bytes": 15236572,
-    "total_megabytes": 14.53,
-    "waf_mitigated_requests": 1457,
-    "top_user_agents": [
-      {
-        "browser": "AhrefsBot",
-        "requests": 12
-      },
-      {
-        "browser": "Chrome",
-        "requests": 10
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 3
-      }
-    ]
-  },
-  {
-    "since": 1750420800,
-    "until": 1750424400,
-    "total_requests": 52,
-    "total_bytes": 698876,
-    "total_megabytes": 0.67,
-    "waf_mitigated_requests": 4,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 25
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 6
-      },
-      {
-        "browser": "Ktor Client",
-        "requests": 1
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 1
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 1
-      },
-      {
-        "browser": "Safari",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750424400,
-    "until": 1750428000,
-    "total_requests": 14,
-    "total_bytes": 341203,
-    "total_megabytes": 0.33,
-    "waf_mitigated_requests": 2,
-    "top_user_agents": [
-      {
-        "browser": "AhrefsBot",
-        "requests": 8
-      },
-      {
-        "browser": "Chrome",
+        "browser": "cURL",
         "requests": 3
       },
       {
-        "browser": "ByteSpider",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750428000,
-    "until": 1750431600,
-    "total_requests": 398,
-    "total_bytes": 6475850,
-    "total_megabytes": 6.18,
-    "waf_mitigated_requests": 168,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 58
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 10
-      },
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 2
-      },
-      {
-        "browser": "Internet Explorer",
+        "browser": "Mobile Browser",
         "requests": 1
       },
       {
-        "browser": "Ktor Client",
+        "browser": "Other Bot",
         "requests": 1
-      },
-      {
-        "browser": "FastHTTP",
-        "requests": 1
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750431600,
-    "until": 1750435200,
-    "total_requests": 46,
-    "total_bytes": 1894122,
-    "total_megabytes": 1.81,
-    "waf_mitigated_requests": 2,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 16
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 13
-      },
-      {
-        "browser": "Safari",
-        "requests": 8
       },
       {
         "browser": "Opera",
-        "requests": 4
-      },
-      {
-        "browser": "Firefox",
         "requests": 1
-      },
+      }
+    ],
+    "top_domains": [
       {
-        "browser": "Internet Explorer",
-        "requests": 1
-      },
-      {
-        "browser": "FastHTTP",
-        "requests": 1
+        "domain": "Unknown",
+        "requests": 73
       }
     ]
   },
   {
-    "since": 1750435200,
-    "until": 1750438800,
-    "total_requests": 63,
-    "total_bytes": 1071376,
-    "total_megabytes": 1.02,
+    "since": 1751662800,
+    "until": 1751666400,
+    "total_requests": 99,
+    "total_bytes": 836107,
+    "total_megabytes": 0.8,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 74
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 11
+      },
+      {
+        "browser": "Safari",
+        "requests": 10
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 3
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 99
+      }
+    ]
+  },
+  {
+    "since": 1751666400,
+    "until": 1751670000,
+    "total_requests": 325,
+    "total_bytes": 4258216,
+    "total_megabytes": 4.06,
+    "waf_mitigated_requests": 12,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 143
+      },
+      {
+        "browser": "Safari",
+        "requests": 13
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 9
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 169
+      }
+    ]
+  },
+  {
+    "since": 1751670000,
+    "until": 1751673600,
+    "total_requests": 192,
+    "total_bytes": 3004617,
+    "total_megabytes": 2.87,
     "waf_mitigated_requests": 1,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 32
+        "requests": 91
       },
       {
         "browser": "AhrefsBot",
+        "requests": 9
+      },
+      {
+        "browser": "Safari",
+        "requests": 6
+      },
+      {
+        "browser": "Firefox",
+        "requests": 4
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 1
+      },
+      {
+        "browser": "BingBot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 112
+      }
+    ]
+  },
+  {
+    "since": 1751673600,
+    "until": 1751677200,
+    "total_requests": 213,
+    "total_bytes": 2637207,
+    "total_megabytes": 2.52,
+    "waf_mitigated_requests": 6,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 62
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 47
+      },
+      {
+        "browser": "Safari",
+        "requests": 6
+      },
+      {
+        "browser": "Mobile Browser",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 120
+      }
+    ]
+  },
+  {
+    "since": 1751677200,
+    "until": 1751680800,
+    "total_requests": 258,
+    "total_bytes": 4214533,
+    "total_megabytes": 4.02,
+    "waf_mitigated_requests": 17,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 94
+      },
+      {
+        "browser": "Go HTTP Client",
+        "requests": 37
+      },
+      {
+        "browser": "Firefox",
+        "requests": 14
+      },
+      {
+        "browser": "Uncharted",
         "requests": 12
+      },
+      {
+        "browser": "Safari",
+        "requests": 3
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 160
+      }
+    ]
+  },
+  {
+    "since": 1751680800,
+    "until": 1751684400,
+    "total_requests": 137,
+    "total_bytes": 2852548,
+    "total_megabytes": 2.72,
+    "waf_mitigated_requests": 20,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 46
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 35
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "Firefox",
+        "requests": 2
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 1
+      },
+      {
+        "browser": "Opera",
+        "requests": 1
+      },
+      {
+        "browser": "Googlebot",
+        "requests": 1
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 91
+      }
+    ]
+  },
+  {
+    "since": 1751684400,
+    "until": 1751688000,
+    "total_requests": 278,
+    "total_bytes": 2667634,
+    "total_megabytes": 2.54,
+    "waf_mitigated_requests": 178,
+    "top_user_agents": [
+      {
+        "browser": "Mobile Browser",
+        "requests": 31
+      },
+      {
+        "browser": "Chrome",
+        "requests": 29
+      },
+      {
+        "browser": "Safari",
+        "requests": 6
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "BingBot",
+        "requests": 2
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 70
+      }
+    ]
+  },
+  {
+    "since": 1751688000,
+    "until": 1751691600,
+    "total_requests": 52,
+    "total_bytes": 923243,
+    "total_megabytes": 0.88,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 23
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "BingBot",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 2
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 1
+      },
+      {
+        "browser": "Ktor Client",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 39
+      }
+    ]
+  },
+  {
+    "since": 1751691600,
+    "until": 1751695200,
+    "total_requests": 113,
+    "total_bytes": 1309360,
+    "total_megabytes": 1.25,
+    "waf_mitigated_requests": 2,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 47
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 6
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 1
+      },
+      {
+        "browser": "Safari",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 59
+      }
+    ]
+  },
+  {
+    "since": 1751695200,
+    "until": 1751698800,
+    "total_requests": 162,
+    "total_bytes": 1594912,
+    "total_megabytes": 1.52,
+    "waf_mitigated_requests": 90,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 39
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 3
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "Python aiohttp",
+        "requests": 1
       },
       {
         "browser": "Safari",
         "requests": 1
       },
       {
-        "browser": "cURL",
+        "browser": "AhrefsBot",
         "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 47
       }
     ]
   },
   {
-    "since": 1750438800,
-    "until": 1750442400,
-    "total_requests": 111,
-    "total_bytes": 1352449,
-    "total_megabytes": 1.29,
-    "waf_mitigated_requests": 35,
+    "since": 1751698800,
+    "until": 1751702400,
+    "total_requests": 325,
+    "total_bytes": 3477910,
+    "total_megabytes": 3.32,
+    "waf_mitigated_requests": 10,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 34
+        "requests": 136
       },
       {
-        "browser": "AhrefsBot",
-        "requests": 13
+        "browser": "Go HTTP Client",
+        "requests": 113
       },
       {
         "browser": "Uncharted",
-        "requests": 10
+        "requests": 14
       },
       {
         "browser": "Safari",
         "requests": 5
       },
       {
-        "browser": "cURL",
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 2
+      },
+      {
+        "browser": "Other Bot",
         "requests": 1
       },
       {
-        "browser": "FastHTTP",
+        "browser": "Firefox",
         "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 286
       }
     ]
   },
   {
-    "since": 1750442400,
-    "until": 1750446000,
-    "total_requests": 169,
-    "total_bytes": 2931188,
-    "total_megabytes": 2.8,
-    "waf_mitigated_requests": 2,
+    "since": 1751702400,
+    "until": 1751706000,
+    "total_requests": 201,
+    "total_bytes": 3069308,
+    "total_megabytes": 2.93,
+    "waf_mitigated_requests": 0,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 80
+        "requests": 92
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 17
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "BingBot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 114
+      }
+    ]
+  },
+  {
+    "since": 1751706000,
+    "until": 1751709600,
+    "total_requests": 110,
+    "total_bytes": 1599754,
+    "total_megabytes": 1.53,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 42
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 12
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 8
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 4
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 2
       },
       {
         "browser": "AhrefsBot",
+        "requests": 1
+      },
+      {
+        "browser": "Safari",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 70
+      }
+    ]
+  },
+  {
+    "since": 1751709600,
+    "until": 1751713200,
+    "total_requests": 31,
+    "total_bytes": 195832,
+    "total_megabytes": 0.19,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 13
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 5
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 3
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 23
+      }
+    ]
+  },
+  {
+    "since": 1751713200,
+    "until": 1751716800,
+    "total_requests": 84,
+    "total_bytes": 1183019,
+    "total_megabytes": 1.13,
+    "waf_mitigated_requests": 3,
+    "top_user_agents": [
+      {
+        "browser": "Mobile Browser",
+        "requests": 35
+      },
+      {
+        "browser": "Chrome",
         "requests": 12
       },
       {
@@ -358,292 +732,32 @@
         "requests": 7
       },
       {
-        "browser": "Safari",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1750446000,
-    "until": 1750449600,
-    "total_requests": 71,
-    "total_bytes": 1487766,
-    "total_megabytes": 1.42,
-    "waf_mitigated_requests": 1,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 48
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 15
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 4
-      },
-      {
-        "browser": "FastHTTP",
-        "requests": 1
-      },
-      {
-        "browser": "Vivaldi",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750449600,
-    "until": 1750453200,
-    "total_requests": 43,
-    "total_bytes": 916538,
-    "total_megabytes": 0.87,
-    "waf_mitigated_requests": 2,
-    "top_user_agents": [
-      {
-        "browser": "AhrefsBot",
-        "requests": 13
-      },
-      {
-        "browser": "Chrome",
-        "requests": 11
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 6
-      },
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "FastHTTP",
-        "requests": 2
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750453200,
-    "until": 1750456800,
-    "total_requests": 85,
-    "total_bytes": 1684823,
-    "total_megabytes": 1.61,
-    "waf_mitigated_requests": 1,
-    "top_user_agents": [
-      {
-        "browser": "ByteSpider",
-        "requests": 31
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 10
-      },
-      {
-        "browser": "Safari",
-        "requests": 10
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 6
-      }
-    ]
-  },
-  {
-    "since": 1750456800,
-    "until": 1750460400,
-    "total_requests": 249,
-    "total_bytes": 4601277,
-    "total_megabytes": 4.39,
-    "waf_mitigated_requests": 0,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 107
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 11
-      },
-      {
-        "browser": "Safari",
-        "requests": 11
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750460400,
-    "until": 1750464000,
-    "total_requests": 50,
-    "total_bytes": 11609162,
-    "total_megabytes": 11.07,
-    "waf_mitigated_requests": 1,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 14
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 12
-      },
-      {
-        "browser": "Safari",
-        "requests": 9
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 5
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750464000,
-    "until": 1750467600,
-    "total_requests": 398,
-    "total_bytes": 6770442,
-    "total_megabytes": 6.46,
-    "waf_mitigated_requests": 1,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 187
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 11
-      },
-      {
-        "browser": "Safari",
-        "requests": 8
-      },
-      {
-        "browser": "Firefox",
-        "requests": 5
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 4
-      },
-      {
-        "browser": "Microsoft Edge",
+        "browser": "Other Bot",
         "requests": 3
-      }
-    ]
-  },
-  {
-    "since": 1750467600,
-    "until": 1750471200,
-    "total_requests": 228,
-    "total_bytes": 3202995,
-    "total_megabytes": 3.05,
-    "waf_mitigated_requests": 37,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 58
-      },
-      {
-        "browser": "Go HTTP Client",
-        "requests": 39
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 10
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 9
-      },
-      {
-        "browser": "Firefox",
-        "requests": 4
-      },
-      {
-        "browser": "GPTBot",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1750471200,
-    "until": 1750474800,
-    "total_requests": 53,
-    "total_bytes": 506729,
-    "total_megabytes": 0.48,
-    "waf_mitigated_requests": 1,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 37
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 9
-      },
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750474800,
-    "until": 1750478400,
-    "total_requests": 1073,
-    "total_bytes": 8894497,
-    "total_megabytes": 8.48,
-    "waf_mitigated_requests": 433,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 181
-      },
-      {
-        "browser": "Go HTTP Client",
-        "requests": 126
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 16
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 12
       },
       {
         "browser": "ByteSpider",
         "requests": 1
       },
       {
-        "browser": "Python aiohttp",
+        "browser": "AhrefsBot",
         "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 59
       }
     ]
   },
   {
-    "since": 1750478400,
-    "until": 1750482000,
-    "total_requests": 72,
-    "total_bytes": 971727,
-    "total_megabytes": 0.93,
-    "waf_mitigated_requests": 10,
+    "since": 1751716800,
+    "until": 1751720400,
+    "total_requests": 95,
+    "total_bytes": 1232481,
+    "total_megabytes": 1.18,
+    "waf_mitigated_requests": 2,
     "top_user_agents": [
       {
         "browser": "Chrome",
@@ -651,83 +765,71 @@
       },
       {
         "browser": "Safari",
-        "requests": 10
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 9
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 2
-      },
-      {
-        "browser": "Python aiohttp",
-        "requests": 1
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1750482000,
-    "until": 1750485600,
-    "total_requests": 593,
-    "total_bytes": 12898263,
-    "total_megabytes": 12.3,
-    "waf_mitigated_requests": 39,
-    "top_user_agents": [
-      {
-        "browser": "Microsoft Edge",
-        "requests": 147
-      },
-      {
-        "browser": "Chrome",
-        "requests": 73
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 10
+        "requests": 7
       },
       {
         "browser": "Uncharted",
-        "requests": 8
+        "requests": 6
       },
       {
-        "browser": "ImgProxy",
-        "requests": 5
+        "browser": "Go HTTP Client",
+        "requests": 3
       },
       {
-        "browser": "Safari",
-        "requests": 2
+        "browser": "BingBot",
+        "requests": 1
+      },
+      {
+        "browser": "Opera",
+        "requests": 1
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      },
+      {
+        "browser": "Internet Explorer",
+        "requests": 1
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 55
       }
     ]
   },
   {
-    "since": 1750485600,
-    "until": 1750489200,
-    "total_requests": 363,
-    "total_bytes": 2380200,
-    "total_megabytes": 2.27,
-    "waf_mitigated_requests": 151,
+    "since": 1751720400,
+    "until": 1751724000,
+    "total_requests": 164,
+    "total_bytes": 1273648,
+    "total_megabytes": 1.21,
+    "waf_mitigated_requests": 1,
     "top_user_agents": [
       {
-        "browser": "AhrefsBot",
-        "requests": 18
+        "browser": "Chrome",
+        "requests": 12
       },
       {
-        "browser": "Chrome",
-        "requests": 14
+        "browser": "Uncharted",
+        "requests": 7
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 5
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 3
       },
       {
         "browser": "Safari",
         "requests": 3
-      },
-      {
-        "browser": "GPTBot",
-        "requests": 2
       },
       {
         "browser": "Firefox",
@@ -736,6 +838,116 @@
       {
         "browser": "Other Bot",
         "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 34
+      }
+    ]
+  },
+  {
+    "since": 1751724000,
+    "until": 1751727600,
+    "total_requests": 54,
+    "total_bytes": 416276,
+    "total_megabytes": 0.4,
+    "waf_mitigated_requests": 2,
+    "top_user_agents": [
+      {
+        "browser": "Uncharted",
+        "requests": 29
+      },
+      {
+        "browser": "Chrome",
+        "requests": 12
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 43
+      }
+    ]
+  },
+  {
+    "since": 1751727600,
+    "until": 1751731200,
+    "total_requests": 460,
+    "total_bytes": 3010550,
+    "total_megabytes": 2.87,
+    "waf_mitigated_requests": 8,
+    "top_user_agents": [
+      {
+        "browser": "Microsoft Edge",
+        "requests": 40
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 15
+      },
+      {
+        "browser": "Chrome",
+        "requests": 5
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 64
+      }
+    ]
+  },
+  {
+    "since": 1751731200,
+    "until": 1751734800,
+    "total_requests": 121,
+    "total_bytes": 1299500,
+    "total_megabytes": 1.24,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 46
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 18
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 7
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      },
+      {
+        "browser": "Googlebot",
+        "requests": 1
+      }
+    ],
+    "top_domains": [
+      {
+        "domain": "Unknown",
+        "requests": 78
       }
     ]
   }

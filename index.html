@@ -792,7 +792,7 @@
             document.documentElement.getAttribute("data-theme") ||
             "light";
           const colors = getThemeColors(currentTheme);
-          if (!log) {
+          if (log) {
             console.group(`[${timestamp}] 当前主题颜色配置 (${currentTheme})`);
             Object.entries(colors).forEach(([key, value]) => {
               console.log(

@@ -23,6 +23,8 @@ def parse_user_agent(ua_string):
             return "Headless Chrome"
         elif 'Applebot' in ua:
             return "Applebot"
+        elif 'facebookexternalhit' in ua or 'facebookbot' in ua:
+            return "Facebook Bot"
         else:
             return "Other Bot"
     

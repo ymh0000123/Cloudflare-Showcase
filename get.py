@@ -78,17 +78,21 @@ query GetNormalUserAgentStats($zoneTag: String!, $since: DateTime!, $until: Date
 
 
 def fetch_graphql(query, variables):
-    try:
-        response = requests.post(
-            url="https://api.cloudflare.com/client/v4/graphql",
-            headers=headers,
-            json={"query": query, "variables": variables},
-            timeout=30
-        )
-        response.raise_for_status()
-        return response.json()
-    except Exception as e:
-        sys.exit(f"请求异常: {e}")
+    for attempt in range(2):
+        try:
+            response = requests.post(
+                url="https://api.cloudflare.com/client/v4/graphql",
+                headers=headers,
+                json={"query": query, "variables": variables},
+                timeout=30
+            )
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            if attempt == 0:
+                print(f"请求失败，正在进行唯一一次重试: {e}")
+                continue
+            sys.exit(f"请求异常（重试后仍失败）: {e}")
 
 now = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
 

@@ -6,6 +6,8 @@
     <title>分析面板</title>
     <!-- 引入 ECharts 库 -->
     <script src="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <!-- 引入世界地图数据 -->
+    <script src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
       rel="stylesheet"
@@ -38,6 +40,26 @@
         --header-text: white;
         --footer-bg: white;
         --transition-speed: 0.3s;
+      }
+
+      /* 进度条样式 */
+      .progress-bar-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: transparent;
+        z-index: 1000;
+        display: none;
+      }
+
+      .progress-bar-fill {
+        height: 100%;
+        width: 0;
+        background: var(--primary-color);
+        box-shadow: 0 0 10px var(--primary-color);
+        transition: width 0.4s ease;
       }
 
       /* 深色模式变量 */
@@ -452,10 +474,6 @@
       @media (min-width: 1200px) {
         .charts-grid {
           grid-template-columns: repeat(2, 1fr);
-        }
-
-        .chart-container-wrapper:nth-child(3) {
-          grid-column: 1 / -1;
         }
       }      .chart-container-wrapper {
         background-color: var(--card-bg);
@@ -952,9 +970,15 @@
         }
       }
       async function loadStats() {
+        const progressBar = document.getElementById('progress-bar');
+        const progressFill = document.getElementById('progress-fill');
+        
         try {
           Logger.log("开始加载统计数据");
-          // 显示加载动画
+          // 显示加载动画和进度条
+          if (progressBar) progressBar.style.display = 'block';
+          if (progressFill) progressFill.style.width = '30%';
+
           document.querySelectorAll(".card .value").forEach((el) => {
             el.innerHTML =
               '<div class="loading"><div class="loading-spinner"></div></div>';
@@ -966,12 +990,18 @@
           });
 
           Logger.log("正在请求 cloudflare_hourly_stats.json 文件");
+          if (progressFill) progressFill.style.width = '60%';
+          
           const response = await fetch("cloudflare_hourly_stats.json");
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
+          if (progressFill) progressFill.style.width = '80%';
+          
           const data = await response.json();
           Logger.log("成功获取数据", { dataLength: data.length });
+
+          if (progressFill) progressFill.style.width = '90%';
 
           if (!Array.isArray(data) || data.length === 0) {
             Logger.warn("数据为空或格式无效");
@@ -992,8 +1022,16 @@
 
           // 更新页脚年份
           updateFooterYear();
+          
+          if (progressFill) progressFill.style.width = '100%';
+          setTimeout(() => {
+            if (progressBar) progressBar.style.display = 'none';
+            if (progressFill) progressFill.style.width = '0';
+          }, 500);
+          
           Logger.log("统计数据加载完成");
         } catch (error) {
+          if (progressBar) progressBar.style.display = 'none';
           Logger.error("加载统计数据失败", error);
           document.getElementById(
             "kpi-cards-container"
@@ -1155,6 +1193,13 @@
           Logger.log("销毁旧的用户代理图表实例");
           window.userAgentChart.dispose();
         }
+        if (
+          window.countryChart &&
+          typeof window.countryChart.dispose === "function"
+        ) {
+          Logger.log("销毁旧的国家图表实例");
+          window.countryChart.dispose();
+        }
 
         Logger.log("创建新的图表实例");
         window.requestsWafChart = echarts.init(
@@ -1165,6 +1210,9 @@
         );
         window.userAgentChart = echarts.init(
           document.getElementById("userAgentChart")
+        );
+        window.countryChart = echarts.init(
+          document.getElementById("countryChart")
         );
 
         const commonOption = {
@@ -1421,6 +1469,8 @@
         window.requestsWafChart.setOption(requestsWafOption);
         window.trafficChart.setOption(trafficOption); // 创建用户代理(浏览器)统计图表 - 使用所有24小时的数据
         createUserAgentChart(data, isDarkTheme, textColor);
+        // 创建国家/地区统计图表
+        createCountryChart(data, isDarkTheme, textColor);
 
         Logger.log("图表创建完成");
 
@@ -1429,12 +1479,14 @@
           if (
             window.requestsWafChart &&
             window.trafficChart &&
-            window.userAgentChart
+            window.userAgentChart &&
+            window.countryChart
           ) {
             Logger.log("窗口大小变化，调整图表尺寸");
             window.requestsWafChart.resize();
             window.trafficChart.resize();
             window.userAgentChart.resize();
+            window.countryChart.resize();
           }
         });
       }      // 创建用户代理统计图表
@@ -1701,6 +1753,161 @@
           renderUserAgentChart(currentUserAgentData, isDarkTheme, textColor);
         }      }
 
+      // 创建国家区域统计图表
+      function createCountryChart(data, isDarkTheme, textColor) {
+        Logger.log("创建国家区域统计图表", { dataLength: data.length });
+
+        // ISO 2位代码到名称的映射 (扩展示例)
+        const isoToName = {
+          'CN': 'China', 'TW': 'China', 'HK': 'China', 'MO': 'China',
+          'US': 'United States', 'RU': 'Russia', 'JP': 'Japan', 'KR': 'Korea',
+          'GB': 'United Kingdom', 'FR': 'France', 'DE': 'Germany', 'CA': 'Canada',
+          'AU': 'Australia', 'IN': 'India', 'BR': 'Brazil', 'IT': 'Italy',
+          'ES': 'Spain', 'NL': 'Netherlands', 'SG': 'Singapore', 'VN': 'Vietnam',
+          'TH': 'Thailand', 'MY': 'Malaysia', 'ID': 'Indonesia', 'PH': 'Philippines',
+          'AE': 'United Arab Emirates', 'SA': 'Saudi Arabia', 'ZA': 'South Africa',
+          'TR': 'Turkey', 'PL': 'Poland', 'UA': 'Ukraine', 'AR': 'Argentina',
+          'CO': 'Colombia', 'CL': 'Chile', 'PE': 'Peru', 'MX': 'Mexico',
+          'NZ': 'New Zealand', 'SE': 'Sweden', 'NO': 'Norway', 'FI': 'Finland',
+          'DK': 'Denmark', 'CH': 'Switzerland', 'AT': 'Austria', 'BE': 'Belgium',
+          'PT': 'Portugal', 'GR': 'Greece', 'IE': 'Ireland', 'IL': 'Israel'
+        };
+
+        // 合并所有24小时的国家数据
+        const allCountryCounts = {};
+
+        data.forEach((hourData) => {
+          if (
+            hourData.top_countries &&
+            Array.isArray(hourData.top_countries)
+          ) {
+            hourData.top_countries.forEach((item) => {
+              let country = item.country;
+              // 转换 ISO 代码为名称
+              if (isoToName[country]) {
+                country = isoToName[country];
+              }
+              const requests = item.requests;
+              allCountryCounts[country] =
+                (allCountryCounts[country] || 0) + requests;
+            });
+          }
+        });
+
+        // 转换为数组并排序
+        const allCountries = Object.entries(allCountryCounts)
+          .map(([country, requests]) => ({ name: country, value: requests }))
+          .sort((a, b) => b.value - a.value);
+
+        Logger.log("合并后的国家数据", {
+          totalTypes: allCountries.length,
+        });
+
+        if (allCountries.length === 0) {
+          Logger.warn("没有国家数据可显示");
+          document.getElementById("countryChart").innerHTML =
+            '<div style="text-align: center; padding: 50px; color: var(--text-muted);">暂无国家数据</div>';
+          return;
+        }
+
+        renderCountryChart(allCountries, isDarkTheme, textColor);
+      }
+
+      // 渲染国家统计图表
+      function renderCountryChart(allCountries, isDarkTheme, textColor) {
+        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
+        const splitLineColor = isDarkTheme
+          ? "rgba(255,255,255,0.05)"
+          : "rgba(0,0,0,0.05)";
+
+        // 常见国家名称映射，解决 Cloudflare 名称与 ECharts 地图名称不匹配的问题
+        const countryNameMap = {
+          'United States': 'United States',
+          'United States of America': 'United States',
+          'Russian Federation': 'Russia',
+          'Korea, Republic of': 'Korea',
+          'Viet Nam': 'Vietnam',
+          'Brunei Darussalam': 'Brunei',
+          'Tanzania, United Republic of': 'Tanzania',
+          'Central African Republic': 'Central African Rep.',
+          'Congo, The Democratic Republic of the': 'Dem. Rep. Congo',
+          'Congo': 'Congo',
+          'Dominican Republic': 'Dominican Rep.',
+          'Lao People\'s Democratic Republic': 'Laos',
+          'Syrian Arab Republic': 'Syria',
+          'Moldova, Republic of': 'Moldova',
+          'Cote d\'Ivoire': 'Ivory Coast',
+          'Iran, Islamic Republic of': 'Iran'
+        };
+
+        // 转换数据并过滤掉空值
+        const mapData = allCountries.filter(c => c.name && c.value > 0);
+        const maxVal = mapData.length > 0 ? Math.max(...mapData.map(c => c.value)) : 100;
+
+        const mapOption = {
+          tooltip: {
+            trigger: "item",
+            formatter: function (params) {
+              if (params.data && params.data.value) {
+                return `${params.name}<br/>请求数: ${formatRequests(params.data.value)}`;
+              }
+              return `${params.name}<br/>无请求数据`;
+            },
+            textStyle: {
+              color: isDarkTheme ? "#e9ecef" : "#333",
+            },
+            backgroundColor: isDarkTheme
+              ? "rgba(31, 41, 55, 0.9)"
+              : "rgba(255, 255, 255, 0.9)",
+            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
+          },
+          visualMap: {
+            min: 0,
+            max: maxVal,
+            left: 'left',
+            top: 'bottom',
+            text: ['高', '低'],
+            calculable: true,
+            show: true, // 确保显示
+            inRange: {
+              color: isDarkTheme 
+                ? ['#1e3a8a', '#3b82f6', '#93c5fd'] // 深色主题：深蓝到浅蓝
+                : ['#f1f5f9', '#60a5fa', '#1e40af'] // 亮色主题：浅蓝到深蓝
+            },
+            textStyle: {
+              color: textColor
+            }
+          },
+          series: [
+            {
+              name: '请求来源',
+              type: 'map',
+              map: 'world',
+              roam: true,
+              emphasis: {
+                label: {
+                  show: true,
+                  color: textColor
+                },
+                itemStyle: {
+                  areaColor: isDarkTheme ? '#334155' : '#e2e8f0'
+                }
+              },
+              itemStyle: {
+                // 无请求数据的国家颜色：深色模式使用更明显的灰蓝色，亮色模式使用浅灰色
+                areaColor: isDarkTheme ? '#334155' : '#e9ecef',
+                borderColor: isDarkTheme ? '#4a5568' : '#dee2e6',
+                borderWidth: 0.8
+              },
+              nameMap: countryNameMap,
+              data: mapData
+            }
+          ]
+        };
+
+        window.countryChart.setOption(mapOption, true);
+      }
+
       // 更新水印信息
       function updateWatermark(data) {
         const watermarkElement = document.getElementById('watermark');
@@ -1786,7 +1993,12 @@
     </script>
   </head>
 
-  <body>    <header>
+  <body>
+    <!-- 进度条 -->
+    <div id="progress-bar" class="progress-bar-container">
+      <div id="progress-fill" class="progress-bar-fill"></div>
+    </div>
+    <header>
       <h1>网站分析面板</h1>
       <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon"></i>
@@ -1835,6 +2047,11 @@
           </div>
           <h2>浏览器使用排行</h2>
           <div class="chart-container" id="userAgentChart"></div>
+        </div>
+
+        <div class="chart-container-wrapper">
+          <h2>国家/地区分布排行</h2>
+          <div class="chart-container" id="countryChart"></div>
         </div>
       </div>
 

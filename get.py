@@ -1,9 +1,12 @@
 import requests
 from datetime import datetime, timedelta, timezone
 import os
+from dotenv import load_dotenv
 import sys
 import json
 from user_agent_parser import process_user_agent_stats
+
+load_dotenv()
 
 API_TOKEN = os.getenv('CLOUDFLARE_API_TOKEN')
 ZONE_ID = os.getenv('ZONE_ID')
@@ -48,6 +51,7 @@ query GetWAFMitigatedRequests($zoneTag: String!, $since: DateTime!, $until: Date
       ) {
         action
         datetime
+        clientCountryName
       }
     }
   }
@@ -67,9 +71,9 @@ query GetNormalUserAgentStats($zoneTag: String!, $since: DateTime!, $until: Date
         }
       ) {
         userAgent
+        clientCountryName
         datetime
         edgeResponseStatus
-        clientRequestHTTPHost
       }
     }
   }
@@ -97,7 +101,18 @@ def fetch_graphql(query, variables):
 now = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
 
 results = []
-for i in range(24, 0, -1):
+total_hours = 24
+print(f"开始获取过去 {total_hours} 小时的数据...")
+
+for i in range(total_hours, 0, -1):
+    # 打印进度条
+    progress = total_hours - i + 1
+    percent = (progress / total_hours) * 100
+    bar_length = 30
+    filled_length = int(bar_length * progress // total_hours)
+    bar = '█' * filled_length + '-' * (bar_length - filled_length)
+    print(f"\r进度: |{bar}| {percent:.1f}% ({progress}/{total_hours} 小时)", end="", flush=True)
+
     since_time = now - timedelta(hours=i)
     until_time = now - timedelta(hours=i-1)
     since = since_time.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -128,8 +143,28 @@ for i in range(24, 0, -1):
     try:
         firewall_events = waf_data["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
         waf_mitigated_requests = len(firewall_events)
+        # 统计 WAF 来源国家
+        waf_country_counts = {}
+        for event in firewall_events:
+            country = event.get("clientCountryName", "Unknown")
+            # 将港澳台归为中国 (同时处理名称和代码)
+            if country in ["Taiwan", "Hong Kong", "Macao", "TW", "HK", "MO"]:
+                country = "China"
+            # 处理常见代码
+            elif country == "CN":
+                country = "China"
+            elif country == "US":
+                country = "United States"
+            waf_country_counts[country] = waf_country_counts.get(country, 0) + 1
+        top_waf_countries = [
+            {"country": country, "requests": count}
+            for country, count in sorted(waf_country_counts.items(), key=lambda x: x[1], reverse=True)
+        ]
     except Exception:
-        waf_mitigated_requests = 0    # User-Agent统计（仅获取正常响应的请求，排除WAF拦截）
+        waf_mitigated_requests = 0
+        top_waf_countries = []
+
+    # User-Agent统计（仅获取正常响应的请求，排除WAF拦截）
     ua_data = fetch_graphql(normal_requests_query, variables)
     try:
         # 检查是否有错误
@@ -137,30 +172,43 @@ for i in range(24, 0, -1):
             print(f"GraphQL错误: {ua_data['errors']}")
             top_user_agents = []
             top_domains = []
+            top_countries = []
         elif not ua_data.get("data") or not ua_data["data"]["viewer"]["zones"]:
             print("UA数据为空或zone不存在")
             top_user_agents = []
             top_domains = []
+            top_countries = []
         else:
             user_agent_events = ua_data["data"]["viewer"]["zones"][0]["httpRequestsAdaptive"]
             # 使用新的处理函数
             top_user_agents = process_user_agent_stats(user_agent_events)
-            # 统计域名排行
-            domain_counts = {}
+            
+            # 统计国家排行
+            country_counts = {}
             for event in user_agent_events:
-                host = event.get("clientRequest", {}).get("host", "Unknown")
-                domain_counts[host] = domain_counts.get(host, 0) + 1
-            top_domains = [
-                {"domain": domain, "requests": count}
-                for domain, count in sorted(domain_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+                # 国家排行
+                country = event.get("clientCountryName", "Unknown")
+                # 将港澳台归为中国 (同时处理名称和代码)
+                if country in ["Taiwan", "Hong Kong", "Macao", "TW", "HK", "MO"]:
+                    country = "China"
+                # 处理常见代码
+                elif country == "CN":
+                    country = "China"
+                elif country == "US":
+                    country = "United States"
+                country_counts[country] = country_counts.get(country, 0) + 1
+                
+            top_countries = [
+                {"country": country, "requests": count}
+                for country, count in sorted(country_counts.items(), key=lambda x: x[1], reverse=True)
             ]
     except Exception as e:
-        print(f"获取UA数据时出错: {e}")
+        print(f"获取数据时出错: {e}")
         # 打印调试信息
         if 'ua_data' in locals():
             print(f"UA数据结构: {ua_data}")
         top_user_agents = []
-        top_domains = []
+        top_countries = []
 
     result = {
         "since": since_ts,
@@ -170,9 +218,12 @@ for i in range(24, 0, -1):
         "total_megabytes": round(total_bytes / (1024 ** 2), 2),
         "waf_mitigated_requests": waf_mitigated_requests,
         "top_user_agents": top_user_agents,
-        "top_domains": top_domains
+        "top_countries": top_countries,
+        "top_waf_countries": top_waf_countries
     }
     results.append(result)
+
+print("\n数据获取完成！")
 
 # 保存到JSON文件
 with open("cloudflare_hourly_stats.json", "w", encoding="utf-8") as f:

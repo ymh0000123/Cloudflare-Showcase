@@ -1,145 +1,688 @@
 [
   {
-    "since": 1768017600,
-    "until": 1768021200,
-    "total_requests": 125,
-    "total_bytes": 472410,
-    "total_megabytes": 0.45,
-    "waf_mitigated_requests": 8,
+    "since": 1771066800,
+    "until": 1771070400,
+    "total_requests": 288,
+    "total_bytes": 1643114,
+    "total_megabytes": 1.57,
+    "waf_mitigated_requests": 162,
+    "top_user_agents": [
+      {
+        "browser": "Go HTTP Client",
+        "requests": 30
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 9
+      },
+      {
+        "browser": "Chrome",
+        "requests": 7
+      },
+      {
+        "browser": "Safari",
+        "requests": 5
+      },
+      {
+        "browser": "Firefox",
+        "requests": 3
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 52
+      },
+      {
+        "country": "China",
+        "requests": 2
+      },
+      {
+        "country": "GB",
+        "requests": 2
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "NO",
+        "requests": 160
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      },
+      {
+        "country": "RU",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1771070400,
+    "until": 1771074000,
+    "total_requests": 26,
+    "total_bytes": 87652,
+    "total_megabytes": 0.08,
+    "waf_mitigated_requests": 1,
+    "top_user_agents": [
+      {
+        "browser": "Safari",
+        "requests": 8
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 7
+      },
+      {
+        "browser": "Firefox",
+        "requests": 6
+      },
+      {
+        "browser": "Chrome",
+        "requests": 2
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 12
+      },
+      {
+        "country": "SE",
+        "requests": 4
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "GB",
+        "requests": 1
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "FR",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1771074000,
+    "until": 1771077600,
+    "total_requests": 539,
+    "total_bytes": 3812621,
+    "total_megabytes": 3.64,
+    "waf_mitigated_requests": 525,
     "top_user_agents": [
       {
         "browser": "Uncharted",
-        "requests": 74
+        "requests": 5
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 1
+      },
+      {
+        "browser": "Chrome",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 4
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "DE",
+        "requests": 2
+      },
+      {
+        "country": "JP",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "IE",
+        "requests": 177
+      },
+      {
+        "country": "NO",
+        "requests": 176
+      },
+      {
+        "country": "ES",
+        "requests": 162
+      },
+      {
+        "country": "SG",
+        "requests": 10
+      }
+    ]
+  },
+  {
+    "since": 1771077600,
+    "until": 1771081200,
+    "total_requests": 21,
+    "total_bytes": 31907,
+    "total_megabytes": 0.03,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 10
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 1
       },
       {
         "browser": "Other Bot",
-        "requests": 21
+        "requests": 1
       },
+      {
+        "browser": "Safari",
+        "requests": 1
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 1
+      },
+      {
+        "browser": "Go HTTP Client",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 12
+      },
+      {
+        "country": "United States",
+        "requests": 5
+      },
+      {
+        "country": "GB",
+        "requests": 1
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": []
+  },
+  {
+    "since": 1771081200,
+    "until": 1771084800,
+    "total_requests": 483,
+    "total_bytes": 6879421,
+    "total_megabytes": 6.56,
+    "waf_mitigated_requests": 198,
+    "top_user_agents": [
+      {
+        "browser": "Uncharted",
+        "requests": 91
+      },
+      {
+        "browser": "Chrome",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 87
+      },
+      {
+        "country": "NL",
+        "requests": 5
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "FR",
+        "requests": 173
+      },
+      {
+        "country": "United States",
+        "requests": 15
+      },
+      {
+        "country": "SG",
+        "requests": 10
+      }
+    ]
+  },
+  {
+    "since": 1771084800,
+    "until": 1771088400,
+    "total_requests": 158,
+    "total_bytes": 1060368,
+    "total_megabytes": 1.01,
+    "waf_mitigated_requests": 142,
+    "top_user_agents": [
+      {
+        "browser": "ByteSpider",
+        "requests": 5
+      },
+      {
+        "browser": "Chrome",
+        "requests": 2
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "FastHTTP",
+        "requests": 1
+      },
+      {
+        "browser": "Firefox",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 6
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "FR",
+        "requests": 2
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      },
+      {
+        "country": "United States",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "United States",
+        "requests": 142
+      }
+    ]
+  },
+  {
+    "since": 1771088400,
+    "until": 1771092000,
+    "total_requests": 12,
+    "total_bytes": 26245,
+    "total_megabytes": 0.03,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 2
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 2
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "FR",
+        "requests": 2
+      },
+      {
+        "country": "NL",
+        "requests": 1
+      },
+      {
+        "country": "LT",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": []
+  },
+  {
+    "since": 1771092000,
+    "until": 1771095600,
+    "total_requests": 198,
+    "total_bytes": 2377641,
+    "total_megabytes": 2.27,
+    "waf_mitigated_requests": 138,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 33
+      },
+      {
+        "browser": "Safari",
+        "requests": 6
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 4
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 35
+      },
+      {
+        "country": "China",
+        "requests": 6
+      },
+      {
+        "country": "BR",
+        "requests": 2
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "United States",
+        "requests": 138
+      }
+    ]
+  },
+  {
+    "since": 1771095600,
+    "until": 1771099200,
+    "total_requests": 34,
+    "total_bytes": 639013,
+    "total_megabytes": 0.61,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
       {
         "browser": "Chrome",
         "requests": 8
       },
       {
         "browser": "Safari",
+        "requests": 8
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 7
+      },
+      {
+        "browser": "Uncharted",
         "requests": 3
       },
       {
-        "browser": "Firefox",
-        "requests": 2
+        "browser": "BingBot",
+        "requests": 1
       },
       {
-        "browser": "ByteSpider",
-        "requests": 2
+        "browser": "Go HTTP Client",
+        "requests": 1
+      },
+      {
+        "browser": "Firefox",
+        "requests": 1
       }
     ],
     "top_countries": [
       {
-        "country": "NL",
-        "requests": 74
-      },
-      {
-        "country": "DE",
-        "requests": 21
-      },
-      {
         "country": "United States",
-        "requests": 11
+        "requests": 22
+      },
+      {
+        "country": "JP",
+        "requests": 2
       },
       {
         "country": "China",
-        "requests": 4
-      },
-      {
-        "country": "AU",
         "requests": 1
       },
       {
-        "country": "HU",
+        "country": "IE",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "NL",
+        "requests": 1
+      },
+      {
+        "country": "FR",
         "requests": 1
       }
     ],
-    "top_waf_countries": [
-      {
-        "country": "NL",
-        "requests": 6
-      },
-      {
-        "country": "United States",
-        "requests": 2
-      }
-    ]
+    "top_waf_countries": []
   },
   {
-    "since": 1768021200,
-    "until": 1768024800,
-    "total_requests": 466,
-    "total_bytes": 2425192,
-    "total_megabytes": 2.31,
-    "waf_mitigated_requests": 206,
+    "since": 1771099200,
+    "until": 1771102800,
+    "total_requests": 45,
+    "total_bytes": 381545,
+    "total_megabytes": 0.36,
+    "waf_mitigated_requests": 10,
     "top_user_agents": [
       {
-        "browser": "Go HTTP Client",
-        "requests": 68
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 66
-      },
-      {
         "browser": "Chrome",
-        "requests": 6
-      },
-      {
-        "browser": "Firefox",
-        "requests": 4
+        "requests": 13
       },
       {
         "browser": "Safari",
+        "requests": 8
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 4
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 2
+      },
+      {
+        "browser": "BingBot",
         "requests": 2
       },
       {
         "browser": "Microsoft Edge",
         "requests": 1
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 1
       }
     ],
     "top_countries": [
       {
-        "country": "United States",
-        "requests": 71
-      },
-      {
-        "country": "FR",
-        "requests": 66
-      },
-      {
-        "country": "NL",
+        "country": "China",
         "requests": 10
       },
       {
-        "country": "BR",
+        "country": "United States",
+        "requests": 9
+      },
+      {
+        "country": "DE",
         "requests": 4
       },
       {
-        "country": "China",
+        "country": "SG",
+        "requests": 2
+      },
+      {
+        "country": "PL",
+        "requests": 1
+      },
+      {
+        "country": "IE",
+        "requests": 1
+      },
+      {
+        "country": "NL",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "GB",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
         "country": "SG",
-        "requests": 151
+        "requests": 10
+      }
+    ]
+  },
+  {
+    "since": 1771102800,
+    "until": 1771106400,
+    "total_requests": 124,
+    "total_bytes": 1544938,
+    "total_megabytes": 1.47,
+    "waf_mitigated_requests": 14,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 32
       },
       {
-        "country": "JP",
-        "requests": 52
+        "browser": "Go HTTP Client",
+        "requests": 6
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 3
+      },
+      {
+        "browser": "Firefox",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 33
+      },
+      {
+        "country": "IN",
+        "requests": 6
       },
       {
         "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "CA",
         "requests": 2
+      },
+      {
+        "country": "GB",
+        "requests": 2
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "JP",
+        "requests": 1
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SG",
+        "requests": 10
+      },
+      {
+        "country": "BG",
+        "requests": 2
+      },
+      {
+        "country": "United States",
+        "requests": 1
       },
       {
         "country": "FR",
@@ -148,82 +691,234 @@
     ]
   },
   {
-    "since": 1768024800,
-    "until": 1768028400,
-    "total_requests": 169,
-    "total_bytes": 2393578,
-    "total_megabytes": 2.28,
-    "waf_mitigated_requests": 137,
+    "since": 1771106400,
+    "until": 1771110000,
+    "total_requests": 373,
+    "total_bytes": 5423189,
+    "total_megabytes": 5.17,
+    "waf_mitigated_requests": 144,
     "top_user_agents": [
       {
-        "browser": "Other Bot",
-        "requests": 14
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 6
-      },
-      {
         "browser": "Chrome",
-        "requests": 3
-      },
-      {
-        "browser": "Safari",
-        "requests": 2
+        "requests": 129
       },
       {
         "browser": "Uncharted",
+        "requests": 6
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 4
+      },
+      {
+        "browser": "Safari",
+        "requests": 3
+      },
+      {
+        "browser": "Firefox",
+        "requests": 2
+      },
+      {
+        "browser": "ByteSpider",
         "requests": 1
       }
     ],
     "top_countries": [
       {
-        "country": "IE",
-        "requests": 12
+        "country": "United States",
+        "requests": 126
       },
       {
         "country": "China",
-        "requests": 8
+        "requests": 11
       },
       {
-        "country": "United States",
+        "country": "CA",
         "requests": 4
       },
       {
-        "country": "DE",
+        "country": "NL",
         "requests": 2
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      },
+      {
+        "country": "GB",
+        "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "IN",
-        "requests": 135
+        "country": "United States",
+        "requests": 142
       },
       {
-        "country": "United States",
+        "country": "RU",
         "requests": 2
       }
     ]
   },
   {
-    "since": 1768028400,
-    "until": 1768032000,
-    "total_requests": 11,
-    "total_bytes": 24270,
-    "total_megabytes": 0.02,
-    "waf_mitigated_requests": 0,
+    "since": 1771110000,
+    "until": 1771113600,
+    "total_requests": 161,
+    "total_bytes": 2234774,
+    "total_megabytes": 2.13,
+    "waf_mitigated_requests": 46,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 3
+        "requests": 33
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 4
+      },
+      {
+        "browser": "Firefox",
+        "requests": 2
+      },
+      {
+        "browser": "FastHTTP",
+        "requests": 1
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 1
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 1
       },
       {
         "browser": "Other Bot",
         "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 38
+      },
+      {
+        "country": "DE",
+        "requests": 2
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      },
+      {
+        "country": "IN",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SG",
+        "requests": 43
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      }
+    ]
+  },
+  {
+    "since": 1771113600,
+    "until": 1771117200,
+    "total_requests": 247,
+    "total_bytes": 2481973,
+    "total_megabytes": 2.37,
+    "waf_mitigated_requests": 184,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 26
       },
       {
         "browser": "Uncharted",
+        "requests": 5
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 2
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 29
+      },
+      {
+        "country": "China",
+        "requests": 4
+      },
+      {
+        "country": "GB",
+        "requests": 2
+      },
+      {
+        "country": "CA",
         "requests": 1
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "United States",
+        "requests": 148
+      },
+      {
+        "country": "SG",
+        "requests": 36
+      }
+    ]
+  },
+  {
+    "since": 1771117200,
+    "until": 1771120800,
+    "total_requests": 15,
+    "total_bytes": 292290,
+    "total_megabytes": 0.28,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 5
+      },
+      {
+        "browser": "Firefox",
+        "requests": 4
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 2
       },
       {
         "browser": "Safari",
@@ -233,231 +928,338 @@
     "top_countries": [
       {
         "country": "United States",
+        "requests": 8
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      },
+      {
+        "country": "DO",
+        "requests": 1
+      },
+      {
+        "country": "GB",
+        "requests": 1
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": []
+  },
+  {
+    "since": 1771120800,
+    "until": 1771124400,
+    "total_requests": 37,
+    "total_bytes": 372662,
+    "total_megabytes": 0.36,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Safari",
+        "requests": 10
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 9
+      },
+      {
+        "browser": "Chrome",
+        "requests": 6
+      },
+      {
+        "browser": "AhrefsBot",
         "requests": 3
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 3
+      },
+      {
+        "browser": "Firefox",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 10
+      },
+      {
+        "country": "NL",
+        "requests": 5
+      },
+      {
+        "country": "United States",
+        "requests": 5
+      },
+      {
+        "country": "CA",
+        "requests": 3
+      },
+      {
+        "country": "GB",
+        "requests": 3
+      },
+      {
+        "country": "SG",
+        "requests": 2
       },
       {
         "country": "SE",
         "requests": 2
       },
       {
+        "country": "BR",
+        "requests": 1
+      },
+      {
         "country": "BE",
-        "requests": 1
-      },
-      {
-        "country": "NL",
-        "requests": 1
-      },
-      {
-        "country": "China",
         "requests": 1
       }
     ],
     "top_waf_countries": []
   },
   {
-    "since": 1768032000,
-    "until": 1768035600,
-    "total_requests": 227,
-    "total_bytes": 1704264,
-    "total_megabytes": 1.63,
-    "waf_mitigated_requests": 214,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 4
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 7
-      },
-      {
-        "country": "United States",
-        "requests": 4
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "JP",
-        "requests": 153
-      },
-      {
-        "country": "China",
-        "requests": 61
-      }
-    ]
-  },
-  {
-    "since": 1768035600,
-    "until": 1768039200,
-    "total_requests": 116,
-    "total_bytes": 244545,
-    "total_megabytes": 0.23,
-    "waf_mitigated_requests": 2,
-    "top_user_agents": [
-      {
-        "browser": "Uncharted",
-        "requests": 103
-      },
-      {
-        "browser": "Chrome",
-        "requests": 6
-      },
-      {
-        "browser": "Safari",
-        "requests": 2
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "FR",
-        "requests": 100
-      },
-      {
-        "country": "United States",
-        "requests": 11
-      },
-      {
-        "country": "BR",
-        "requests": 2
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "FR",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1768039200,
-    "until": 1768042800,
-    "total_requests": 76,
-    "total_bytes": 452569,
-    "total_megabytes": 0.43,
+    "since": 1771124400,
+    "until": 1771128000,
+    "total_requests": 70,
+    "total_bytes": 1503401,
+    "total_megabytes": 1.43,
     "waf_mitigated_requests": 1,
     "top_user_agents": [
       {
-        "browser": "Uncharted",
-        "requests": 15
+        "browser": "Firefox",
+        "requests": 19
       },
       {
         "browser": "Chrome",
-        "requests": 1
+        "requests": 19
       },
       {
-        "browser": "Other Bot",
-        "requests": 1
+        "browser": "Safari",
+        "requests": 9
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 8
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 4
       },
       {
         "browser": "Microsoft Edge",
-        "requests": 1
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 1
+        "requests": 2
       }
     ],
     "top_countries": [
       {
-        "country": "FR",
-        "requests": 13
+        "country": "United States",
+        "requests": 25
       },
       {
-        "country": "United States",
-        "requests": 3
+        "country": "NL",
+        "requests": 22
+      },
+      {
+        "country": "China",
+        "requests": 10
       },
       {
         "country": "BE",
         "requests": 2
       },
       {
-        "country": "BR",
-        "requests": 2
-      },
-      {
-        "country": "NL",
+        "country": "FR",
         "requests": 1
       },
       {
-        "country": "GB",
+        "country": "CA",
         "requests": 1
       },
       {
-        "country": "China",
+        "country": "JP",
+        "requests": 1
+      },
+      {
+        "country": "KR",
+        "requests": 1
+      },
+      {
+        "country": "DE",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "FR",
+        "country": "ID",
         "requests": 1
       }
     ]
   },
   {
-    "since": 1768042800,
-    "until": 1768046400,
-    "total_requests": 380,
-    "total_bytes": 1047503,
-    "total_megabytes": 1.0,
-    "waf_mitigated_requests": 5,
+    "since": 1771128000,
+    "until": 1771131600,
+    "total_requests": 104,
+    "total_bytes": 1187857,
+    "total_megabytes": 1.13,
+    "waf_mitigated_requests": 3,
     "top_user_agents": [
       {
+        "browser": "Chrome",
+        "requests": 44
+      },
+      {
+        "browser": "Firefox",
+        "requests": 19
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 3
+      },
+      {
         "browser": "Uncharted",
-        "requests": 194
+        "requests": 3
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 2
+      },
+      {
+        "browser": "ByteSpider",
+        "requests": 1
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 1
       },
       {
         "browser": "Safari",
-        "requests": 5
+        "requests": 1
       },
       {
-        "browser": "Chrome",
-        "requests": 5
+        "browser": "Other Bot",
+        "requests": 1
       },
       {
         "browser": "Go HTTP Client",
-        "requests": 4
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 4
-      },
-      {
-        "browser": "BingBot",
         "requests": 1
       }
     ],
     "top_countries": [
       {
-        "country": "IN",
-        "requests": 161
-      },
-      {
-        "country": "FR",
-        "requests": 34
-      },
-      {
         "country": "United States",
-        "requests": 20
+        "requests": 42
       },
       {
-        "country": "BR",
+        "country": "NL",
+        "requests": 19
+      },
+      {
+        "country": "China",
+        "requests": 9
+      },
+      {
+        "country": "CA",
+        "requests": 3
+      },
+      {
+        "country": "DE",
+        "requests": 2
+      },
+      {
+        "country": "BE",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "RU",
+        "country": "DE",
         "requests": 2
       },
       {
         "country": "FR",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1771131600,
+    "until": 1771135200,
+    "total_requests": 200,
+    "total_bytes": 2688244,
+    "total_megabytes": 2.56,
+    "waf_mitigated_requests": 7,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 61
+      },
+      {
+        "browser": "Go HTTP Client",
+        "requests": 26
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 4
+      },
+      {
+        "browser": "Safari",
+        "requests": 3
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 1
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 86
+      },
+      {
+        "country": "China",
+        "requests": 5
+      },
+      {
+        "country": "GB",
+        "requests": 2
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "DE",
+        "requests": 4
+      },
+      {
+        "country": "RU",
         "requests": 2
       },
       {
@@ -467,27 +1269,196 @@
     ]
   },
   {
-    "since": 1768046400,
-    "until": 1768050000,
-    "total_requests": 133,
-    "total_bytes": 642649,
-    "total_megabytes": 0.61,
-    "waf_mitigated_requests": 2,
+    "since": 1771135200,
+    "until": 1771138800,
+    "total_requests": 36,
+    "total_bytes": 374170,
+    "total_megabytes": 0.36,
+    "waf_mitigated_requests": 9,
     "top_user_agents": [
       {
-        "browser": "Uncharted",
-        "requests": 85
+        "browser": "ByteSpider",
+        "requests": 7
       },
       {
         "browser": "Chrome",
-        "requests": 17
-      },
-      {
-        "browser": "Firefox",
-        "requests": 4
+        "requests": 5
       },
       {
         "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 2
+      },
+      {
+        "browser": "Firefox",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 10
+      },
+      {
+        "country": "China",
+        "requests": 9
+      },
+      {
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SG",
+        "requests": 9
+      }
+    ]
+  },
+  {
+    "since": 1771138800,
+    "until": 1771142400,
+    "total_requests": 86,
+    "total_bytes": 279683,
+    "total_megabytes": 0.27,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Microsoft Edge",
+        "requests": 44
+      },
+      {
+        "browser": "Chrome",
+        "requests": 9
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 6
+      },
+      {
+        "browser": "Firefox",
+        "requests": 2
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 55
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": []
+  },
+  {
+    "since": 1771142400,
+    "until": 1771146000,
+    "total_requests": 38,
+    "total_bytes": 150733,
+    "total_megabytes": 0.14,
+    "waf_mitigated_requests": 10,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 7
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 4
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 3
+      },
+      {
+        "browser": "Safari",
+        "requests": 3
+      },
+      {
+        "browser": "Googlebot",
+        "requests": 3
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 2
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 11
+      },
+      {
+        "country": "CA",
+        "requests": 4
+      },
+      {
+        "country": "JP",
+        "requests": 4
+      },
+      {
+        "country": "IN",
+        "requests": 2
+      },
+      {
+        "country": "China",
+        "requests": 2
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SG",
+        "requests": 10
+      }
+    ]
+  },
+  {
+    "since": 1771146000,
+    "until": 1771149600,
+    "total_requests": 23,
+    "total_bytes": 60712,
+    "total_megabytes": 0.06,
+    "waf_mitigated_requests": 0,
+    "top_user_agents": [
+      {
+        "browser": "Safari",
+        "requests": 6
+      },
+      {
+        "browser": "Chrome",
+        "requests": 6
+      },
+      {
+        "browser": "Other Bot",
         "requests": 2
       },
       {
@@ -501,1035 +1472,59 @@
     ],
     "top_countries": [
       {
-        "country": "FR",
-        "requests": 79
-      },
-      {
         "country": "United States",
-        "requests": 12
-      },
-      {
-        "country": "China",
-        "requests": 11
-      },
-      {
-        "country": "GB",
-        "requests": 4
-      },
-      {
-        "country": "DE",
-        "requests": 4
-      },
-      {
-        "country": "BR",
-        "requests": 2
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "FR",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1768050000,
-    "until": 1768053600,
-    "total_requests": 184,
-    "total_bytes": 469307,
-    "total_megabytes": 0.45,
-    "waf_mitigated_requests": 2,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
         "requests": 8
       },
       {
-        "browser": "Safari",
-        "requests": 3
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 3
-      },
-      {
-        "browser": "Firefox",
-        "requests": 2
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 12
-      },
-      {
-        "country": "BE",
-        "requests": 2
-      },
-      {
         "country": "China",
-        "requests": 2
-      },
-      {
-        "country": "JP",
-        "requests": 1
-      },
-      {
-        "country": "IN",
-        "requests": 1
-      },
-      {
-        "country": "GB",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "United States",
-        "requests": 1
-      },
-      {
-        "country": "IN",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1768053600,
-    "until": 1768057200,
-    "total_requests": 237,
-    "total_bytes": 1593327,
-    "total_megabytes": 1.52,
-    "waf_mitigated_requests": 152,
-    "top_user_agents": [
-      {
-        "browser": "Uncharted",
-        "requests": 67
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 7
-      },
-      {
-        "browser": "Chrome",
         "requests": 5
       },
       {
-        "browser": "Microsoft Edge",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "FR",
-        "requests": 68
-      },
-      {
-        "country": "United States",
-        "requests": 6
-      },
-      {
-        "country": "NL",
-        "requests": 4
-      },
-      {
         "country": "BR",
-        "requests": 1
-      },
-      {
-        "country": "BE",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "KR",
-        "requests": 150
-      },
-      {
-        "country": "FR",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1768057200,
-    "until": 1768060800,
-    "total_requests": 82,
-    "total_bytes": 561604,
-    "total_megabytes": 0.54,
-    "waf_mitigated_requests": 55,
-    "top_user_agents": [
-      {
-        "browser": "Uncharted",
-        "requests": 6
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 6
-      },
-      {
-        "browser": "Chrome",
-        "requests": 6
-      },
-      {
-        "browser": "Safari",
-        "requests": 3
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 7
-      },
-      {
-        "country": "FR",
-        "requests": 7
-      },
-      {
-        "country": "DE",
-        "requests": 3
-      },
-      {
-        "country": "NL",
-        "requests": 3
-      },
-      {
-        "country": "GB",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "AU",
-        "requests": 55
-      }
-    ]
-  },
-  {
-    "since": 1768060800,
-    "until": 1768064400,
-    "total_requests": 195,
-    "total_bytes": 1425672,
-    "total_megabytes": 1.36,
-    "waf_mitigated_requests": 151,
-    "top_user_agents": [
-      {
-        "browser": "Uncharted",
-        "requests": 22
-      },
-      {
-        "browser": "Chrome",
-        "requests": 4
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 4
-      },
-      {
-        "browser": "Safari",
-        "requests": 3
-      },
-      {
-        "browser": "Python aiohttp",
-        "requests": 1
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "FR",
-        "requests": 23
-      },
-      {
-        "country": "United States",
-        "requests": 10
-      },
-      {
-        "country": "BR",
-        "requests": 1
-      },
-      {
-        "country": "China",
-        "requests": 1
-      },
-      {
-        "country": "UZ",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "China",
-        "requests": 149
-      },
-      {
-        "country": "FR",
-        "requests": 1
-      },
-      {
-        "country": "United States",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1768064400,
-    "until": 1768068000,
-    "total_requests": 240,
-    "total_bytes": 1689668,
-    "total_megabytes": 1.61,
-    "waf_mitigated_requests": 68,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 79
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 14
-      },
-      {
-        "browser": "Safari",
-        "requests": 13
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 6
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      },
-      {
-        "browser": "Opera",
-        "requests": 1
-      },
-      {
-        "browser": "BingBot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 55
-      },
-      {
-        "country": "AT",
-        "requests": 35
-      },
-      {
-        "country": "NL",
-        "requests": 14
-      },
-      {
-        "country": "JP",
-        "requests": 3
-      },
-      {
-        "country": "China",
-        "requests": 2
-      },
-      {
-        "country": "RO",
-        "requests": 2
-      },
-      {
-        "country": "T1",
-        "requests": 2
-      },
-      {
-        "country": "FR",
-        "requests": 2
-      },
-      {
-        "country": "HU",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "AU",
-        "requests": 55
-      },
-      {
-        "country": "NL",
-        "requests": 5
-      },
-      {
-        "country": "JP",
-        "requests": 4
-      },
-      {
-        "country": "T1",
-        "requests": 2
-      },
-      {
-        "country": "RU",
-        "requests": 1
-      },
-      {
-        "country": "United States",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1768068000,
-    "until": 1768071600,
-    "total_requests": 223,
-    "total_bytes": 4257120,
-    "total_megabytes": 4.06,
-    "waf_mitigated_requests": 2,
-    "top_user_agents": [
-      {
-        "browser": "Other Bot",
-        "requests": 112
-      },
-      {
-        "browser": "Chrome",
-        "requests": 46
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 10
-      },
-      {
-        "browser": "Safari",
-        "requests": 8
-      },
-      {
-        "browser": "Firefox",
-        "requests": 2
-      },
-      {
-        "browser": "BingBot",
-        "requests": 1
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "DE",
-        "requests": 109
-      },
-      {
-        "country": "United States",
-        "requests": 67
-      },
-      {
-        "country": "CZ",
-        "requests": 1
-      },
-      {
-        "country": "RO",
-        "requests": 1
-      },
-      {
-        "country": "MY",
-        "requests": 1
-      },
-      {
-        "country": "China",
-        "requests": 1
-      },
-      {
-        "country": "KR",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "United States",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1768071600,
-    "until": 1768075200,
-    "total_requests": 384,
-    "total_bytes": 2873215,
-    "total_megabytes": 2.74,
-    "waf_mitigated_requests": 357,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 8
-      },
-      {
-        "browser": "Chrome",
-        "requests": 5
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 4
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 8
-      },
-      {
-        "country": "RO",
-        "requests": 3
-      },
-      {
-        "country": "China",
-        "requests": 2
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "BR",
-        "requests": 1
-      },
-      {
-        "country": "KR",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      },
-      {
-        "country": "JP",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "China",
-        "requests": 205
-      },
-      {
-        "country": "United States",
-        "requests": 150
-      },
-      {
-        "country": "SG",
-        "requests": 1
-      },
-      {
-        "country": "IN",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1768075200,
-    "until": 1768078800,
-    "total_requests": 317,
-    "total_bytes": 1242729,
-    "total_megabytes": 1.19,
-    "waf_mitigated_requests": 135,
-    "top_user_agents": [
-      {
-        "browser": "Uncharted",
-        "requests": 159
-      },
-      {
-        "browser": "Chrome",
-        "requests": 8
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 4
-      },
-      {
-        "browser": "Safari",
-        "requests": 2
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "AU",
-        "requests": 158
-      },
-      {
-        "country": "United States",
-        "requests": 6
-      },
-      {
-        "country": "NL",
-        "requests": 4
-      },
-      {
-        "country": "HU",
-        "requests": 2
-      },
-      {
-        "country": "China",
-        "requests": 1
-      },
-      {
-        "country": "BR",
-        "requests": 1
-      },
-      {
-        "country": "BE",
-        "requests": 1
-      },
-      {
-        "country": "SG",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "IE",
-        "requests": 135
-      }
-    ]
-  },
-  {
-    "since": 1768078800,
-    "until": 1768082400,
-    "total_requests": 148,
-    "total_bytes": 393044,
-    "total_megabytes": 0.37,
-    "waf_mitigated_requests": 5,
-    "top_user_agents": [
-      {
-        "browser": "Uncharted",
-        "requests": 82
-      },
-      {
-        "browser": "Chrome",
-        "requests": 10
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 8
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 2
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "NL",
-        "requests": 42
-      },
-      {
-        "country": "FR",
-        "requests": 39
-      },
-      {
-        "country": "United States",
-        "requests": 11
-      },
-      {
-        "country": "LT",
-        "requests": 9
-      },
-      {
-        "country": "CA",
-        "requests": 2
-      },
-      {
-        "country": "China",
-        "requests": 2
-      },
-      {
-        "country": "BR",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "NL",
-        "requests": 3
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "FR",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1768082400,
-    "until": 1768086000,
-    "total_requests": 175,
-    "total_bytes": 1239610,
-    "total_megabytes": 1.18,
-    "waf_mitigated_requests": 155,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 9
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 2
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 2
-      },
-      {
-        "browser": "BingBot",
-        "requests": 1
-      },
-      {
-        "browser": "Safari",
-        "requests": 1
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 8
-      },
-      {
-        "country": "United States",
-        "requests": 8
-      },
-      {
-        "country": "NL",
-        "requests": 2
-      },
-      {
-        "country": "SG",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "United States",
-        "requests": 151
-      },
-      {
-        "country": "SG",
-        "requests": 4
-      }
-    ]
-  },
-  {
-    "since": 1768086000,
-    "until": 1768089600,
-    "total_requests": 157,
-    "total_bytes": 2026692,
-    "total_megabytes": 1.93,
-    "waf_mitigated_requests": 1,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 62
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 17
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 4
-      },
-      {
-        "browser": "BingBot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 53
-      },
-      {
-        "country": "FR",
-        "requests": 14
-      },
-      {
-        "country": "LT",
-        "requests": 9
-      },
-      {
-        "country": "BE",
-        "requests": 4
-      },
-      {
-        "country": "HU",
-        "requests": 4
-      },
-      {
-        "country": "NL",
-        "requests": 3
-      },
-      {
-        "country": "BR",
-        "requests": 3
-      },
-      {
-        "country": "GB",
-        "requests": 2
-      },
-      {
-        "country": "PT",
-        "requests": 2
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "FR",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1768089600,
-    "until": 1768093200,
-    "total_requests": 173,
-    "total_bytes": 2276876,
-    "total_megabytes": 2.17,
-    "waf_mitigated_requests": 53,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 45
-      },
-      {
-        "browser": "Firefox",
-        "requests": 4
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 3
-      },
-      {
-        "browser": "BingBot",
-        "requests": 2
-      },
-      {
-        "browser": "Safari",
-        "requests": 2
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 57
-      },
-      {
-        "country": "BE",
         "requests": 2
       },
       {
         "country": "JP",
         "requests": 2
-      },
-      {
-        "country": "NL",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "KR",
-        "requests": 53
-      }
-    ]
-  },
-  {
-    "since": 1768093200,
-    "until": 1768096800,
-    "total_requests": 98,
-    "total_bytes": 709919,
-    "total_megabytes": 0.68,
-    "waf_mitigated_requests": 73,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 8
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 8
-      },
-      {
-        "browser": "Chrome",
-        "requests": 7
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 8
-      },
-      {
-        "country": "United States",
-        "requests": 7
-      },
-      {
-        "country": "TR",
-        "requests": 3
-      },
-      {
-        "country": "HU",
-        "requests": 2
-      },
-      {
-        "country": "GB",
-        "requests": 1
-      },
-      {
-        "country": "BR",
-        "requests": 1
-      },
-      {
-        "country": "SG",
-        "requests": 1
-      },
-      {
-        "country": "NL",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "China",
-        "requests": 55
       },
       {
         "country": "IE",
-        "requests": 16
-      },
-      {
-        "country": "NL",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1768096800,
-    "until": 1768100400,
-    "total_requests": 63,
-    "total_bytes": 5134345,
-    "total_megabytes": 4.9,
-    "waf_mitigated_requests": 0,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 24
-      },
-      {
-        "browser": "Safari",
-        "requests": 11
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 10
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "BR",
-        "requests": 22
-      },
-      {
-        "country": "United States",
-        "requests": 16
-      },
-      {
-        "country": "HU",
-        "requests": 2
-      },
-      {
-        "country": "KR",
-        "requests": 2
-      },
-      {
-        "country": "DE",
-        "requests": 2
-      },
-      {
-        "country": "JP",
-        "requests": 1
-      },
-      {
-        "country": "China",
         "requests": 1
       }
     ],
     "top_waf_countries": []
   },
   {
-    "since": 1768100400,
-    "until": 1768104000,
-    "total_requests": 310,
-    "total_bytes": 5911119,
-    "total_megabytes": 5.64,
-    "waf_mitigated_requests": 77,
+    "since": 1771149600,
+    "until": 1771153200,
+    "total_requests": 2887,
+    "total_bytes": 14001193,
+    "total_megabytes": 13.35,
+    "waf_mitigated_requests": 683,
     "top_user_agents": [
       {
-        "browser": "Chrome",
-        "requests": 55
+        "browser": "cURL",
+        "requests": 128
       },
       {
-        "browser": "Microsoft Edge",
-        "requests": 28
-      },
-      {
-        "browser": "Uncharted",
+        "browser": "Googlebot",
         "requests": 9
       },
       {
-        "browser": "Firefox",
-        "requests": 5
+        "browser": "Uncharted",
+        "requests": 3
       },
       {
-        "browser": "Other Bot",
+        "browser": "Chrome",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
         "requests": 2
+      },
+      {
+        "browser": "Firefox",
+        "requests": 1
       },
       {
         "browser": "BingBot",
@@ -1538,42 +1533,30 @@
     ],
     "top_countries": [
       {
-        "country": "United States",
-        "requests": 60
-      },
-      {
-        "country": "China",
-        "requests": 34
-      },
-      {
-        "country": "BE",
-        "requests": 3
-      },
-      {
-        "country": "LT",
-        "requests": 2
-      },
-      {
-        "country": "GB",
-        "requests": 1
+        "country": "FR",
+        "requests": 129
       },
       {
         "country": "NL",
-        "requests": 1
+        "requests": 29
       },
       {
-        "country": "DE",
+        "country": "United States",
+        "requests": 15
+      },
+      {
+        "country": "BR",
+        "requests": 2
+      },
+      {
+        "country": "CA",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "AU",
-        "requests": 56
-      },
-      {
-        "country": "United States",
-        "requests": 21
+        "country": "FR",
+        "requests": 683
       }
     ]
   }

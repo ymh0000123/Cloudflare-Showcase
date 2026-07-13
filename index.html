@@ -3,2080 +3,687 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>分析面板</title>
-    <!-- 引入 ECharts 库 -->
+    <title>Cloudflare Analytics</title>
     <script src="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
-    <!-- 引入世界地图数据 -->
     <script src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- 添加Font Awesome图标库 -->
-    <link
-      rel="stylesheet"
-      href="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
       :root {
-        /* 亮色模式变量 */
-        --primary-color: #4361ee;
-        --secondary-color: #3f37c9;
-        --accent-color: #4895ef;
-        --success-color: #4cc9f0;
-        --danger-color: #f72585;
-        --warning-color: #f8961e;
-        --light-color: #f8f9fa;
-        --dark-color: #212529;
-        --bg-gradient-start: #f5f7fa;
-        --bg-gradient-end: #c3cfe2;
-        --card-bg: white;
-        --card-shadow: rgba(0, 0, 0, 0.05);
-        --card-shadow-hover: rgba(0, 0, 0, 0.1);
-        --text-color: #333;
-        --text-muted: #666;
-        --border-color: #e0e0e0;
-        --chart-line-color: rgba(0, 0, 0, 0.05);
-        --header-text: white;
-        --footer-bg: white;
-        --transition-speed: 0.3s;
+        --primary: #2563eb;
+        --primary-light: #3b82f6;
+        --primary-dark: #1d4ed8;
+        --danger: #ef4444;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --bg: #f8fafc;
+        --bg-card: #ffffff;
+        --text: #0f172a;
+        --text-secondary: #64748b;
+        --border: #e2e8f0;
+        --shadow: 0 1px 3px rgba(0,0,0,0.08);
+        --shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
+        --radius: 12px;
       }
 
-      /* 进度条样式 */
-      .progress-bar-container {
+      [data-theme="dark"] {
+        --primary: #3b82f6;
+        --primary-light: #60a5fa;
+        --primary-dark: #2563eb;
+        --bg: #0f172a;
+        --bg-card: #1e293b;
+        --text: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --border: #334155;
+        --shadow: 0 1px 3px rgba(0,0,0,0.3);
+        --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --primary: #3b82f6;
+          --primary-light: #60a5fa;
+          --primary-dark: #2563eb;
+          --bg: #0f172a;
+          --bg-card: #1e293b;
+          --text: #f1f5f9;
+          --text-secondary: #94a3b8;
+          --border: #334155;
+          --shadow: 0 1px 3px rgba(0,0,0,0.3);
+          --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .header {
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-title {
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .header-title i {
+        color: var(--primary);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg-card);
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+      }
+
+      .btn-icon:hover {
+        background: var(--bg);
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .btn-icon.loading {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      @media (max-width: 1024px) {
+        .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      @media (max-width: 640px) {
+        .kpi-grid { grid-template-columns: 1fr; }
+      }
+
+      .kpi-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        transition: box-shadow 0.2s;
+      }
+
+      .kpi-card:hover {
+        box-shadow: var(--shadow-hover);
+      }
+
+      .kpi-label {
+        font-size: 13px;
+        color: var(--text-secondary);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      .kpi-label i {
+        font-size: 14px;
+      }
+
+      .kpi-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      @media (max-width: 900px) {
+        .charts-grid { grid-template-columns: 1fr; }
+      }
+
+      .chart-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        transition: box-shadow 0.2s;
+      }
+
+      .chart-card:hover {
+        box-shadow: var(--shadow-hover);
+      }
+
+      .chart-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .chart-title {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .chart-toggle {
+        display: inline-flex;
+        background: var(--bg);
+        border-radius: 6px;
+        padding: 2px;
+        border: 1px solid var(--border);
+      }
+
+      .chart-toggle-btn {
+        padding: 6px 10px;
+        border: none;
+        background: transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        color: var(--text-secondary);
+        font-size: 13px;
+        transition: all 0.2s;
+      }
+
+      .chart-toggle-btn:hover {
+        color: var(--primary);
+      }
+
+      .chart-toggle-btn.active {
+        background: var(--primary);
+        color: white;
+      }
+
+      .chart-container {
+        width: 100%;
+        height: 320px;
+      }
+
+      .watermark {
+        position: fixed;
+        bottom: 16px;
+        left: 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 12px;
+        color: var(--text-secondary);
+        box-shadow: var(--shadow);
+        z-index: 50;
+      }
+
+      .watermark-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .watermark-time {
+        font-weight: 500;
+        color: var(--primary);
+      }
+
+      .watermark-info {
+        margin-top: 4px;
+        font-size: 11px;
+        opacity: 0.8;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 24px;
+        color: var(--text-secondary);
+        font-size: 13px;
+        border-top: 1px solid var(--border);
+        margin-top: 24px;
+      }
+
+      .footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .loading-spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid var(--border);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 40px auto;
+      }
+
+      .progress-bar {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        height: 3px;
-        background: transparent;
-        z-index: 1000;
+        height: 2px;
+        z-index: 200;
         display: none;
       }
 
       .progress-bar-fill {
         height: 100%;
         width: 0;
-        background: var(--primary-color);
-        box-shadow: 0 0 10px var(--primary-color);
-        transition: width 0.4s ease;
-      }
-
-      /* 深色模式变量 */
-      [data-theme="dark"] {
-        --primary-color: #4cc9f0;
-        --secondary-color: #4895ef;
-        --accent-color: #4361ee;
-        --success-color: #3f37c9;
-        --danger-color: #f72585;
-        --warning-color: #f8961e;
-        --light-color: #f8f9fa;
-        --dark-color: #e9ecef;
-        --bg-gradient-start: #1a1a2e;
-        --bg-gradient-end: #16213e;
-        --card-bg: #1f2937;
-        --card-shadow: rgba(0, 0, 0, 0.2);
-        --card-shadow-hover: rgba(0, 0, 0, 0.4);
-        --text-color: #e9ecef;
-        --text-muted: #adb5bd;
-        --border-color: #4d4d4d;
-        --chart-line-color: rgba(255, 255, 255, 0.05);
-        --header-text: #f8f9fa;
-        --footer-bg: #1f2937;
-      }
-
-      /* 系统偏好深色模式自动切换 */
-      @media (prefers-color-scheme: dark) {
-        :root:not([data-theme="light"]) {
-          --primary-color: #4cc9f0;
-          --secondary-color: #4895ef;
-          --accent-color: #4361ee;
-          --success-color: #3f37c9;
-          --danger-color: #f72585;
-          --warning-color: #f8961e;
-          --light-color: #f8f9fa;
-          --dark-color: #e9ecef;
-          --bg-gradient-start: #1a1a2e;
-          --bg-gradient-end: #16213e;
-          --card-bg: #1f2937;
-          --card-shadow: rgba(0, 0, 0, 0.2);
-          --card-shadow-hover: rgba(0, 0, 0, 0.4);
-          --text-color: #e9ecef;
-          --text-muted: #adb5bd;
-          --border-color: #4d4d4d;
-          --chart-line-color: rgba(255, 255, 255, 0.05);
-          --header-text: #f8f9fa;
-          --footer-bg: #1f2937;
-        }
-      }
-
-      * {
-        box-sizing: border-box;
-        transition: all var(--transition-speed) ease;
-      }
-
-      body {
-        font-family: "Roboto", Arial, sans-serif;
-        margin: 0;
-        background: linear-gradient(
-          135deg,
-          var(--bg-gradient-start) 0%,
-          var(--bg-gradient-end) 100%
-        );
-        color: var(--text-color);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-      }
-
-      .container {
-        width: 95%;
-        max-width: 1400px;
-        margin: 20px auto;
-        padding: 20px;
-        animation: fadeIn 1s ease-in-out;
-        flex-grow: 1;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      header {
-        width: 100%;
-        background: linear-gradient(
-          to right,
-          var(--primary-color),
-          var(--accent-color)
-        );
-        padding: 25px 0;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        margin-bottom: 30px;
-        border-radius: 0 0 15px 15px;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      header::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(
-          circle,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
-        transform: rotate(30deg);
-      }
-
-      header h1 {
-        color: var(--header-text);
-        margin: 0;
-        font-size: 2.2em;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        position: relative;
-      }      /* 主题切换按钮 */
-      .theme-toggle {
-        position: absolute;
-        right: 80px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: var(--header-text);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2em;
-        transition: all 0.3s ease;
-      }
-
-      .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-
-      /* 背景切换按钮 */
-      .bg-toggle {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        color: var(--header-text);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2em;
-        transition: all 0.3s ease;
-      }
-
-      .bg-toggle:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-
-      /* 背景图片样式 */
-      body.bg-image {
-        background: var(--bg-image-url) no-repeat center center fixed;
-        background-size: cover;
-        position: relative;
-      }
-
-      body.bg-image::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: -1;
-        pointer-events: none;
-      }      [data-theme="dark"] body.bg-image::before {
-        background: rgba(0, 0, 0, 0.5);
-      }      /* 亚克力风格卡片 */
-      body.bg-image .card,
-      body.bg-image .chart-container-wrapper,
-      body.bg-image footer {
-        background: rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(13px);
-        -webkit-backdrop-filter: blur(13px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-      }
-
-      [data-theme="dark"] body.bg-image .card,
-      [data-theme="dark"] body.bg-image .chart-container-wrapper,
-      [data-theme="dark"] body.bg-image .watermark,
-      [data-theme="dark"] body.bg-image footer {
-        background: rgba(0, 0, 0, 0.25);
-        backdrop-filter: blur(13px);
-        -webkit-backdrop-filter: blur(13px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      }
-
-      /* 亚克力风格下的悬停效果 */
-      body.bg-image .card:hover,
-      body.bg-image .chart-container-wrapper:hover {
-        background: rgba(255, 255, 255, 0.35);
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-      }
-
-      [data-theme="dark"] body.bg-image .card:hover,
-      [data-theme="dark"] body.bg-image .chart-container-wrapper:hover {
-        background: rgba(0, 0, 0, 0.35);
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-      }      /* 亚克力风格下的文字增强 */
-      body.bg-image .card h3,
-      body.bg-image .card .value,
-      body.bg-image .chart-container-wrapper h2 {
-        text-shadow: 1px 1px 3px rgba(102, 102, 102, 0.3);
-        color: var(--text-color);
-        font-weight: 600;
-      }
-
-      /* 文字特殊突出样式 */
-      body.bg-image .footer-text,
-      body.bg-image .watermark .update-time,
-      body.bg-image .watermark .data-info {
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
-        color: #ffffff !important;
-        font-weight: 700;
-      }
-
-      /* 页脚链接在背景图片模式下的特殊样式 */
-      body.bg-image .footer-text a {
-        color: #ffffff !important;
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
-        font-weight: 700;
-        text-decoration: underline;
-        text-decoration-color: rgba(255, 255, 255, 0.7);
-      }
-
-      body.bg-image .footer-text a:hover {
-        color: #e0e0e0 !important;
-        text-decoration-color: #e0e0e0;
-      }
-
-      [data-theme="dark"] body.bg-image .card h3,
-      [data-theme="dark"] body.bg-image .card .value,
-      [data-theme="dark"] body.bg-image .chart-container-wrapper h2,
-      [data-theme="dark"] body.bg-image .watermark,
-      [data-theme="dark"] body.bg-image .watermark .data-info {
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-        color: var(--text-color);
-      }
-
-      /* 深色主题下页脚文字特殊突出样式 */
-      [data-theme="dark"] body.bg-image .footer-text {
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.6);
-        color: #f0f0f0 !important;
-        font-weight: 700;
-      }
-
-      /* 深色主题下页脚链接的特殊样式 */
-      [data-theme="dark"] body.bg-image .footer-text a {
-        color: #f0f0f0 !important;
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.6);
-        font-weight: 700;
-        text-decoration: underline;
-        text-decoration-color: rgba(240, 240, 240, 0.7);
-      }
-
-      [data-theme="dark"] body.bg-image .footer-text a:hover {
-        color: #d0d0d0 !important;
-        text-decoration-color: #d0d0d0;
-      }
-
-      /* 亚克力风格下的图表类型切换按钮 */
-      body.bg-image .chart-type-toggle {
-        background: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-      }
-
-      [data-theme="dark"] body.bg-image .chart-type-toggle {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      /* 亚克力风格下的水印 */
-      body.bg-image .watermark:hover {
-        background: rgba(255, 255, 255, 0.35);
-        transform: scale(1.02);
-      }
-
-      [data-theme="dark"] body.bg-image .watermark:hover {
-        background: rgba(0, 0, 0, 0.35);
-      }
-
-      .kpi-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 25px;
-        margin-bottom: 40px;
-      }
-
-      .card {
-        background-color: var(--card-bg);
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px var(--card-shadow);
-        text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        border-top: 4px solid var(--primary-color);
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px var(--card-shadow-hover);
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.1) 0%,
-          rgba(255, 255, 255, 0) 100%
-        );
-        pointer-events: none;
-      }
-
-      .card:nth-child(1) {
-        border-top-color: var(--primary-color);
-      }
-
-      .card:nth-child(2) {
-        border-top-color: var(--accent-color);
-      }
-
-      .card:nth-child(3) {
-        border-top-color: var(--danger-color);
-      }
-
-      .card:nth-child(4) {
-        border-top-color: var(--warning-color);
-      }
-
-      .card h3 {
-        margin-top: 0;
-        color: var(--text-color);
-        font-size: 1.1em;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .card .value {
-        font-size: 2.2em;
-        font-weight: 700;
-        color: var(--text-color);
-        margin: 15px 0;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
-      }
-
-      .card .change {
-        font-size: 0.9em;
-        color: var(--text-muted);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-      }
-      .charts-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-
-      @media (min-width: 992px) {
-        .charts-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-      @media (min-width: 1200px) {
-        .charts-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }      .chart-container-wrapper {
-        background-color: var(--card-bg);
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px var(--card-shadow);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 400px;
-        max-height: 400px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        position: relative;
-      }
-
-      .chart-container-wrapper:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px var(--card-shadow-hover);
-      }
-
-      .chart-container-wrapper h2 {
-        text-align: center;
-        color: var(--text-color);
-        margin-top: 0;
-        margin-bottom: 20px;
-        font-size: 1.5em;
-        position: relative;
-        padding-bottom: 10px;
-      }      .chart-container-wrapper h2::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 50px;
-        height: 3px;
-        background: linear-gradient(
-          to right,
-          var(--primary-color),
-          var(--accent-color)
-        );
-        border-radius: 3px;
-      }      /* 图表类型切换按钮样式 */
-      .chart-type-toggle {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        display: inline-flex;
-        background: var(--card-bg);
-        border-radius: 20px;
-        padding: 4px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border: 1px solid var(--border-color);
-        z-index: 10;
-      }
-
-      .chart-type-btn {
-        background: transparent;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 16px;
-        cursor: pointer;
-        color: var(--text-muted);
-        transition: all 0.3s ease;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 40px;
-      }
-
-      .chart-type-btn:hover {
-        color: var(--primary-color);
-        background: rgba(67, 97, 238, 0.1);
-      }
-
-      .chart-type-btn.active {
-        background: var(--primary-color);
-        color: white;
-        box-shadow: 0 2px 4px rgba(67, 97, 238, 0.3);
-      }
-      .chart-container {
-        width: 100%;
-        height: 320px;
-        max-height: 320px;
-        flex: 1;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-
-      .stats-raw {
-        margin-top: 40px;
-        max-height: 300px;
-        overflow: auto;
-        background-color: var(--card-bg);
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px var(--card-shadow);
-        border: 1px solid var(--border-color);
-      }
-
-      .stats-raw pre {
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        color: var(--text-color);
-      }
-
-      /* 响应式调整 */        @media (max-width: 768px) {
-        .container {
-          width: 95%;
-          padding: 15px;
-        }
-
-        header h1 {
-          font-size: 1.8em;
-        }
-
-        .card {
-          padding: 20px;
-        }
-
-        .card .value {
-          font-size: 1.8em;
-        }
-        .chart-container {
-          height: 250px;
-          max-height: 250px;
-        }
-
-        .chart-container-wrapper {
-          height: 320px;
-          max-height: 320px;
-        }
-
-        .theme-toggle {
-          width: 35px;
-          height: 35px;
-          font-size: 1em;
-          right: 60px;
-        }
-
-        .bg-toggle {
-          width: 35px;
-          height: 35px;
-          font-size: 1em;
-          right: 10px;
-        }
-      }
-
-      /* 加载动画 */
-      .loading {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100px;
-      }
-
-      .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50%;
-        border-top-color: var(--primary-color);
-        animation: spin 1s ease-in-out infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }      /* 水印样式 */
-      .watermark {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        padding: 8px 12px;
-        font-size: 12px;
-        color: var(--text-muted);
-        z-index: 1000;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        max-width: 250px;
-        line-height: 1.4;
-      }
-
-      .watermark:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: scale(1.02);
-      }
-
-      [data-theme="dark"] .watermark {
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      [data-theme="dark"] .watermark:hover {
-        background: rgba(0, 0, 0, 0.3);
-      }      .watermark .update-time {
-        font-weight: 500;
-        color: var(--primary-color);
-        margin-bottom: 2px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .watermark .data-info {
-        font-size: 11px;
-        opacity: 0.8;
-      }
-
-      .refresh-btn {
-        background: none;
-        border: none;
-        color: var(--primary-color);
-        cursor: pointer;
-        padding: 2px 4px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-        font-size: 12px;
-        margin-left: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 20px;
-        height: 20px;
-      }
-
-      .refresh-btn:hover {
-        background: rgba(67, 97, 238, 0.1);
-        transform: scale(1.1);
-      }
-
-      .refresh-btn.loading {
-        animation: refreshSpin 1s linear infinite;
-        pointer-events: none;
-        opacity: 0.6;
-      }
-
-      @keyframes refreshSpin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-
-      /* 响应式调整 - 移动端水印 */
-      @media (max-width: 768px) {
-        .watermark {
-          bottom: 10px;
-          left: 10px;
-          right: 10px;
-          max-width: 250px;
-          text-align: center;
-          font-size: 11px;
-        }
-      }
-
-      /* 页脚样式 */
-      footer {
-        width: 100%;
-        background-color: var(--footer-bg);
-        text-align: center;
-        padding: 20px 0;
-        margin-top: 40px;
-        box-shadow: 0 -4px 10px var(--card-shadow);
-        color: var(--text-muted);
-        font-size: 0.9em;
-      }
-
-      /* 页脚文字基础样式 */
-      .footer-text {
-        font-weight: 500;
-        margin: 0;
-      }
-
-      .footer-text a {
-        color: var(--text-color);
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-      }
-
-      .footer-text a:hover {
-        text-decoration: underline;
-        opacity: 0.8;
+        background: var(--primary);
+        transition: width 0.3s;
       }
     </style>
-    <script>      // 日志工具
-      const log = false; // 设置为 false 可禁用日志输出
-      
-      // 全局变量存储用户代理数据和图表类型
+    <script>
       let currentUserAgentData = [];
-      let currentChartType = 'bar'; // 'bar' 或 'pie'
-      
-      // 背景图片配置
-      const backgroundImages = [
-        //'url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")', // 数字科技背景
-        //'url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80")', // 地球科技
-        //'url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")', // 抽象科技
-        //'url("https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80")', // 网络连接
-        //'url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")', // 数据流
-        'url("https://blog-picture.xiao-feishu.top/list/background/2024-07-05_1.webp")'
-      ];
-      let currentBackgroundIndex = 0;
-      let isBackgroundEnabled = false;
-      
-      const Logger = {
-        log: (message, data = null) => {
-          if (log) {
-            const timestamp = new Date().toISOString();
-            console.log(`[${timestamp}] ${message}`, data || "");
-          }
-        },
-        error: (message, error = null) => {
-          if (log) {
-            const timestamp = new Date().toISOString();
-            console.error(`[${timestamp}] ERROR: ${message}`, error || "");
-          }
-        },
-        warn: (message, data = null) => {
-          if (log) {
-            const timestamp = new Date().toISOString();
-            console.warn(`[${timestamp}] WARNING: ${message}`, data || "");
-          }
-        },
-        colors: (theme = null) => {
-          const timestamp = new Date().toISOString();
-          const currentTheme =
-            theme ||
-            document.documentElement.getAttribute("data-theme") ||
-            "light";
-          const colors = getThemeColors(currentTheme);
-          if (log) {
-            console.group(`[${timestamp}] 当前主题颜色配置 (${currentTheme})`);
-            Object.entries(colors).forEach(([key, value]) => {
-              console.log(
-                `%c${key}: ${value}`,
-                `color: ${value}; font-weight: bold;`
-              );
-            });
-          }
-          console.groupEnd();
-          return colors;
-        },
-      };
+      let currentChartType = 'bar';
 
-      // 获取主题颜色配置
-      function getThemeColors(theme = "light") {
-        const isDark = theme === "dark";
+      function getThemeColors() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         return {
-          "primary-color": isDark ? "#4cc9f0" : "#4361ee",
-          "secondary-color": isDark ? "#4895ef" : "#3f37c9",
-          "accent-color": isDark ? "#4361ee" : "#4895ef",
-          "success-color": isDark ? "#3f37c9" : "#4cc9f0",
-          "danger-color": "#f72585",
-          "warning-color": "#f8961e",
-          "light-color": "#f8f9fa",
-          "dark-color": isDark ? "#e9ecef" : "#212529",
-          "bg-gradient-start": isDark ? "#1a1a2e" : "#f5f7fa",
-          "bg-gradient-end": isDark ? "#16213e" : "#c3cfe2",
-          "card-bg": isDark ? "#1f2937" : "white",
-          "text-color": isDark ? "#e9ecef" : "#333",
-          "text-muted": isDark ? "#adb5bd" : "#666",
-          "border-color": isDark ? "#4d4d4d" : "#e0e0e0",
-          "header-text": isDark ? "#f8f9fa" : "white",
-          "footer-bg": isDark ? "#1f2937" : "white",
+          text: isDark ? '#f1f5f9' : '#0f172a',
+          textSecondary: isDark ? '#94a3b8' : '#64748b',
+          border: isDark ? '#334155' : '#e2e8f0',
+          bg: isDark ? '#1e293b' : '#ffffff',
+          splitLine: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
         };
-      }      // 主题切换功能
+      }
+
       function toggleTheme() {
-        Logger.log("开始切换主题");
-        const currentTheme =
-          document.documentElement.getAttribute("data-theme") || "light";
-        const newTheme = currentTheme === "light" ? "dark" : "light";
-        Logger.log(`主题切换: ${currentTheme} -> ${newTheme}`);
-
-        document.documentElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
-        updateThemeIcon(newTheme);
-        updateCharts();
-        Logger.log("主题切换完成");
-
-        // 输出颜色配置
-        Logger.colors(newTheme);
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeIcon(next);
+        if (window.chartData) createCharts(window.chartData);
       }
-      
+
       function updateThemeIcon(theme) {
-        Logger.log(`更新主题图标: ${theme}`);
-        const themeToggle = document.getElementById("theme-toggle");
-        if (themeToggle) {
-          themeToggle.innerHTML =
-            theme === "dark"
-              ? '<i class="fas fa-sun"></i>'
-              : '<i class="fas fa-moon"></i>';
-        }
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
       }
 
-      // 背景切换功能
-      function toggleBackground() {
-        Logger.log("切换背景图片");
-        isBackgroundEnabled = !isBackgroundEnabled;
-        
-        if (isBackgroundEnabled) {
-          applyBackgroundImage();
-          localStorage.setItem("backgroundEnabled", "true");
-          localStorage.setItem("backgroundIndex", currentBackgroundIndex.toString());
-        } else {
-          removeBackgroundImage();
-          localStorage.setItem("backgroundEnabled", "false");
-        }
-        
-        updateBackgroundIcon();
-        Logger.log(`背景图片已${isBackgroundEnabled ? '启用' : '禁用'}`);
-      }
-
-      function applyBackgroundImage() {
-        const bgUrl = backgroundImages[currentBackgroundIndex];
-        document.documentElement.style.setProperty('--bg-image-url', bgUrl);
-        document.body.classList.add('bg-image');
-        Logger.log(`应用背景图片: ${currentBackgroundIndex + 1}/${backgroundImages.length}`);
-      }
-
-      function removeBackgroundImage() {
-        document.body.classList.remove('bg-image');
-        document.documentElement.style.removeProperty('--bg-image-url');
-        Logger.log("移除背景图片");
-      }
-
-      function updateBackgroundIcon() {
-        const bgToggle = document.getElementById("bg-toggle");
-        if (bgToggle) {
-          bgToggle.innerHTML = isBackgroundEnabled
-            ? '<i class="fas fa-image"></i>'
-            : '<i class="far fa-image"></i>';
-        }
-      }
-
-      function nextBackgroundImage() {
-        if (isBackgroundEnabled) {
-          currentBackgroundIndex = (currentBackgroundIndex + 1) % backgroundImages.length;
-          applyBackgroundImage();
-          localStorage.setItem("backgroundIndex", currentBackgroundIndex.toString());
-          Logger.log(`切换到背景图片: ${currentBackgroundIndex + 1}/${backgroundImages.length}`);
-        }
-      }      // 初始化主题
       function initTheme() {
-        Logger.log("初始化主题设置");
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme) {
-          Logger.log(`使用保存的主题: ${savedTheme}`);
-          document.documentElement.setAttribute("data-theme", savedTheme);
-          updateThemeIcon(savedTheme);
-        } else if (
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
-          Logger.log("检测到系统深色模式偏好，使用深色主题");
-          document.documentElement.setAttribute("data-theme", "dark");
-          updateThemeIcon("dark");
-        } else {
-          Logger.log("使用默认浅色主题");
-        }
-
-        // 初始化背景设置
-        const savedBackgroundEnabled = localStorage.getItem("backgroundEnabled");
-        const savedBackgroundIndex = localStorage.getItem("backgroundIndex");
-        
-        if (savedBackgroundEnabled === "true") {
-          isBackgroundEnabled = true;
-          if (savedBackgroundIndex) {
-            currentBackgroundIndex = parseInt(savedBackgroundIndex) || 0;
-          }
-          applyBackgroundImage();
-        }
-        updateBackgroundIcon();
-
-        // 输出初始主题颜色配置
-        Logger.colors();
-      }// 更新图表颜色
-      function updateCharts() {
-        Logger.log("开始更新图表颜色");
-        if (
-          window.requestsWafChart &&
-          window.trafficChart &&
-          window.userAgentChart
-        ) {
-          Logger.log("重新创建图表以应用新主题");
-          createCharts(window.chartData || []);
-        } else {
-          Logger.warn("图表实例不存在，跳过更新");
-        }
-      }
-      async function loadStats() {
-        const progressBar = document.getElementById('progress-bar');
-        const progressFill = document.getElementById('progress-fill');
-        
-        try {
-          Logger.log("开始加载统计数据");
-          // 显示加载动画和进度条
-          if (progressBar) progressBar.style.display = 'block';
-          if (progressFill) progressFill.style.width = '30%';
-
-          document.querySelectorAll(".card .value").forEach((el) => {
-            el.innerHTML =
-              '<div class="loading"><div class="loading-spinner"></div></div>';
-          });
-
-          document.querySelectorAll(".chart-container").forEach((el) => {
-            el.innerHTML =
-              '<div class="loading"><div class="loading-spinner"></div></div>';
-          });
-
-          Logger.log("正在请求 cloudflare_hourly_stats.json 文件");
-          if (progressFill) progressFill.style.width = '60%';
-          
-          const response = await fetch("cloudflare_hourly_stats.json");
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          if (progressFill) progressFill.style.width = '80%';
-          
-          const data = await response.json();
-          Logger.log("成功获取数据", { dataLength: data.length });
-
-          if (progressFill) progressFill.style.width = '90%';
-
-          if (!Array.isArray(data) || data.length === 0) {
-            Logger.warn("数据为空或格式无效");
-            document.getElementById("kpi-cards-container").innerHTML =
-              "<p>无法加载统计数据或数据为空。</p>";
-            return;
-          }
-
-          // 保存数据以便主题切换时重新渲染图表
-          window.chartData = data;          Logger.log("开始创建 KPI 卡片");
-          createKPIs(data);
-          Logger.log("开始创建图表");
-          createCharts(data);
-          // displayRawData(data); // Optional: if you want to show raw data
-
-          // 更新水印信息
-          updateWatermark(data);
-
-          // 更新页脚年份
-          updateFooterYear();
-          
-          if (progressFill) progressFill.style.width = '100%';
-          setTimeout(() => {
-            if (progressBar) progressBar.style.display = 'none';
-            if (progressFill) progressFill.style.width = '0';
-          }, 500);
-          
-          Logger.log("统计数据加载完成");
-        } catch (error) {
-          if (progressBar) progressBar.style.display = 'none';
-          Logger.error("加载统计数据失败", error);
-          document.getElementById(
-            "kpi-cards-container"
-          ).innerHTML = `<p>加载统计数据失败: ${error.message}</p>`;
-        }
-      }
-      function formatTimestamp(timestamp) {
-        const date = new Date(timestamp * 1000);
-        return (
-          (date.getMonth() + 1) + "/" + date.getDate() +
-          " " +
-          date.toLocaleTimeString("zh-CN", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        );
-      } // 格式化流量单位
-      function formatTraffic(megabytes, precision = 2) {
-        if (megabytes >= 1024 * 1024) {
-          // TB
-          return (megabytes / (1024 * 1024)).toFixed(precision) + " TB";
-        } else if (megabytes >= 1024) {
-          // GB
-          return (megabytes / 1024).toFixed(precision) + " GB";
-        } else {
-          // MB
-          return megabytes.toFixed(precision) + " MB";
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+          updateThemeIcon(saved);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          updateThemeIcon('dark');
         }
       }
 
-      // 格式化请求数量单位
-      function formatRequests(count, precision = 1) {
-        if (count >= 100000000) {
-          // 亿
-          return (count / 100000000).toFixed(precision) + "BN";
-        } else if (count >= 10000) {
-          // 万
-          return (count / 10000).toFixed(precision) + "W";
-        } else if (count >= 1000) {
-          // 千
-          return (count / 1000).toFixed(precision) + "K";
-        } else {
-          // 原数值
-          return Math.round(count).toLocaleString();
-        }
+      function formatTimestamp(ts) {
+        const d = new Date(ts * 1000);
+        return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+      }
+
+      function formatTraffic(mb, p = 2) {
+        if (mb >= 1024 * 1024) return (mb / (1024 * 1024)).toFixed(p) + ' TB';
+        if (mb >= 1024) return (mb / 1024).toFixed(p) + ' GB';
+        return mb.toFixed(p) + ' MB';
+      }
+
+      function formatRequests(count, p = 1) {
+        if (count >= 1e8) return (count / 1e8).toFixed(p) + 'BN';
+        if (count >= 1e4) return (count / 1e4).toFixed(p) + 'W';
+        if (count >= 1e3) return (count / 1e3).toFixed(p) + 'K';
+        return Math.round(count).toLocaleString();
+      }
+
+      function animateValue(id, start, end, dur, fmt) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        let t0 = null;
+        const step = (ts) => {
+          if (!t0) t0 = ts;
+          const p = Math.min((ts - t0) / dur, 1);
+          el.textContent = fmt(p * (end - start) + start);
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
       }
 
       function createKPIs(data) {
-        Logger.log("创建 KPI 卡片数据", { itemsCount: data.length });
-        const totalRequests = data.reduce(
-          (sum, item) => sum + item.total_requests,
-          0
-        );
-        const totalTrafficMB = data.reduce(
-          (sum, item) => sum + item.total_megabytes,
-          0
-        );
-        const totalWafMitigated = data.reduce(
-          (sum, item) => sum + item.waf_mitigated_requests,
-          0
-        );
-        const averageWafRate =
-          totalRequests > 0 ? (totalWafMitigated / totalRequests) * 100 : 0;
+        const totalReq = data.reduce((s, d) => s + d.total_requests, 0);
+        const totalTraffic = data.reduce((s, d) => s + d.total_megabytes, 0);
+        const totalWaf = data.reduce((s, d) => s + d.waf_mitigated_requests, 0);
+        const wafRate = totalReq > 0 ? (totalWaf / totalReq) * 100 : 0;
 
-        Logger.log("KPI 数据计算完成", {
-          totalRequests,
-          totalTrafficMB: totalTrafficMB.toFixed(2),
-          totalWafMitigated,
-          averageWafRate: averageWafRate.toFixed(2),
-        });
-
-        // 添加数字增长动画
-        animateValue("total-requests", 0, totalRequests, 1500, (value) =>
-          formatRequests(value)
-        );
-        animateValue("total-traffic", 0, totalTrafficMB, 1500, (value) =>
-          formatTraffic(value)
-        );
-        animateValue("waf-mitigated", 0, totalWafMitigated, 1500, (value) =>
-          formatRequests(value)
-        );
-        animateValue(
-          "waf-rate",
-          0,
-          averageWafRate,
-          1500,
-          (value) => value.toFixed(2) + "%"
-        );
+        animateValue('kpi-requests', 0, totalReq, 1200, v => formatRequests(v));
+        animateValue('kpi-traffic', 0, totalTraffic, 1200, v => formatTraffic(v));
+        animateValue('kpi-waf', 0, totalWaf, 1200, v => formatRequests(v));
+        animateValue('kpi-rate', 0, wafRate, 1200, v => v.toFixed(1) + '%');
       }
-      function animateValue(
-        id,
-        start,
-        end,
-        duration,
-        formatter = (value) => Math.round(value).toLocaleString()
-      ) {
-        Logger.log(`开始动画: ${id}, 从 ${start} 到 ${end}`);
-        const obj = document.getElementById(id);
-        if (!obj) {
-          Logger.error(`找不到元素: ${id}`);
-          return;
-        }
 
-        let startTimestamp = null;
-        const step = (timestamp) => {
-          if (!startTimestamp) startTimestamp = timestamp;
-          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-          const value = progress * (end - start) + start;
-          obj.textContent = formatter(value);
-          if (progress < 1) {
-            window.requestAnimationFrame(step);
-          } else {
-            Logger.log(`动画完成: ${id}`);
-          }
-        };
-        window.requestAnimationFrame(step);
-      }
       function createCharts(data) {
-        Logger.log("开始创建图表", { dataLength: data.length });
-        const labels = data.map((item) => formatTimestamp(item.since));
-        const requestsData = data.map((item) => item.total_requests);
-        const trafficData = data.map((item) => item.total_megabytes);
-        const wafData = data.map((item) => item.waf_mitigated_requests);
+        const labels = data.map(d => formatTimestamp(d.since));
+        const requests = data.map(d => d.total_requests);
+        const traffic = data.map(d => d.total_megabytes);
+        const waf = data.map(d => d.waf_mitigated_requests);
+        const c = getThemeColors();
 
-        Logger.log("图表数据准备完成", {
-          labelsCount: labels.length,
-          maxRequests: Math.max(...requestsData),
-          maxTraffic: Math.max(...trafficData),
-          maxWaf: Math.max(...wafData),
+        ['requestsWafChart', 'trafficChart', 'userAgentChart', 'countryChart'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el && el.__ecInstance__) el.__ecInstance__.dispose();
         });
 
-        // 获取当前主题
-        const isDarkTheme =
-          document.documentElement.getAttribute("data-theme") === "dark";
-        Logger.log(`使用主题: ${isDarkTheme ? "深色" : "浅色"}`);
-        const textColor = isDarkTheme ? "#e9ecef" : "#333";
-        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
-        const splitLineColor = isDarkTheme
-          ? "rgba(255,255,255,0.05)"
-          : "rgba(0,0,0,0.05)"; // 初始化 ECharts 实例
-        if (
-          window.requestsWafChart &&
-          typeof window.requestsWafChart.dispose === "function"
-        ) {
-          Logger.log("销毁旧的请求图表实例");
-          window.requestsWafChart.dispose();
-        }
-        if (
-          window.trafficChart &&
-          typeof window.trafficChart.dispose === "function"
-        ) {
-          Logger.log("销毁旧的流量图表实例");
-          window.trafficChart.dispose();
-        }
-        if (
-          window.userAgentChart &&
-          typeof window.userAgentChart.dispose === "function"
-        ) {
-          Logger.log("销毁旧的用户代理图表实例");
-          window.userAgentChart.dispose();
-        }
-        if (
-          window.countryChart &&
-          typeof window.countryChart.dispose === "function"
-        ) {
-          Logger.log("销毁旧的国家图表实例");
-          window.countryChart.dispose();
-        }
+        const rwChart = echarts.init(document.getElementById('requestsWafChart'));
+        const tChart = echarts.init(document.getElementById('trafficChart'));
+        const uaChart = echarts.init(document.getElementById('userAgentChart'));
+        const coChart = echarts.init(document.getElementById('countryChart'));
 
-        Logger.log("创建新的图表实例");
-        window.requestsWafChart = echarts.init(
-          document.getElementById("requestsWafChart")
-        );
-        window.trafficChart = echarts.init(
-          document.getElementById("trafficChart")
-        );
-        window.userAgentChart = echarts.init(
-          document.getElementById("userAgentChart")
-        );
-        window.countryChart = echarts.init(
-          document.getElementById("countryChart")
-        );
+        window.__charts = [rwChart, tChart, uaChart, coChart];
 
-        const commonOption = {
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "cross",
-              label: {
-                backgroundColor: isDarkTheme ? "#6a7985" : "#fff",
-                color: textColor,
-              },
-            },
-            borderRadius: 8,
-            padding: 10,
-            textStyle: {
-              fontSize: 12,
-              color: isDarkTheme ? "#e9ecef" : "#333",
-            },
-            backgroundColor: isDarkTheme
-              ? "rgba(31, 41, 55, 0.9)"
-              : "rgba(255, 255, 255, 0.9)",
-            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-          },
-          legend: {
-            top: "5%",
-            textStyle: {
-              color: textColor,
-            },
-          },
-          grid: {
-            left: "3%",
-            right: "4%",
-            bottom: "3%",
-            containLabel: true,
-          },
-          xAxis: {
-            type: "category",
-            boundaryGap: false,
-            data: labels,
-            axisLabel: {
-              rotate: 45,
-              fontSize: 10,
-              color: textColor,
-            },
-            axisLine: {
-              lineStyle: {
-                color: axisLineColor,
-              },
-            },
-          },
-          yAxis: {
-            type: "value",
-            axisLabel: {
-              formatter: "{value}",
-              color: textColor,
-            },
-            splitLine: {
-              lineStyle: {
-                color: splitLineColor,
-              },
-            },
-          },
-          animation: true,
-          animationDuration: 1500,
-          animationEasing: "cubicOut",
+        const tooltipBase = {
+          backgroundColor: c.bg,
+          borderColor: c.border,
+          textStyle: { color: c.text, fontSize: 12 },
+          borderRadius: 8,
+          padding: 10,
         };
 
-        // 请求量与WAF拦截图表配置
-        const requestsWafOption = {
-          ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
-          legend: {
-            data: ["总请求数", "WAF拦截请求数"],
-            top: "5%",
-            textStyle: {
-              color: textColor,
-            },
-          },
-          yAxis: {
-            type: "value",
-            axisLabel: {
-              formatter: function (value) {
-                return formatRequests(value, 1);
-              },
-              color: textColor,
-            },
-            splitLine: {
-              lineStyle: {
-                color: splitLineColor,
-              },
-            },
-          },
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "cross",
-              label: {
-                backgroundColor: isDarkTheme ? "#6a7985" : "#fff",
-                color: textColor,
-              },
-            },
-            borderRadius: 8,
-            padding: 10,
-            textStyle: {
-              fontSize: 12,
-              color: isDarkTheme ? "#e9ecef" : "#333",
-            },
-            backgroundColor: isDarkTheme
-              ? "rgba(31, 41, 55, 0.9)"
-              : "rgba(255, 255, 255, 0.9)",
-            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-            formatter: function (params) {
-              let result = `${params[0].name}<br/>`;
-              params.forEach((param) => {
-                result += `${param.seriesName}: ${formatRequests(
-                  param.value
-                )}<br/>`;
-              });
-              return result;
-            },
-          },
+        rwChart.setOption({
+          tooltip: { ...tooltipBase, trigger: 'axis', formatter: params => {
+            let s = params[0].name + '<br/>';
+            params.forEach(p => s += p.seriesName + ': ' + formatRequests(p.value) + '<br/>');
+            return s;
+          }},
+          legend: { data: ['总请求数', 'WAF拦截'], top: 0, textStyle: { color: c.textSecondary, fontSize: 12 } },
+          grid: { left: 12, right: 12, bottom: 12, top: 40, containLabel: true },
+          xAxis: { type: 'category', data: labels, axisLabel: { rotate: 45, fontSize: 10, color: c.textSecondary }, axisLine: { lineStyle: { color: c.border } }, boundaryGap: false },
+          yAxis: { type: 'value', axisLabel: { formatter: v => formatRequests(v, 0), color: c.textSecondary }, splitLine: { lineStyle: { color: c.splitLine } } },
           series: [
-            {
-              name: "总请求数",
-              type: "line",
-              data: requestsData,
-              smooth: true,
-              symbol: "emptyCircle",
-              symbolSize: 6,
-              itemStyle: {
-                color: "#4361ee",
-              },
-              lineStyle: {
-                width: 3,
-              },
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(67, 97, 238, 0.5)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(67, 97, 238, 0.05)",
-                  },
-                ]),
-              },
-            },
-            {
-              name: "WAF拦截请求数",
-              type: "line",
-              data: wafData,
-              smooth: true,
-              symbol: "emptyCircle",
-              symbolSize: 6,
-              itemStyle: {
-                color: "#f72585",
-              },
-              lineStyle: {
-                width: 3,
-              },
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(247, 37, 133, 0.5)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(247, 37, 133, 0.05)",
-                  },
-                ]),
-              },
-            },
+            { name: '总请求数', type: 'line', data: requests, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#3b82f6' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(59,130,246,0.3)' }, { offset: 1, color: 'rgba(59,130,246,0.02)' }]) } },
+            { name: 'WAF拦截', type: 'line', data: waf, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#ef4444' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(239,68,68,0.3)' }, { offset: 1, color: 'rgba(239,68,68,0.02)' }]) } },
           ],
-        }; // 流量图表配置
-        const trafficOption = {
-          ...JSON.parse(JSON.stringify(commonOption)), // 深拷贝通用配置
-          legend: {
-            data: ["流量"],
-            top: "5%",
-            textStyle: {
-              color: textColor,
-            },
-          },
-          yAxis: {
-            type: "value",
-            axisLabel: {
-              formatter: function (value) {
-                return formatTraffic(value, 1);
-              },
-              color: textColor,
-            },
-            splitLine: {
-              lineStyle: {
-                color: splitLineColor,
-              },
-            },
-          },
-          tooltip: {
-            trigger: "axis",
-            axisPointer: {
-              type: "cross",
-              label: {
-                backgroundColor: isDarkTheme ? "#6a7985" : "#fff",
-                color: textColor,
-              },
-            },
-            borderRadius: 8,
-            padding: 10,
-            textStyle: {
-              fontSize: 12,
-              color: isDarkTheme ? "#e9ecef" : "#333",
-            },
-            backgroundColor: isDarkTheme
-              ? "rgba(31, 41, 55, 0.9)"
-              : "rgba(255, 255, 255, 0.9)",
-            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-            formatter: function (params) {
-              const dataPoint = params[0];
-              return `${dataPoint.name}<br/>流量: ${formatTraffic(
-                dataPoint.value
-              )}`;
-            },
-          },
+          animation: true,
+          animationDuration: 1000,
+        });
+
+        tChart.setOption({
+          tooltip: { ...tooltipBase, trigger: 'axis', formatter: params => params[0].name + '<br/>流量: ' + formatTraffic(params[0].value) },
+          legend: { data: ['流量'], top: 0, textStyle: { color: c.textSecondary, fontSize: 12 } },
+          grid: { left: 12, right: 12, bottom: 12, top: 40, containLabel: true },
+          xAxis: { type: 'category', data: labels, axisLabel: { rotate: 45, fontSize: 10, color: c.textSecondary }, axisLine: { lineStyle: { color: c.border } }, boundaryGap: false },
+          yAxis: { type: 'value', axisLabel: { formatter: v => formatTraffic(v, 1), color: c.textSecondary }, splitLine: { lineStyle: { color: c.splitLine } } },
           series: [
-            {
-              name: "流量",
-              type: "line",
-              data: trafficData,
-              smooth: true,
-              symbol: "emptyCircle",
-              symbolSize: 6,
-              itemStyle: {
-                color: "#4895ef",
-              },
-              lineStyle: {
-                width: 3,
-              },
-              areaStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(72, 149, 239, 0.5)",
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(72, 149, 239, 0.05)",
-                  },
-                ]),
-              },
-            },
+            { name: '流量', type: 'line', data: traffic, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#10b981' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(16,185,129,0.3)' }, { offset: 1, color: 'rgba(16,185,129,0.02)' }]) } },
           ],
-        }; // 应用配置项
-        window.requestsWafChart.setOption(requestsWafOption);
-        window.trafficChart.setOption(trafficOption); // 创建用户代理(浏览器)统计图表 - 使用所有24小时的数据
-        createUserAgentChart(data, isDarkTheme, textColor);
-        // 创建国家/地区统计图表
-        createCountryChart(data, isDarkTheme, textColor);
-
-        Logger.log("图表创建完成");
-
-        // 监听窗口大小变化，自适应图表
-        window.addEventListener("resize", () => {
-          if (
-            window.requestsWafChart &&
-            window.trafficChart &&
-            window.userAgentChart &&
-            window.countryChart
-          ) {
-            Logger.log("窗口大小变化，调整图表尺寸");
-            window.requestsWafChart.resize();
-            window.trafficChart.resize();
-            window.userAgentChart.resize();
-            window.countryChart.resize();
-          }
-        });
-      }      // 创建用户代理统计图表
-      function createUserAgentChart(data, isDarkTheme, textColor) {
-        Logger.log("创建用户代理统计图表", { dataLength: data.length });
-
-        // 合并所有24小时的用户代理数据
-        const allBrowserCounts = {};
-
-        data.forEach((hourData) => {
-          if (
-            hourData.top_user_agents &&
-            Array.isArray(hourData.top_user_agents)
-          ) {
-            hourData.top_user_agents.forEach((item) => {
-              const browser = item.browser;
-              const requests = item.requests;
-              allBrowserCounts[browser] =
-                (allBrowserCounts[browser] || 0) + requests;
-            });
-          }
+          animation: true,
+          animationDuration: 1000,
         });
 
-        // 转换为数组并排序
-        const allUserAgents = Object.entries(allBrowserCounts)
-          .map(([browser, requests]) => ({ browser, requests }))
-          .sort((a, b) => b.requests - a.requests);
+        createUserAgentChart(data, c);
+        createCountryChart(data, c);
 
-        Logger.log("合并后的用户代理数据", {
-          totalTypes: allUserAgents.length,
+        window.addEventListener('resize', () => {
+          if (window.__charts) window.__charts.forEach(ch => ch.resize());
         });
-
-        if (allUserAgents.length === 0) {
-          Logger.warn("没有用户代理数据可显示");
-          document.getElementById("userAgentChart").innerHTML =
-            '<div style="text-align: center; padding: 50px; color: var(--text-muted);">暂无用户代理数据</div>';
-          return;
-        }
-
-        // 保存数据供切换图表类型使用
-        currentUserAgentData = allUserAgents;
-
-        // 根据当前图表类型渲染图表
-        renderUserAgentChart(allUserAgents, isDarkTheme, textColor);
       }
 
-      // 渲染用户代理图表（根据类型）
-      function renderUserAgentChart(allUserAgents, isDarkTheme, textColor) {
-        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
-        const splitLineColor = isDarkTheme
-          ? "rgba(255,255,255,0.05)"
-          : "rgba(0,0,0,0.05)";
+      function createUserAgentChart(data, c) {
+        const counts = {};
+        data.forEach(d => {
+          if (d.top_user_agents) d.top_user_agents.forEach(ua => {
+            counts[ua.browser] = (counts[ua.browser] || 0) + ua.requests;
+          });
+        });
+        const sorted = Object.entries(counts).map(([b, r]) => ({ browser: b, requests: r })).sort((a, b) => b.requests - a.requests);
+        currentUserAgentData = sorted;
+        renderUserAgentChart(sorted, c);
+      }
+
+      function renderUserAgentChart(data, c) {
+        const chart = echarts.getInstanceByDom(document.getElementById('userAgentChart')) || echarts.init(document.getElementById('userAgentChart'));
+        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#14b8a6', '#f97316', '#6366f1'];
 
         if (currentChartType === 'pie') {
-          // 饼图配置
-          const pieData = allUserAgents.map((item, index) => ({
-            name: item.browser,
-            value: item.requests,
-            itemStyle: {
-              color: getBrowserColor(index)
-            }
-          }));
-
-          const pieOption = {
-            tooltip: {
-              trigger: 'item',
-              formatter: function(params) {
-                const percentage = params.percent;
-                return `${params.name}<br/>请求数: ${formatRequests(params.value)}<br/>占比: ${percentage}%`;
-              },
-              textStyle: {
-                color: isDarkTheme ? "#e9ecef" : "#333",
-              },
-              backgroundColor: isDarkTheme
-                ? "rgba(31, 41, 55, 0.9)"
-                : "rgba(255, 255, 255, 0.9)",
-              borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-            },
-            legend: {
-              type: 'scroll',
-              orient: 'vertical',
-              right: 10,
-              top: 20,
-              bottom: 20,
-              textStyle: {
-                color: textColor,
-                fontSize: 10
-              },
-              pageIconColor: textColor,
-              pageIconInactiveColor: isDarkTheme ? "#666" : "#ccc",
-              pageTextStyle: {
-                color: textColor
-              }
-            },
-            series: [
-              {
-                name: '浏览器使用统计',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                center: ['40%', '50%'],
-                avoidLabelOverlap: false,
-                label: {
-                  show: false,
-                  position: 'center'
-                },
-                emphasis: {
-                  label: {
-                    show: true,
-                    fontSize: '14',
-                    fontWeight: 'bold',
-                    color: textColor,
-                    formatter: function(params) {
-                      return `${params.name}\n${formatRequests(params.value)}`;
-                    }
-                  }
-                },
-                labelLine: {
-                  show: false
-                },
-                data: pieData,
-                animationType: 'scale',
-                animationEasing: 'elasticOut',
-                animationDelay: function (idx) {
-                  return Math.random() * 200;
-                }
-              }
-            ],
-            animation: true,
-            animationDuration: 1500,
-          };
-
-          window.userAgentChart.setOption(pieOption, true);
+          chart.setOption({
+            tooltip: { ...c, trigger: 'item', formatter: p => p.name + '<br/>请求数: ' + formatRequests(p.value) + '<br/>占比: ' + p.percent + '%' },
+            series: [{
+              type: 'pie', radius: ['40%', '70%'], center: ['40%', '50%'],
+              label: { show: false },
+              emphasis: { label: { show: true, fontSize: 13, fontWeight: 'bold' } },
+              data: data.map((d, i) => ({ name: d.browser, value: d.requests, itemStyle: { color: colors[i % colors.length] } })),
+            }],
+            animation: true, animationDuration: 800,
+          }, true);
         } else {
-          // 柱状图配置（原有的）
-          const browserNames = allUserAgents.map((item) => item.browser);
-          const browserValues = allUserAgents.map((item) => item.requests);
-
-          const barOption = {
-            tooltip: {
-              trigger: "axis",
-              axisPointer: {
-                type: "shadow",
-              },
-              formatter: function (params) {
-                const dataPoint = params[0];
-                return `${dataPoint.name}<br/>请求数: ${formatRequests(
-                  dataPoint.value
-                )}`;
-              },
-              textStyle: {
-                color: isDarkTheme ? "#e9ecef" : "#333",
-              },
-              backgroundColor: isDarkTheme
-                ? "rgba(31, 41, 55, 0.9)"
-                : "rgba(255, 255, 255, 0.9)",
-              borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-            },
-            grid: {
-              left: "25%",
-              right: "4%",
-              bottom: "3%",
-              top: "3%",
-              containLabel: true,
-            },
-            xAxis: {
-              type: "value",
-              axisLabel: {
-                formatter: function (value) {
-                  return formatRequests(value, 1);
-                },
-                color: textColor,
-              },
-              axisLine: {
-                lineStyle: {
-                  color: axisLineColor,
-                },
-              },
-              splitLine: {
-                lineStyle: {
-                  color: splitLineColor,
-                },
-              },
-            },
-            yAxis: {
-              type: "category",
-              data: browserNames,
-              axisLabel: {
-                color: textColor,
-                fontSize: 10,
-              },
-              axisLine: {
-                lineStyle: {
-                  color: axisLineColor,
-                },
-              },
-              inverse: true,
-            },
-            series: [
-              {
-                name: "浏览器请求数",
-                type: "bar",
-                data: browserValues,
-                itemStyle: {
-                  color: function (params) {
-                    return getBrowserColor(params.dataIndex);
-                  },
-                  borderRadius: [0, 4, 4, 0],
-                },
-                label: {
-                  show: true,
-                  position: "right",
-                  formatter: function (params) {
-                    return formatRequests(params.value);
-                  },
-                  color: textColor,
-                  fontSize: 9,
-                },
-                animationDelay: function (idx) {
-                  return idx * 50;
-                },
-                animationEasing: "elasticOut",
-              },
-            ],
-            animation: true,
-            animationDuration: 1500,
-          };
-
-          window.userAgentChart.setOption(barOption, true);
+          chart.setOption({
+            tooltip: { ...c, trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: p => p[0].name + '<br/>请求数: ' + formatRequests(p[0].value) },
+            grid: { left: 12, right: 40, bottom: 12, top: 8, containLabel: true },
+            xAxis: { type: 'value', axisLabel: { formatter: v => formatRequests(v, 0), color: c.textSecondary }, splitLine: { lineStyle: { color: c.splitLine } } },
+            yAxis: { type: 'category', data: data.map(d => d.browser), axisLabel: { color: c.textSecondary, fontSize: 11 }, inverse: true },
+            series: [{
+              type: 'bar', barWidth: 16,
+              data: data.map((d, i) => ({ value: d.requests, itemStyle: { color: colors[i % colors.length], borderRadius: [0, 4, 4, 0] } })),
+              label: { show: true, position: 'right', formatter: p => formatRequests(p.value), color: c.textSecondary, fontSize: 10 },
+            }],
+            animation: true, animationDuration: 800,
+          }, true);
         }
+      }
 
-        Logger.log(`用户代理${currentChartType === 'pie' ? '饼' : '柱状'}图创建完成`, {
-          totalBrowsers: allUserAgents.length,
-          topBrowser: allUserAgents[0]?.browser,
-          topRequests: allUserAgents[0]?.requests,
+      function createCountryChart(data, c) {
+        const isoMap = {
+          'CN': 'China', 'US': 'United States', 'JP': 'Japan', 'KR': 'Korea', 'GB': 'United Kingdom',
+          'FR': 'France', 'DE': 'Germany', 'CA': 'Canada', 'AU': 'Australia', 'IN': 'India',
+          'BR': 'Brazil', 'NL': 'Netherlands', 'SG': 'Singapore', 'RU': 'Russia', 'IT': 'Italy',
+          'ES': 'Spain', 'MX': 'Mexico', 'SE': 'Sweden', 'NO': 'Norway', 'FI': 'Finland',
+          'DK': 'Denmark', 'CH': 'Switzerland', 'AT': 'Austria', 'BE': 'Belgium', 'PT': 'Portugal',
+          'IE': 'Ireland', 'IL': 'Israel', 'TR': 'Turkey', 'PL': 'Poland', 'UA': 'Ukraine',
+          'AR': 'Argentina', 'CO': 'Colombia', 'CL': 'Chile', 'PE': 'Peru', 'NZ': 'New Zealand',
+          'TH': 'Thailand', 'MY': 'Malaysia', 'ID': 'Indonesia', 'PH': 'Philippines',
+          'VN': 'Vietnam', 'AE': 'United Arab Emirates', 'SA': 'Saudi Arabia', 'ZA': 'South Africa',
+          'TW': 'China', 'HK': 'China', 'MO': 'China',
+        };
+
+        const counts = {};
+        data.forEach(d => {
+          if (d.top_countries) d.top_countries.forEach(co => {
+            let name = isoMap[co.country] || co.country;
+            counts[name] = (counts[name] || 0) + co.requests;
+          });
         });
+
+        const mapData = Object.entries(counts).map(([n, v]) => ({ name: n, value: v })).sort((a, b) => b.value - a.value);
+        const maxVal = mapData.length > 0 ? mapData[0].value : 100;
+
+        const chart = echarts.getInstanceByDom(document.getElementById('countryChart')) || echarts.init(document.getElementById('countryChart'));
+        chart.setOption({
+          tooltip: { ...c, trigger: 'item', formatter: p => p.data && p.data.value ? p.name + '<br/>请求数: ' + formatRequests(p.data.value) : p.name + '<br/>无数据' },
+          visualMap: { min: 0, max: maxVal, left: 'left', bottom: 10, text: ['高', '低'], calculable: true, inRange: { color: c.text === '#f1f5f9' ? ['#1e3a8a', '#3b82f6', '#93c5fd'] : ['#dbeafe', '#3b82f6', '#1e40af'] }, textStyle: { color: c.textSecondary } },
+          series: [{
+            type: 'map', map: 'world', roam: true,
+            emphasis: { label: { show: true, color: c.text }, itemStyle: { areaColor: c.border } },
+            itemStyle: { areaColor: c.text === '#f1f5f9' ? '#334155' : '#f1f5f9', borderColor: c.border, borderWidth: 0.5 },
+            data: mapData,
+          }],
+          animation: true, animationDuration: 800,
+        }, true);
       }
 
-      // 获取浏览器颜色
-      function getBrowserColor(index) {
-        const colors = [
-          "#4361ee", "#4895ef", "#4cc9f0", "#f8961e", "#f72585",
-          "#3f37c9", "#7209b7", "#f77f00", "#fcbf49", "#06ffa5",
-          "#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#feca57",
-          "#ff9ff3", "#54a0ff", "#5f27cd", "#00d2d3", "#ff9f43",
-        ];
-        return colors[index % colors.length];
-      }
-
-      // 切换图表类型
       function toggleChartType(type) {
         if (type === currentChartType) return;
-        
-        Logger.log(`切换图表类型: ${currentChartType} -> ${type}`);
         currentChartType = type;
-
-        // 更新按钮状态
-        document.getElementById('chart-type-bar').classList.toggle('active', type === 'bar');
-        document.getElementById('chart-type-pie').classList.toggle('active', type === 'pie');
-
-        // 重新渲染图表
-        if (currentUserAgentData.length > 0) {
-          const isDarkTheme = document.documentElement.getAttribute("data-theme") === "dark";
-          const textColor = isDarkTheme ? "#e9ecef" : "#333";
-          renderUserAgentChart(currentUserAgentData, isDarkTheme, textColor);
-        }      }
-
-      // 创建国家区域统计图表
-      function createCountryChart(data, isDarkTheme, textColor) {
-        Logger.log("创建国家区域统计图表", { dataLength: data.length });
-
-        // ISO 2位代码到名称的映射 (扩展示例)
-        const isoToName = {
-          'CN': 'China', 'TW': 'China', 'HK': 'China', 'MO': 'China',
-          'US': 'United States', 'RU': 'Russia', 'JP': 'Japan', 'KR': 'Korea',
-          'GB': 'United Kingdom', 'FR': 'France', 'DE': 'Germany', 'CA': 'Canada',
-          'AU': 'Australia', 'IN': 'India', 'BR': 'Brazil', 'IT': 'Italy',
-          'ES': 'Spain', 'NL': 'Netherlands', 'SG': 'Singapore', 'VN': 'Vietnam',
-          'TH': 'Thailand', 'MY': 'Malaysia', 'ID': 'Indonesia', 'PH': 'Philippines',
-          'AE': 'United Arab Emirates', 'SA': 'Saudi Arabia', 'ZA': 'South Africa',
-          'TR': 'Turkey', 'PL': 'Poland', 'UA': 'Ukraine', 'AR': 'Argentina',
-          'CO': 'Colombia', 'CL': 'Chile', 'PE': 'Peru', 'MX': 'Mexico',
-          'NZ': 'New Zealand', 'SE': 'Sweden', 'NO': 'Norway', 'FI': 'Finland',
-          'DK': 'Denmark', 'CH': 'Switzerland', 'AT': 'Austria', 'BE': 'Belgium',
-          'PT': 'Portugal', 'GR': 'Greece', 'IE': 'Ireland', 'IL': 'Israel'
-        };
-
-        // 合并所有24小时的国家数据
-        const allCountryCounts = {};
-
-        data.forEach((hourData) => {
-          if (
-            hourData.top_countries &&
-            Array.isArray(hourData.top_countries)
-          ) {
-            hourData.top_countries.forEach((item) => {
-              let country = item.country;
-              // 转换 ISO 代码为名称
-              if (isoToName[country]) {
-                country = isoToName[country];
-              }
-              const requests = item.requests;
-              allCountryCounts[country] =
-                (allCountryCounts[country] || 0) + requests;
-            });
-          }
-        });
-
-        // 转换为数组并排序
-        const allCountries = Object.entries(allCountryCounts)
-          .map(([country, requests]) => ({ name: country, value: requests }))
-          .sort((a, b) => b.value - a.value);
-
-        Logger.log("合并后的国家数据", {
-          totalTypes: allCountries.length,
-        });
-
-        if (allCountries.length === 0) {
-          Logger.warn("没有国家数据可显示");
-          document.getElementById("countryChart").innerHTML =
-            '<div style="text-align: center; padding: 50px; color: var(--text-muted);">暂无国家数据</div>';
-          return;
-        }
-
-        renderCountryChart(allCountries, isDarkTheme, textColor);
+        document.getElementById('toggle-bar').classList.toggle('active', type === 'bar');
+        document.getElementById('toggle-pie').classList.toggle('active', type === 'pie');
+        if (currentUserAgentData.length > 0) renderUserAgentChart(currentUserAgentData, getThemeColors());
       }
 
-      // 渲染国家统计图表
-      function renderCountryChart(allCountries, isDarkTheme, textColor) {
-        const axisLineColor = isDarkTheme ? "#4d4d4d" : "#ddd";
-        const splitLineColor = isDarkTheme
-          ? "rgba(255,255,255,0.05)"
-          : "rgba(0,0,0,0.05)";
-
-        // 常见国家名称映射，解决 Cloudflare 名称与 ECharts 地图名称不匹配的问题
-        const countryNameMap = {
-          'United States': 'United States',
-          'United States of America': 'United States',
-          'Russian Federation': 'Russia',
-          'Korea, Republic of': 'Korea',
-          'Viet Nam': 'Vietnam',
-          'Brunei Darussalam': 'Brunei',
-          'Tanzania, United Republic of': 'Tanzania',
-          'Central African Republic': 'Central African Rep.',
-          'Congo, The Democratic Republic of the': 'Dem. Rep. Congo',
-          'Congo': 'Congo',
-          'Dominican Republic': 'Dominican Rep.',
-          'Lao People\'s Democratic Republic': 'Laos',
-          'Syrian Arab Republic': 'Syria',
-          'Moldova, Republic of': 'Moldova',
-          'Cote d\'Ivoire': 'Ivory Coast',
-          'Iran, Islamic Republic of': 'Iran'
-        };
-
-        // 转换数据并过滤掉空值
-        const mapData = allCountries.filter(c => c.name && c.value > 0);
-        const maxVal = mapData.length > 0 ? Math.max(...mapData.map(c => c.value)) : 100;
-
-        const mapOption = {
-          tooltip: {
-            trigger: "item",
-            formatter: function (params) {
-              if (params.data && params.data.value) {
-                return `${params.name}<br/>请求数: ${formatRequests(params.data.value)}`;
-              }
-              return `${params.name}<br/>无请求数据`;
-            },
-            textStyle: {
-              color: isDarkTheme ? "#e9ecef" : "#333",
-            },
-            backgroundColor: isDarkTheme
-              ? "rgba(31, 41, 55, 0.9)"
-              : "rgba(255, 255, 255, 0.9)",
-            borderColor: isDarkTheme ? "#4d4d4d" : "#ddd",
-          },
-          visualMap: {
-            min: 0,
-            max: maxVal,
-            left: 'left',
-            top: 'bottom',
-            text: ['高', '低'],
-            calculable: true,
-            show: true, // 确保显示
-            inRange: {
-              color: isDarkTheme 
-                ? ['#1e3a8a', '#3b82f6', '#93c5fd'] // 深色主题：深蓝到浅蓝
-                : ['#f1f5f9', '#60a5fa', '#1e40af'] // 亮色主题：浅蓝到深蓝
-            },
-            textStyle: {
-              color: textColor
-            }
-          },
-          series: [
-            {
-              name: '请求来源',
-              type: 'map',
-              map: 'world',
-              roam: true,
-              emphasis: {
-                label: {
-                  show: true,
-                  color: textColor
-                },
-                itemStyle: {
-                  areaColor: isDarkTheme ? '#334155' : '#e2e8f0'
-                }
-              },
-              itemStyle: {
-                // 无请求数据的国家颜色：深色模式使用更明显的灰蓝色，亮色模式使用浅灰色
-                areaColor: isDarkTheme ? '#334155' : '#e9ecef',
-                borderColor: isDarkTheme ? '#4a5568' : '#dee2e6',
-                borderWidth: 0.8
-              },
-              nameMap: countryNameMap,
-              data: mapData
-            }
-          ]
-        };
-
-        window.countryChart.setOption(mapOption, true);
-      }
-
-      // 更新水印信息
       function updateWatermark(data) {
-        const watermarkElement = document.getElementById('watermark');
-        if (!watermarkElement || !data || data.length === 0) return;
-
-        // 获取最新数据的时间戳
-        const latestData = data[data.length - 1];
-        const lastUpdateTime = new Date(latestData.since * 1000);
-        
-        // 格式化时间
-        const formattedTime = lastUpdateTime.toLocaleString('zh-CN', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        });
-
-        // 计算数据覆盖的时间范围
-        const firstData = data[0];
-        const timeSpan = latestData.since - firstData.since;
-        const hoursSpan = Math.round(timeSpan / 3600);        watermarkElement.innerHTML = `
-          <div class="update-time">
-            <span>最后更新: ${formattedTime}</span>
-            <button class="refresh-btn" onclick="refreshData()" title="刷新数据">
-              <i class="fas fa-sync-alt"></i>
-            </button>
+        const el = document.getElementById('watermark');
+        if (!el || !data || data.length === 0) return;
+        const latest = data[data.length - 1];
+        const t = new Date(latest.since * 1000);
+        const fmt = t.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        const hours = Math.round((latest.since - data[0].since) / 3600);
+        el.innerHTML = `
+          <div class="watermark-row">
+            <span class="watermark-time">${fmt}</span>
+            <button class="btn-icon" onclick="loadStats()" title="刷新" style="width:24px;height:24px;font-size:11px;border:none;background:transparent;color:var(--primary);cursor:pointer;"><i class="fas fa-sync-alt"></i></button>
           </div>
-          <div class="data-info">数据覆盖: ${hoursSpan}小时 | ${data.length}个数据点</div>
+          <div class="watermark-info">数据覆盖 ${hours}h · ${data.length} 个数据点</div>
         `;
+      }
 
-        Logger.log('水印信息已更新', {
-          lastUpdate: formattedTime,
-          dataPoints: data.length,
-          timeSpanHours: hoursSpan
-        });      }
-
-      // 刷新数据功能
-      async function refreshData() {
-        Logger.log("手动刷新数据");
-        const refreshBtn = document.querySelector('.refresh-btn');
-        
-        // 添加加载状态
-        if (refreshBtn) {
-          refreshBtn.classList.add('loading');
-        }
-
+      async function loadStats() {
+        const bar = document.getElementById('progress-bar');
+        const fill = document.getElementById('progress-fill');
         try {
-          // 重新加载统计数据
-          await loadStats();
-          Logger.log("手动刷新完成");
-        } catch (error) {
-          Logger.error("手动刷新失败", error);
-        } finally {
-          // 移除加载状态
-          if (refreshBtn) {
-            setTimeout(() => {
-              refreshBtn.classList.remove('loading');
-            }, 500); // 延迟移除，让用户看到刷新动画
-          }
+          if (bar) bar.style.display = 'block';
+          if (fill) fill.style.width = '30%';
+
+          document.querySelectorAll('.kpi-value').forEach(el => el.innerHTML = '<div class="loading-spinner"></div>');
+          document.querySelectorAll('.chart-container').forEach(el => el.innerHTML = '<div class="loading-spinner"></div>');
+
+          if (fill) fill.style.width = '60%';
+          const resp = await fetch('cloudflare_hourly_stats.json');
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          if (fill) fill.style.width = '90%';
+
+          const data = await resp.json();
+          if (!Array.isArray(data) || data.length === 0) throw new Error('数据为空');
+
+          window.chartData = data;
+          createKPIs(data);
+          createCharts(data);
+          updateWatermark(data);
+
+          if (fill) fill.style.width = '100%';
+          setTimeout(() => { if (bar) bar.style.display = 'none'; }, 400);
+        } catch (e) {
+          if (bar) bar.style.display = 'none';
+          document.getElementById('kpi-requests').textContent = '-';
+          console.error('加载失败:', e);
         }
       }
 
-      // 更新页脚年份
-      function updateFooterYear() {
-        const currentYear = new Date().getFullYear();
-        const footerYearElement = document.getElementById("current-year");
-        if (footerYearElement) {
-          footerYearElement.textContent = currentYear;
-          Logger.log(`页脚年份更新为: ${currentYear}`);
-        }
-      }      // 初始化
       window.onload = function () {
-        Logger.log("页面加载完成，开始初始化");
         initTheme();
         loadStats();
-        
-        // 绑定图表类型切换事件
-        document.getElementById('chart-type-bar').addEventListener('click', () => toggleChartType('bar'));
-        document.getElementById('chart-type-pie').addEventListener('click', () => toggleChartType('pie'));
+        document.getElementById('toggle-bar').addEventListener('click', () => toggleChartType('bar'));
+        document.getElementById('toggle-pie').addEventListener('click', () => toggleChartType('pie'));
       };
     </script>
   </head>
-
   <body>
-    <!-- 进度条 -->
-    <div id="progress-bar" class="progress-bar-container">
-      <div id="progress-fill" class="progress-bar-fill"></div>
-    </div>
-    <header>
-      <h1>网站分析面板</h1>
-      <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
-        <i class="fas fa-moon"></i>
-      </button>
-      <button id="bg-toggle" class="bg-toggle" onclick="toggleBackground()" oncontextmenu="nextBackgroundImage(); return false;" title="左键开关背景，右键切换图片">
-        <i class="far fa-image"></i>
-      </button>
+    <div id="progress-bar" class="progress-bar"><div id="progress-fill" class="progress-bar-fill"></div></div>
+
+    <header class="header">
+      <div class="header-title"><i class="fas fa-chart-line"></i> Cloudflare Analytics</div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn-icon" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+      </div>
     </header>
 
     <div class="container">
-      <div class="kpi-cards" id="kpi-cards-container">
-        <div class="card">
-          <h3><i class="fas fa-globe"></i> 总请求数</h3>
-          <div class="value" id="total-requests">-</div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label"><i class="fas fa-globe"></i> 总请求数</div>
+          <div class="kpi-value" id="kpi-requests">-</div>
         </div>
-        <div class="card">
-          <h3><i class="fas fa-exchange-alt"></i> 总流量</h3>
-          <div class="value" id="total-traffic">-</div>
+        <div class="kpi-card">
+          <div class="kpi-label"><i class="fas fa-exchange-alt"></i> 总流量</div>
+          <div class="kpi-value" id="kpi-traffic">-</div>
         </div>
-        <div class="card">
-          <h3><i class="fas fa-shield-alt"></i> WAF拦截数</h3>
-          <div class="value" id="waf-mitigated">-</div>
+        <div class="kpi-card">
+          <div class="kpi-label"><i class="fas fa-shield-alt"></i> WAF 拦截数</div>
+          <div class="kpi-value" id="kpi-waf">-</div>
         </div>
-        <div class="card">
-          <h3><i class="fas fa-percentage"></i> 平均WAF拦截率</h3>
-          <div class="value" id="waf-rate">-</div>
+        <div class="kpi-card">
+          <div class="kpi-label"><i class="fas fa-percentage"></i> 平均拦截率</div>
+          <div class="kpi-value" id="kpi-rate">-</div>
         </div>
       </div>
+
       <div class="charts-grid">
-        <div class="chart-container-wrapper">
-          <h2>请求量与WAF拦截趋势</h2>
+        <div class="chart-card">
+          <div class="chart-header"><span class="chart-title">请求量与 WAF 拦截趋势</span></div>
           <div class="chart-container" id="requestsWafChart"></div>
         </div>
-
-        <div class="chart-container-wrapper">
-          <h2>流量变化趋势</h2>
+        <div class="chart-card">
+          <div class="chart-header"><span class="chart-title">流量变化趋势</span></div>
           <div class="chart-container" id="trafficChart"></div>
-        </div>        <div class="chart-container-wrapper">
-          <div class="chart-type-toggle">
-            <button id="chart-type-bar" class="chart-type-btn active">
-              <i class="fas fa-chart-bar"></i>
-            </button>
-            <button id="chart-type-pie" class="chart-type-btn">
-              <i class="fas fa-chart-pie"></i>
-            </button>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">浏览器使用排行</span>
+            <div class="chart-toggle">
+              <button id="toggle-bar" class="chart-toggle-btn active"><i class="fas fa-chart-bar"></i></button>
+              <button id="toggle-pie" class="chart-toggle-btn"><i class="fas fa-chart-pie"></i></button>
+            </div>
           </div>
-          <h2>浏览器使用排行</h2>
           <div class="chart-container" id="userAgentChart"></div>
         </div>
-
-        <div class="chart-container-wrapper">
-          <h2>国家/地区分布排行</h2>
+        <div class="chart-card">
+          <div class="chart-header"><span class="chart-title">国家/地区分布</span></div>
           <div class="chart-container" id="countryChart"></div>
         </div>
       </div>
-
-      <!-- Optional: Raw data display -->
-      <!-- 
-        <div class="stats-raw">
-            <h2>原始数据</h2>
-            <div id="raw-data">加载中...</div>
-        </div>
-        -->    </div>    <!-- 水印 -->
-    <div id="watermark" class="watermark">
-      <div class="update-time">
-        <span>加载中...</span>
-        <button class="refresh-btn" onclick="refreshData()" title="刷新数据">
-          <i class="fas fa-sync-alt"></i>
-        </button>
-      </div>
-      <div class="data-info">正在获取数据...</div>
     </div>
 
-    <footer>
-      <p class="footer-text">
-        © <span id="current-year"></span> Powered by
-        <a href="https://github.com/ymh0000123/Cloudflare-Showcase">Cloudflare-Showcase</a>
-      </p>
+    <div id="watermark" class="watermark">
+      <div class="watermark-row"><span class="watermark-time">加载中...</span></div>
+      <div class="watermark-info">正在获取数据...</div>
+    </div>
+
+    <footer class="footer">
+      © <span id="current-year"></span> Powered by <a href="https://github.com/ymh0000123/Cloudflare-Showcase">Cloudflare-Showcase</a>
     </footer>
+
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
   </body>
 </html>

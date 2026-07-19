@@ -336,6 +336,9 @@
         .chart-container {
           height: 240px;
         }
+        .chart-card > div:last-child {
+          max-height: 240px;
+        }
         .watermark {
           bottom: 8px;
           left: 8px;
@@ -762,9 +765,9 @@
         </div>
         <div class="chart-card" style="grid-column: 1 / -1;">
           <div class="chart-header"><span class="chart-title">Bot 访问分析（最近7天）</span></div>
-          <div style="overflow-x: auto;">
+          <div style="overflow: auto; max-height: 320px;">
             <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-              <thead>
+              <thead style="position: sticky; top: 0; background: var(--bg-card); z-index: 1;">
                 <tr style="border-bottom: 2px solid var(--border); text-align: left;">
                   <th style="padding: 12px 8px; font-weight: 600;">爬虫名称</th>
                   <th style="padding: 12px 8px; font-weight: 600;">运营商</th>

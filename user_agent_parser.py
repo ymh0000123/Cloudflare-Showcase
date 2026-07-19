@@ -7,26 +7,120 @@ def parse_user_agent(ua_string):
     
     # 机器人和爬虫
     if any(bot in ua for bot in ['bot', 'crawler', 'spider', 'scraper']):
+        # 搜索引擎爬虫
         if 'googlebot' in ua:
             return "Googlebot"
-        elif 'ahrefsbot' in ua:
-            return "AhrefsBot"
         elif 'bingbot' in ua:
             return "BingBot"
+        elif 'applebot' in ua:
+            return "Applebot"
+        elif 'baiduspider' in ua:
+            return "BaiduSpider"
+        elif 'yandex' in ua:
+            return "Yandex"
+        # AI 爬虫
         elif 'gptbot' in ua:
             return "GPTBot"
+        elif 'chatgpt-user' in ua:
+            return "ChatGPT-User"
+        elif 'claudebot' in ua:
+            return "ClaudeBot"
+        elif 'claude-searchbot' in ua:
+            return "Claude-SearchBot"
+        elif 'claude-user' in ua:
+            return "Claude-User"
+        elif 'amazonbot' in ua:
+            return "Amazonbot"
+        elif 'amazon-kendra' in ua:
+            return "Amazon Kendra"
+        elif 'amazonadbot' in ua:
+            return "Amazon AdBot"
+        elif 'meta-externalagent' in ua:
+            return "Meta-ExternalAgent"
+        elif 'meta-externalfetcher' in ua:
+            return "Meta-ExternalFetcher"
+        elif 'meta-webindexer' in ua:
+            return "Meta-WebIndexer"
         elif 'bytespider' in ua:
             return "ByteSpider"
+        elif 'ccbot' in ua:
+            return "CCBot"
+        elif 'anthropic-ai' in ua:
+            return "Anthropic AI"
+        elif 'cohere-ai' in ua:
+            return "Cohere AI"
+        elif 'perplexity' in ua:
+            return "Perplexity"
+        elif 'youbot' in ua:
+            return "YouBot"
+        # SEO 工具
+        elif 'ahrefsbot' in ua:
+            return "AhrefsBot"
+        elif 'ahrefssiteaudit' in ua:
+            return "Ahrefs Site Audit"
+        elif 'semrush' in ua:
+            return "SEMrush"
+        elif 'mj12bot' in ua:
+            return "Majestic SEO"
+        elif 'dotbot' in ua:
+            return "Moz/(dotBot)"
+        # 广告和营销
+        elif 'adsbot-google' in ua:
+            return "Google AdsBot"
+        elif 'mediapartners-google' in ua:
+            return "Google AdSense"
+        elif 'adsbot-google-mobile' in ua:
+            return "Google AdsBot Mobile"
+        elif 'adidxbot' in ua:
+            return "Bing Ads"
+        elif 'amazon-contxtbot' in ua:
+            return "Amazon Contxbot"
+        # 社交媒体
+        elif 'facebookexternalhit' in ua or 'facebookbot' in ua:
+            return "Facebook Bot"
+        elif 'twitterbot' in ua:
+            return "Twitter Bot"
+        elif 'linkedinbot' in ua:
+            return "LinkedIn Bot"
+        elif 'whatsapp' in ua:
+            return "WhatsApp"
+        elif 'telegrambot' in ua:
+            return "Telegram Bot"
+        elif 'slackbot' in ua:
+            return "Slack Bot"
+        elif 'discordbot' in ua:
+            return "Discord Bot"
+        # 监控和分析
         elif 'prerender' in ua:
             return "Prerender Bot"
         elif 'headlesschrome' in ua:
             return "Headless Chrome"
-        elif 'Applebot' in ua:
-            return "Applebot"
-        elif 'facebookexternalhit' in ua or 'facebookbot' in ua:
-            return "Facebook Bot"
+        elif 'uptimerobot' in ua:
+            return "UptimeRobot"
+        elif 'pingdom' in ua:
+            return "Pingdom"
+        elif 'nagios' in ua:
+            return "Nagios"
+        # 其他
+        elif 'google-other' in ua or 'googleother' in ua:
+            return "GoogleOther"
+        elif 'google-agent' in ua:
+            return "Google-Agent"
+        elif 'bingpreview' in ua:
+            return "Bing Preview"
+        elif 'google-inspectiontool' in ua:
+            return "Google Inspection Tool"
         else:
             return "Other Bot"
+    # AI 助手（非 bot 关键词）
+    elif 'claude-user' in ua:
+        return "Claude-User"
+    elif 'meta-externalagent' in ua:
+        return "Meta-ExternalAgent"
+    elif 'chatgpt-user' in ua:
+        return "ChatGPT-User"
+    elif 'google-agent' in ua:
+        return "Google-Agent"
     
     # 特殊客户端
     if 'go-http-client' in ua:

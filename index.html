@@ -381,6 +381,40 @@
       let currentUserAgentData = [];
       let currentChartType = 'bar';
 
+      const botData = [
+        { name: 'GoogleBot', operator: 'Google', category: '搜索引擎爬虫', userAgent: 'Googlebot/', percentage: '12.96%' },
+        { name: 'Claude-User', operator: 'Anthropic', category: 'AI 助手', userAgent: 'Claude-User', percentage: '8.95%' },
+        { name: 'Meta-ExternalAgent', operator: 'Meta', category: 'AI 爬虫', userAgent: 'meta-externalagent', percentage: '6.97%' },
+        { name: 'GPTBot', operator: 'OpenAI', category: 'AI 爬虫', userAgent: 'GPTBot', percentage: '5.73%' },
+        { name: 'BingBot', operator: 'Microsoft', category: '搜索引擎爬虫', userAgent: 'bingbot/', percentage: '4.93%' },
+        { name: 'Google AdsBot', operator: 'Google', category: '广告营销', userAgent: 'AdsBot-Google', percentage: '3.85%' },
+        { name: 'FacebookExternalHit', operator: 'Meta', category: '社交媒体', userAgent: 'facebookexternalhit/', percentage: '3.53%' },
+        { name: 'Applebot', operator: 'Apple', category: 'AI 搜索', userAgent: 'Applebot', percentage: '3.44%' },
+        { name: 'Amazonbot', operator: 'Amazon', category: 'AI 爬虫', userAgent: 'Amazonbot', percentage: '3.24%' },
+        { name: 'Claude-SearchBot', operator: 'Anthropic', category: 'AI 搜索', userAgent: 'Claude-SearchBot', percentage: '-' },
+        { name: 'ChatGPT-User', operator: 'OpenAI', category: 'AI 助手', userAgent: 'ChatGPT-User', percentage: '-' },
+        { name: 'GoogleOther', operator: 'Google', category: 'AI 爬虫', userAgent: 'GoogleOther', percentage: '-' },
+        { name: 'Google-Agent', operator: 'Google', category: 'AI 助手', userAgent: 'Google-Agent', percentage: '-' },
+        { name: 'Amazon AdBot', operator: 'Amazon', category: '广告营销', userAgent: 'AmazonAdBot', percentage: '-' },
+        { name: 'Amazon Kendra', operator: 'Amazon', category: 'AI 爬虫', userAgent: 'amazon-kendra-', percentage: '-' },
+        { name: 'Bing Preview', operator: 'Microsoft', category: '页面预览', userAgent: 'BingPreview', percentage: '-' },
+        { name: 'AhrefsBot', operator: 'Ahrefs', category: 'SEO 工具', userAgent: 'AhrefsBot', percentage: '-' },
+      ];
+
+      function populateBotTable() {
+        const tbody = document.getElementById('bot-table-body');
+        if (!tbody) return;
+        tbody.innerHTML = botData.map(bot => `
+          <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 10px 8px; font-weight: 500;">${bot.name}</td>
+            <td style="padding: 10px 8px;">${bot.operator}</td>
+            <td style="padding: 10px 8px;"><span style="background: var(--bg); padding: 2px 8px; border-radius: 4px; font-size: 11px;">${bot.category}</span></td>
+            <td style="padding: 10px 8px; font-family: monospace; font-size: 12px; color: var(--primary);">${bot.userAgent}</td>
+            <td style="padding: 10px 8px; font-weight: 600;">${bot.percentage}</td>
+          </tr>
+        `).join('');
+      }
+
       function getThemeColors() {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         return {
@@ -667,6 +701,7 @@
       window.onload = function () {
         initTheme();
         loadStats();
+        populateBotTable();
         document.getElementById('toggle-bar').addEventListener('click', () => toggleChartType('bar'));
         document.getElementById('toggle-pie').addEventListener('click', () => toggleChartType('pie'));
       };
@@ -724,6 +759,25 @@
         <div class="chart-card">
           <div class="chart-header"><span class="chart-title">国家/地区分布</span></div>
           <div class="chart-container" id="countryChart"></div>
+        </div>
+        <div class="chart-card" style="grid-column: 1 / -1;">
+          <div class="chart-header"><span class="chart-title">Bot 访问分析（最近7天）</span></div>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+              <thead>
+                <tr style="border-bottom: 2px solid var(--border); text-align: left;">
+                  <th style="padding: 12px 8px; font-weight: 600;">爬虫名称</th>
+                  <th style="padding: 12px 8px; font-weight: 600;">运营商</th>
+                  <th style="padding: 12px 8px; font-weight: 600;">类别</th>
+                  <th style="padding: 12px 8px; font-weight: 600;">User-Agent</th>
+                  <th style="padding: 12px 8px; font-weight: 600;">占比</th>
+                </tr>
+              </thead>
+              <tbody id="bot-table-body">
+                <tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--text-secondary);">加载中...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

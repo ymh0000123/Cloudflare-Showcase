@@ -15,6 +15,25 @@ Cloudflare Showcase是一个展示Cloudflare功能和特性的项目。可以在
 - `requirements.txt`: Python项目的依赖文件。
 - `waf.py`: 用于获取WAF的Python脚本。
 
+## 功能特性
+
+### 流量监控
+- 总请求数统计
+- 总流量统计
+- WAF拦截数和拦截率
+
+### 数据可视化
+- 请求量与WAF拦截趋势图
+- 流量变化趋势图
+- 浏览器使用排行（支持柱状图和饼图切换）
+- 国家/地区分布地图
+
+### Bot访问分析
+- 主要爬虫识别（GoogleBot、Claude-User、GPTBot等）
+- 爬虫运营商分布统计
+- 爬虫类别分析（搜索引擎、AI爬虫、广告营销等）
+- User-Agent详细信息
+
 ## 使用说明
 
 [博客文章](https://feishu.xiao-feishu.top/article/Cloudflare-Showcase)

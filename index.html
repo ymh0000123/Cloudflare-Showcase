@@ -10,47 +10,65 @@
     <link rel="stylesheet" href="https://lf6-cdnjs.zstaticcdn.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
       :root {
-        --primary: #2563eb;
-        --primary-light: #3b82f6;
-        --primary-dark: #1d4ed8;
-        --danger: #ef4444;
-        --success: #10b981;
-        --warning: #f59e0b;
-        --bg: #f8fafc;
+        --primary: #B8860B;
+        --primary-light: #DAA520;
+        --primary-dark: #996515;
+        --danger: #dc3545;
+        --success: #28a745;
+        --warning: #B8860B;
+        --bg: #e8e8e8;
         --bg-card: #ffffff;
-        --text: #0f172a;
-        --text-secondary: #64748b;
-        --border: #e2e8f0;
-        --shadow: 0 1px 3px rgba(0,0,0,0.08);
-        --shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
-        --radius: 12px;
+        --bg-card-hover: #f5f5f5;
+        --text: #1a1a1a;
+        --text-secondary: #666666;
+        --border: #d0d0d0;
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+        --radius: 0px;
+        --accent-yellow: #B8860B;
+      }
+
+      [data-theme="light"] {
+        --primary: #B8860B;
+        --primary-light: #DAA520;
+        --primary-dark: #996515;
+        --bg: #e8e8e8;
+        --bg-card: #ffffff;
+        --bg-card-hover: #f5f5f5;
+        --text: #1a1a1a;
+        --text-secondary: #666666;
+        --border: #d0d0d0;
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
       }
 
       [data-theme="dark"] {
-        --primary: #3b82f6;
-        --primary-light: #60a5fa;
-        --primary-dark: #2563eb;
-        --bg: #0f172a;
-        --bg-card: #1e293b;
-        --text: #f1f5f9;
-        --text-secondary: #94a3b8;
-        --border: #334155;
-        --shadow: 0 1px 3px rgba(0,0,0,0.3);
-        --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+        --primary: #FFD700;
+        --primary-light: #FFE44D;
+        --primary-dark: #E5C100;
+        --bg: #0a0a0a;
+        --bg-card: #141414;
+        --bg-card-hover: #1a1a1a;
+        --text: #ffffff;
+        --text-secondary: #777777;
+        --border: #2a2a2a;
+        --shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+        --shadow-hover: 0 0 30px rgba(255, 215, 0, 0.15);
       }
 
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme="light"]) {
-          --primary: #3b82f6;
-          --primary-light: #60a5fa;
-          --primary-dark: #2563eb;
-          --bg: #0f172a;
-          --bg-card: #1e293b;
-          --text: #f1f5f9;
-          --text-secondary: #94a3b8;
-          --border: #334155;
-          --shadow: 0 1px 3px rgba(0,0,0,0.3);
-          --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+          --primary: #FFD700;
+          --primary-light: #FFE44D;
+          --primary-dark: #E5C100;
+          --bg: #0a0a0a;
+          --bg-card: #141414;
+          --bg-card-hover: #1a1a1a;
+          --text: #ffffff;
+          --text-secondary: #777777;
+          --border: #2a2a2a;
+          --shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+          --shadow-hover: 0 0 30px rgba(255, 215, 0, 0.15);
         }
       }
 
@@ -67,30 +85,153 @@
         line-height: 1.6;
         min-height: 100vh;
         overflow-x: hidden;
+        position: relative;
+      }
+
+      /* 左侧垂直黄色装饰线 */
+      body::before {
+        content: '';
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--accent-yellow) 0%, var(--accent-yellow) 50%, transparent 100%);
+        z-index: 1000;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) body::before {
+          background: linear-gradient(180deg, #B8860B 0%, #B8860B 50%, transparent 100%);
+        }
+      }
+
+      /* 加载进度条 */
+      .loading-progress {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 0%;
+        background: var(--accent-yellow);
+        z-index: 1001;
+        transition: height 0.3s ease;
+        box-shadow: 0 0 10px var(--accent-yellow);
+        animation: pulse 1.5s ease-in-out infinite;
+        display: none;
+      }
+
+      .loading-progress.active {
+        display: block;
+      }
+
+      @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 10px var(--accent-yellow); }
+        50% { box-shadow: 0 0 20px var(--accent-yellow), 0 0 30px var(--accent-yellow); }
+      }
+
+      .loading-percent {
+        position: absolute;
+        right: -50px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--accent-yellow);
+        font-size: 14px;
+        font-weight: 700;
+        font-family: 'Inter', monospace;
+        text-shadow: 0 0 10px var(--accent-yellow);
+        white-space: nowrap;
+      }
+
+      .loading-progress::after {
+        content: '';
+        position: absolute;
+        right: -20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        background: var(--accent-yellow);
+        border-radius: 50%;
+        box-shadow: 0 0 15px var(--accent-yellow);
+        opacity: 0.8;
+        animation: dotPulse 1s ease-in-out infinite;
+      }
+
+      @keyframes dotPulse {
+        0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.8; }
+        50% { transform: translateY(-50%) scale(1.2); opacity: 1; }
+      }
+
+      .loading-progress.complete {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+        animation: none;
+        display: none;
+      }
+
+      .loading-progress.complete::after,
+      .loading-progress.complete .loading-percent {
+        opacity: 0;
+        visibility: hidden;
+        animation: none;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root:not([data-theme="dark"]) {
+          --accent-yellow: #B8860B;
+        }
+      }
+
+      /* 卡片入场动画 */
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes glowPulse {
+        0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
+        50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
       }
 
       .header {
         background: var(--bg-card);
         border-bottom: 1px solid var(--border);
-        padding: 16px 24px;
+        padding: 16px 24px 16px 28px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         position: sticky;
         top: 0;
         z-index: 100;
+        backdrop-filter: blur(10px);
       }
 
       .header-title {
         font-size: 18px;
-        font-weight: 600;
+        font-weight: 700;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
       }
 
       .header-title i {
-        color: var(--primary);
+        color: var(--accent-yellow);
+        font-size: 20px;
       }
 
       .header-actions {
@@ -102,21 +243,22 @@
       .btn-icon {
         width: 36px;
         height: 36px;
-        border-radius: 8px;
+        border-radius: 0;
         border: 1px solid var(--border);
-        background: var(--bg-card);
+        background: transparent;
         color: var(--text-secondary);
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s;
+        transition: all 0.3s ease;
       }
 
       .btn-icon:hover {
-        background: var(--bg);
-        color: var(--primary);
-        border-color: var(--primary);
+        background: var(--accent-yellow);
+        color: #ffffff;
+        border-color: var(--accent-yellow);
+        box-shadow: 0 0 15px rgba(184, 134, 11, 0.3);
       }
 
       .btn-icon.loading {
@@ -130,7 +272,7 @@
       .container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 24px;
+        padding: 24px 24px 24px 28px;
       }
 
       .kpi-grid {
@@ -152,32 +294,62 @@
         background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--radius);
-        padding: 20px;
-        transition: box-shadow 0.2s;
+        padding: 24px 20px;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        animation: slideInLeft 0.6s ease forwards;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .kpi-card:nth-child(1) { animation-delay: 0.1s; }
+      .kpi-card:nth-child(2) { animation-delay: 0.2s; }
+      .kpi-card:nth-child(3) { animation-delay: 0.3s; }
+      .kpi-card:nth-child(4) { animation-delay: 0.4s; }
+
+      .kpi-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 3px;
+        height: 100%;
+        background: var(--accent-yellow);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+      }
+
+      .kpi-card:hover::before {
+        transform: scaleY(1);
       }
 
       .kpi-card:hover {
-        box-shadow: var(--shadow-hover);
+        background: var(--bg-card-hover);
       }
 
       .kpi-label {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--text-secondary);
         font-weight: 500;
         display: flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       .kpi-label i {
         font-size: 14px;
+        color: var(--accent-yellow);
       }
 
       .kpi-value {
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 700;
         color: var(--text);
+        font-family: 'Inter', monospace;
       }
 
       .charts-grid {
@@ -195,30 +367,61 @@
         background: var(--bg-card);
         border: 1px solid var(--border);
         border-radius: var(--radius);
-        padding: 20px;
-        transition: box-shadow 0.2s;
+        padding: 24px;
+        position: relative;
+        transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 0.8s ease forwards;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .chart-card:nth-child(1) { animation-delay: 0.5s; }
+      .chart-card:nth-child(2) { animation-delay: 0.6s; }
+      .chart-card:nth-child(3) { animation-delay: 0.7s; }
+      .chart-card:nth-child(4) { animation-delay: 0.8s; }
+      .chart-card:nth-child(5) { animation-delay: 0.9s; }
+
+      .chart-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--accent-yellow) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .chart-card:hover::before {
+        opacity: 1;
       }
 
       .chart-card:hover {
-        box-shadow: var(--shadow-hover);
+        background: var(--bg-card-hover);
       }
 
       .chart-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
       }
 
       .chart-title {
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text);
       }
 
       .chart-toggle {
         display: inline-flex;
         background: var(--bg);
-        border-radius: 6px;
+        border-radius: 0;
         padding: 2px;
         border: 1px solid var(--border);
       }
@@ -227,20 +430,20 @@
         padding: 6px 10px;
         border: none;
         background: transparent;
-        border-radius: 4px;
+        border-radius: 0;
         cursor: pointer;
         color: var(--text-secondary);
         font-size: 13px;
-        transition: all 0.2s;
+        transition: all 0.3s ease;
       }
 
       .chart-toggle-btn:hover {
-        color: var(--primary);
+        color: var(--accent-yellow);
       }
 
       .chart-toggle-btn.active {
-        background: var(--primary);
-        color: white;
+        background: var(--accent-yellow);
+        color: #ffffff;
       }
 
       .chart-container {
@@ -254,12 +457,12 @@
         left: 16px;
         background: var(--bg-card);
         border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 10px 14px;
-        font-size: 12px;
+        border-radius: 0;
+        padding: 12px 16px;
+        font-size: 11px;
         color: var(--text-secondary);
-        box-shadow: var(--shadow);
         z-index: 50;
+        backdrop-filter: blur(10px);
       }
 
       .watermark-row {
@@ -270,68 +473,75 @@
       }
 
       .watermark-time {
-        font-weight: 500;
-        color: var(--primary);
+        font-weight: 600;
+        color: var(--accent-yellow);
+        font-family: 'Inter', monospace;
       }
 
       .watermark-info {
         margin-top: 4px;
-        font-size: 11px;
-        opacity: 0.8;
+        font-size: 10px;
+        opacity: 0.7;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       .footer {
         text-align: center;
-        padding: 24px;
+        padding: 32px 24px;
         color: var(--text-secondary);
-        font-size: 13px;
+        font-size: 12px;
         border-top: 1px solid var(--border);
-        margin-top: 24px;
+        margin-top: 32px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       .footer a {
-        color: var(--primary);
+        color: var(--accent-yellow);
         text-decoration: none;
-        font-weight: 500;
+        font-weight: 600;
+        transition: all 0.3s ease;
       }
 
       .footer a:hover {
-        text-decoration: underline;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
       }
 
       /* Mobile Responsive */
       @media (max-width: 640px) {
         .header {
-          padding: 12px 16px;
+          padding: 12px 16px 12px 20px;
         }
         .header-title {
-          font-size: 15px;
+          font-size: 14px;
+          letter-spacing: 1px;
         }
         .container {
-          padding: 12px;
+          padding: 16px 16px 16px 20px;
         }
         .kpi-grid {
           grid-template-columns: repeat(2, 1fr);
-          gap: 8px;
+          gap: 12px;
         }
         .kpi-card {
-          padding: 14px;
+          padding: 16px 12px;
         }
         .kpi-label {
-          font-size: 11px;
+          font-size: 10px;
         }
         .kpi-value {
-          font-size: 20px;
+          font-size: 22px;
         }
         .charts-grid {
           grid-template-columns: 1fr;
           gap: 12px;
         }
         .chart-card {
-          padding: 14px;
+          padding: 16px;
         }
         .chart-title {
-          font-size: 13px;
+          font-size: 12px;
         }
         .chart-container {
           height: 240px;
@@ -343,23 +553,23 @@
           bottom: 8px;
           left: 8px;
           right: auto;
-          padding: 8px 10px;
-          font-size: 11px;
-          max-width: 180px;
+          padding: 10px 12px;
+          font-size: 10px;
+          max-width: 160px;
         }
         .footer {
-          padding: 16px;
-          font-size: 12px;
+          padding: 20px 16px;
+          font-size: 11px;
         }
       }
 
       .loading-spinner {
-        width: 32px;
-        height: 32px;
-        border: 3px solid var(--border);
-        border-top-color: var(--primary);
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--border);
+        border-top-color: var(--accent-yellow);
+        border-radius: 0;
+        animation: spin 1s linear infinite;
         margin: 40px auto;
       }
 
@@ -371,13 +581,15 @@
         height: 2px;
         z-index: 200;
         display: none;
+        background: var(--border);
       }
 
       .progress-bar-fill {
         height: 100%;
         width: 0;
-        background: var(--primary);
+        background: linear-gradient(90deg, var(--accent-yellow), var(--accent-yellow));
         transition: width 0.3s;
+        box-shadow: 0 0 10px var(--accent-yellow);
       }
     </style>
     <script>
@@ -419,13 +631,14 @@
       }
 
       function getThemeColors() {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+          (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
         return {
-          text: isDark ? '#f1f5f9' : '#0f172a',
-          textSecondary: isDark ? '#94a3b8' : '#64748b',
-          border: isDark ? '#334155' : '#e2e8f0',
-          bg: isDark ? '#1e293b' : '#ffffff',
-          splitLine: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+          text: isDark ? '#ffffff' : '#1a1a1a',
+          textSecondary: isDark ? '#777777' : '#666666',
+          border: isDark ? '#2a2a2a' : '#e0e0e0',
+          bg: isDark ? '#141414' : '#ffffff',
+          splitLine: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.08)',
         };
       }
 
@@ -535,8 +748,8 @@
           xAxis: { type: 'category', data: labels, axisLabel: { rotate: 45, fontSize: 10, color: c.textSecondary }, axisLine: { lineStyle: { color: c.border } }, boundaryGap: false },
           yAxis: { type: 'value', axisLabel: { formatter: v => formatRequests(v, 0), color: c.textSecondary }, splitLine: { lineStyle: { color: c.splitLine } } },
           series: [
-            { name: '总请求数', type: 'line', data: requests, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#3b82f6' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(59,130,246,0.3)' }, { offset: 1, color: 'rgba(59,130,246,0.02)' }]) } },
-            { name: 'WAF拦截', type: 'line', data: waf, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#ef4444' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(239,68,68,0.3)' }, { offset: 1, color: 'rgba(239,68,68,0.02)' }]) } },
+            { name: '总请求数', type: 'line', data: requests, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#FFD700' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(255, 215, 0, 0.4)' }, { offset: 1, color: 'rgba(255, 215, 0, 0.02)' }]) } },
+            { name: 'WAF拦截', type: 'line', data: waf, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#FFA500' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(255, 165, 0, 0.3)' }, { offset: 1, color: 'rgba(255, 165, 0, 0.02)' }]) } },
           ],
           animation: true,
           animationDuration: 1000,
@@ -549,7 +762,7 @@
           xAxis: { type: 'category', data: labels, axisLabel: { rotate: 45, fontSize: 10, color: c.textSecondary }, axisLine: { lineStyle: { color: c.border } }, boundaryGap: false },
           yAxis: { type: 'value', axisLabel: { formatter: v => formatTraffic(v, 1), color: c.textSecondary }, splitLine: { lineStyle: { color: c.splitLine } } },
           series: [
-            { name: '流量', type: 'line', data: traffic, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#10b981' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(16,185,129,0.3)' }, { offset: 1, color: 'rgba(16,185,129,0.02)' }]) } },
+            { name: '流量', type: 'line', data: traffic, smooth: true, symbol: 'none', lineStyle: { width: 2, color: '#FFE44D' }, areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(255, 228, 77, 0.3)' }, { offset: 1, color: 'rgba(255, 228, 77, 0.02)' }]) } },
           ],
           animation: true,
           animationDuration: 1000,
@@ -577,7 +790,7 @@
 
       function renderUserAgentChart(data, c) {
         const chart = echarts.getInstanceByDom(document.getElementById('userAgentChart')) || echarts.init(document.getElementById('userAgentChart'));
-        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#ec4899', '#14b8a6', '#f97316', '#6366f1'];
+        const colors = ['#FFD700', '#FFC107', '#FFB300', '#FFA000', '#FF8F00', '#FF6F00', '#FFE44D', '#FFD54F', '#FFCA28', '#FFC107'];
 
         if (currentChartType === 'pie') {
           chart.setOption({
@@ -634,11 +847,11 @@
         const chart = echarts.getInstanceByDom(document.getElementById('countryChart')) || echarts.init(document.getElementById('countryChart'));
         chart.setOption({
           tooltip: { ...c, trigger: 'item', formatter: p => p.data && p.data.value ? p.name + '<br/>请求数: ' + formatRequests(p.data.value) : p.name + '<br/>无数据' },
-          visualMap: { min: 0, max: maxVal, left: 'left', bottom: 10, text: ['高', '低'], calculable: true, inRange: { color: c.text === '#f1f5f9' ? ['#1e3a8a', '#3b82f6', '#93c5fd'] : ['#dbeafe', '#3b82f6', '#1e40af'] }, textStyle: { color: c.textSecondary } },
+          visualMap: { min: 0, max: maxVal, left: 'left', bottom: 10, text: ['高', '低'], calculable: true, inRange: { color: c.text === '#1a1a1a' ? ['#f5e6b8', '#B8860B', '#8B6914'] : ['#4a3800', '#FFD700', '#FFE44D'] }, textStyle: { color: c.textSecondary } },
           series: [{
             type: 'map', map: 'world', roam: true,
             emphasis: { label: { show: true, color: c.text }, itemStyle: { areaColor: c.border } },
-            itemStyle: { areaColor: c.text === '#f1f5f9' ? '#334155' : '#f1f5f9', borderColor: c.border, borderWidth: 0.5 },
+            itemStyle: { areaColor: c.text === '#1a1a1a' ? '#e8e8e8' : '#2a2a2a', borderColor: c.border, borderWidth: 0.5 },
             data: mapData,
           }],
           animation: true, animationDuration: 800,
@@ -672,33 +885,99 @@
       async function loadStats() {
         const bar = document.getElementById('progress-bar');
         const fill = document.getElementById('progress-fill');
+        const loadingProgress = document.getElementById('loading-progress');
+        const loadingPercent = document.getElementById('loading-percent');
+
+        // 更新进度条
+        function updateProgress(percent) {
+          if (loadingProgress) {
+            loadingProgress.style.height = percent + '%';
+          }
+          if (fill) {
+            fill.style.width = percent + '%';
+          }
+          if (loadingPercent) {
+            loadingPercent.textContent = percent + '%';
+          }
+        }
+
         try {
           if (bar) bar.style.display = 'block';
-          if (fill) fill.style.width = '30%';
+          if (loadingProgress) loadingProgress.classList.add('active');
+          updateProgress(10);
 
           document.querySelectorAll('.kpi-value').forEach(el => el.innerHTML = '<div class="loading-spinner"></div>');
           document.querySelectorAll('.chart-container').forEach(el => el.innerHTML = '<div class="loading-spinner"></div>');
 
-          if (fill) fill.style.width = '60%';
+          updateProgress(30);
           const resp = await fetch('cloudflare_hourly_stats.json');
           if (!resp.ok) throw new Error('HTTP ' + resp.status);
-          if (fill) fill.style.width = '90%';
+          updateProgress(60);
 
           const data = await resp.json();
           if (!Array.isArray(data) || data.length === 0) throw new Error('数据为空');
+          updateProgress(80);
 
           window.chartData = data;
           createKPIs(data);
-          createCharts(data);
-          updateWatermark(data);
+          updateProgress(90);
 
-          if (fill) fill.style.width = '100%';
-          setTimeout(() => { if (bar) bar.style.display = 'none'; }, 400);
+          createCharts(data);
+          updateProgress(95);
+
+          updateWatermark(data);
+          updateProgress(100);
+
+          // 加载完成，隐藏进度条
+          setTimeout(() => {
+            if (bar) bar.style.display = 'none';
+            if (loadingProgress) {
+              loadingProgress.classList.remove('active');
+              loadingProgress.classList.add('complete');
+              loadingProgress.style.display = 'none';
+            }
+          }, 400);
         } catch (e) {
           if (bar) bar.style.display = 'none';
+          if (loadingProgress) {
+            loadingProgress.classList.remove('active');
+            loadingProgress.classList.add('complete');
+            loadingProgress.style.display = 'none';
+          }
           document.getElementById('kpi-requests').textContent = '-';
           console.error('加载失败:', e);
         }
+      }
+
+      // 卡片边框光晕跟随鼠标效果
+      function initCardGlowEffect() {
+        const cards = document.querySelectorAll('.kpi-card, .chart-card');
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+          (!document.documentElement.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+        cards.forEach(card => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // 根据主题选择光晕颜色
+            const glowColor = isDark ? 'rgba(255, 215, 0,' : 'rgba(184, 134, 11,';
+            const borderColor = isDark ? 'rgba(255, 215, 0, 0.6)' : 'rgba(184, 134, 11, 0.5)';
+
+            // 使用 box-shadow 实现边框光晕，避免 border 宽度变化
+            card.style.boxShadow = `
+              0 0 20px ${glowColor}0.3),
+              inset 0 0 15px ${glowColor}0.05)
+            `;
+            card.style.borderColor = borderColor;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.boxShadow = '';
+            card.style.borderColor = '';
+          });
+        });
       }
 
       window.onload = function () {
@@ -707,16 +986,22 @@
         populateBotTable();
         document.getElementById('toggle-bar').addEventListener('click', () => toggleChartType('bar'));
         document.getElementById('toggle-pie').addEventListener('click', () => toggleChartType('pie'));
+
+        // 延迟初始化高光效果，等待卡片渲染完成
+        setTimeout(initCardGlowEffect, 1000);
       };
     </script>
   </head>
   <body>
+    <div id="loading-progress" class="loading-progress">
+      <span id="loading-percent" class="loading-percent">0%</span>
+    </div>
     <div id="progress-bar" class="progress-bar"><div id="progress-fill" class="progress-bar-fill"></div></div>
 
     <header class="header">
-      <div class="header-title"><i class="fas fa-chart-line"></i> Cloudflare Analytics</div>
+      <div class="header-title"><i class="fas fa-shield-alt"></i> CLOUDFLARE ANALYTICS</div>
       <div class="header-actions">
-        <button id="theme-toggle" class="btn-icon" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+        <button id="theme-toggle" class="btn-icon" onclick="toggleTheme()" title="切换主题"><i class="fas fa-moon"></i></button>
       </div>
     </header>
 

@@ -736,10 +736,27 @@
       .footer { margin-bottom: 62px; }
     }
     @media (max-width: 560px) {
-      .masthead { min-height: 196px; }
-      .mast-meta .eyebrow { max-width: 180px; }
-      .system-state span { display: none; }
-      .wordmark { margin-top: 50px; font-size: 13.4vw; }
+      .masthead { min-height: 214px; padding: 26px 14px 28px; }
+      .masthead::before { left: 14px; right: 14px; }
+      .masthead::after {
+        right: 14px;
+        width: 54px;
+        height: 136px;
+        padding: 10px 7px;
+        font-size: 14px;
+      }
+      .mast-meta { padding-right: 66px; }
+      .mast-meta .eyebrow { max-width: 220px; line-height: 1.45; }
+      .system-state { display: none; }
+      .wordmark {
+        margin-top: 58px;
+        max-width: calc(100% - 62px);
+        font-size: clamp(32px, 10.2vw, 48px);
+        line-height: .78;
+        letter-spacing: -.075em;
+        transform: scaleX(.92);
+        transform-origin: left center;
+      }
       .workspace { padding-inline: 14px; }
       .section { margin-bottom: 44px; }
       .section-grid, #security .section-grid { grid-template-columns: minmax(0, 1fr) 40px; gap: 0; }

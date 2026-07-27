@@ -894,21 +894,6 @@
   </main>
 
   <script>
-    const botData = [
-      ['GoogleBot', 'Google', '搜索引擎爬虫', 'Googlebot/', '12.96%'],
-      ['Claude-User', 'Anthropic', 'AI 助手', 'Claude-User', '8.95%'],
-      ['Meta-ExternalAgent', 'Meta', 'AI 爬虫', 'meta-externalagent', '6.97%'],
-      ['GPTBot', 'OpenAI', 'AI 爬虫', 'GPTBot', '5.73%'],
-      ['BingBot', 'Microsoft', '搜索引擎爬虫', 'bingbot/', '4.93%'],
-      ['Google AdsBot', 'Google', '广告营销', 'AdsBot-Google', '3.85%'],
-      ['FacebookExternalHit', 'Meta', '社交媒体', 'facebookexternalhit/', '3.53%'],
-      ['Applebot', 'Apple', 'AI 搜索', 'Applebot', '3.44%'],
-      ['Amazonbot', 'Amazon', 'AI 爬虫', 'Amazonbot', '3.24%'],
-      ['Claude-SearchBot', 'Anthropic', 'AI 搜索', 'Claude-SearchBot', '—'],
-      ['ChatGPT-User', 'OpenAI', 'AI 助手', 'ChatGPT-User', '—'],
-      ['AhrefsBot', 'Ahrefs', 'SEO 工具', 'AhrefsBot', '—']
-    ];
-
     let charts = [];
     let rawData = [];
     let browserMode = 'bar';
@@ -1116,8 +1101,62 @@
       renderCountryChart();
     }
 
-    function populateBots() {
-      $('#bot-body').innerHTML = botData.map(bot => `<tr><td class="bot-name">${bot[0]}</td><td>${bot[1]}</td><td><span class="bot-type">${bot[2]}</span></td><td class="bot-agent">${bot[3]}</td><td>${bot[4]}</td></tr>`).join('');
+    function populateBots(data) {
+      const legacyBotPattern = /bot|spider|crawler|claude|gpt|anthropic|meta-external|perplexity|cohere|majestic|semrush|ahrefs|facebook|twitter|linkedin|whatsapp|telegram|slack|discord|prerender|uptime|pingdom|nagios/i;
+      const bots = new Map();
+
+      data.forEach(item => {
+        const hasBotStats = Array.isArray(item.top_bots);
+        const entries = hasBotStats
+          ? item.top_bots
+          : (item.top_user_agents || [])
+              .filter(entry => legacyBotPattern.test(entry.browser || ''))
+              .map(entry => ({ name: entry.browser, requests: entry.requests }));
+
+        entries.forEach(entry => {
+          const name = entry.name || entry.browser;
+          if (!name) return;
+          const existing = bots.get(name) || {
+            name,
+            operator: entry.operator || '—',
+            classification: entry.classification || '自动化客户端',
+            signature: entry.signature || name,
+            requests: 0
+          };
+          existing.requests += Number(entry.requests || 0);
+          bots.set(name, existing);
+        });
+      });
+
+      const ranked = [...bots.values()].sort((a, b) => b.requests - a.requests).slice(0, 12);
+      const total = [...bots.values()].reduce((sum, bot) => sum + bot.requests, 0);
+      const body = $('#bot-body');
+      body.replaceChildren();
+
+      if (!ranked.length) {
+        const row = body.insertRow();
+        const cell = row.insertCell();
+        cell.colSpan = 5;
+        cell.textContent = '当前数据窗口未识别到自动化客户端';
+        return;
+      }
+
+      ranked.forEach(bot => {
+        const row = body.insertRow();
+        const name = row.insertCell();
+        name.className = 'bot-name';
+        name.textContent = bot.name;
+        row.insertCell().textContent = bot.operator;
+        const classification = row.insertCell();
+        const badge = document.createElement('span');
+        badge.className = 'bot-type';
+        badge.textContent = bot.classification;
+        classification.appendChild(badge);
+        const signature = row.insertCell();
+        signature.className = 'bot-agent';
+        signature.textContent = bot.signature;
+        row.insertCell().textContent = (total ? bot.requests / total * 100 : 0).toFixed(2) + '%';
+      });
     }
 
     function updateTimestamp(data) {
@@ -1145,12 +1184,14 @@
         rawData = [...data].sort((a,b) => a.since - b.since);
         updateKpis(rawData);
         updateTimestamp(rawData);
+        populateBots(rawData);
         renderAllCharts();
         setBootProgress(92, 'Rendering intelligence surface...');
       } catch (error) {
         console.error('Data load failed:', error);
         $$('.kpi-value').forEach(node => node.textContent = '—');
         ['requests-chart','traffic-chart','browser-chart','country-chart'].forEach(id => { document.getElementById(id).innerHTML = '<div class="error-box">DATA LINK UNAVAILABLE<br>请通过本地服务器打开页面并检查数据文件</div>'; });
+        $('#bot-body').innerHTML = '<tr><td colspan="5">DATA LINK UNAVAILABLE / 自动化客户端数据不可用</td></tr>';
         $('#data-range').textContent = 'DATA LINK / OFFLINE';
         $('#updated-at').textContent = 'LAST UPDATE / LINK UNAVAILABLE';
       } finally {
@@ -1267,7 +1308,6 @@
       $('#year').textContent = new Date().getFullYear();
       initTheme();
       initInteractions();
-      populateBots();
       loadStats(true);
     });
   </script>

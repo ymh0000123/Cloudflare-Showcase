@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 import sys
 import json
-from user_agent_parser import process_user_agent_stats
+from user_agent_parser import process_bot_stats, process_user_agent_stats
 
 load_dotenv()
 
@@ -171,17 +171,18 @@ for i in range(total_hours, 0, -1):
         if ua_data.get("errors"):
             print(f"GraphQL错误: {ua_data['errors']}")
             top_user_agents = []
-            top_domains = []
+            top_bots = []
             top_countries = []
         elif not ua_data.get("data") or not ua_data["data"]["viewer"]["zones"]:
             print("UA数据为空或zone不存在")
             top_user_agents = []
-            top_domains = []
+            top_bots = []
             top_countries = []
         else:
             user_agent_events = ua_data["data"]["viewer"]["zones"][0]["httpRequestsAdaptive"]
-            # 使用新的处理函数
+            # 浏览器图表保留前 10 项，Bot 表格使用单独的完整分类结果。
             top_user_agents = process_user_agent_stats(user_agent_events)
+            top_bots = process_bot_stats(user_agent_events)
             
             # 统计国家排行
             country_counts = {}
@@ -208,6 +209,7 @@ for i in range(total_hours, 0, -1):
         if 'ua_data' in locals():
             print(f"UA数据结构: {ua_data}")
         top_user_agents = []
+        top_bots = []
         top_countries = []
 
     result = {
@@ -218,6 +220,7 @@ for i in range(total_hours, 0, -1):
         "total_megabytes": round(total_bytes / (1024 ** 2), 2),
         "waf_mitigated_requests": waf_mitigated_requests,
         "top_user_agents": top_user_agents,
+        "top_bots": top_bots,
         "top_countries": top_countries,
         "top_waf_countries": top_waf_countries
     }

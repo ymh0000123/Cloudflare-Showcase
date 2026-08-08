@@ -1,153 +1,139 @@
 [
   {
-    "since": 1784545200,
-    "until": 1784548800,
-    "total_requests": 114,
-    "total_bytes": 1885100,
-    "total_megabytes": 1.8,
-    "waf_mitigated_requests": 13,
+    "since": 1786125600,
+    "until": 1786129200,
+    "total_requests": 455,
+    "total_bytes": 3446618,
+    "total_megabytes": 3.29,
+    "waf_mitigated_requests": 286,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 32
+        "requests": 24
       },
       {
-        "browser": "Microsoft Edge",
-        "requests": 12
-      },
-      {
-        "browser": "Safari",
-        "requests": 10
-      },
-      {
-        "browser": "Firefox",
-        "requests": 8
-      },
-      {
-        "browser": "BaiduSpider",
+        "browser": "Yandex",
         "requests": 6
+      },
+      {
+        "browser": "YouBot",
+        "requests": 3
       },
       {
         "browser": "AhrefsBot",
         "requests": 2
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 38
       },
       {
-        "country": "United States",
-        "requests": 28
-      },
-      {
-        "country": "FR",
+        "browser": "Uncharted",
         "requests": 1
       },
       {
-        "country": "CA",
+        "browser": "BingBot",
         "requests": 1
       },
       {
-        "country": "DE",
+        "browser": "Meta-ExternalAgent",
         "requests": 1
       },
       {
-        "country": "BR",
+        "browser": "OAI-SearchBot",
         "requests": 1
       }
     ],
-    "top_waf_countries": [
+    "top_bots": [
       {
-        "country": "United States",
-        "requests": 4
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 6
       },
       {
-        "country": "NL",
-        "requests": 4
+        "name": "YouBot",
+        "operator": "You.com",
+        "classification": "AI 搜索",
+        "signature": "YouBot",
+        "requests": 3
       },
       {
-        "country": "CA",
-        "requests": 4
+        "name": "AhrefsBot",
+        "operator": "Ahrefs",
+        "classification": "SEO 工具",
+        "signature": "AhrefsBot",
+        "requests": 2
       },
       {
-        "country": "China",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784548800,
-    "until": 1784552400,
-    "total_requests": 1490,
-    "total_bytes": 9678398,
-    "total_megabytes": 9.23,
-    "waf_mitigated_requests": 521,
-    "top_user_agents": [
-      {
-        "browser": "Other Bot",
-        "requests": 16
-      },
-      {
-        "browser": "Safari",
-        "requests": 8
-      },
-      {
-        "browser": "Majestic SEO",
-        "requests": 4
-      },
-      {
-        "browser": "Chrome",
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
         "requests": 1
       },
       {
-        "browser": "Googlebot",
+        "name": "Meta-ExternalAgent",
+        "operator": "Meta",
+        "classification": "AI 爬虫",
+        "signature": "meta-externalagent",
+        "requests": 1
+      },
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
         "requests": 1
       }
     ],
     "top_countries": [
       {
-        "country": "China",
-        "requests": 16
-      },
-      {
         "country": "United States",
-        "requests": 9
+        "requests": 24
       },
       {
-        "country": "FR",
-        "requests": 4
-      },
-      {
-        "country": "SG",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "BR",
-        "requests": 416
-      },
-      {
-        "country": "FR",
-        "requests": 91
+        "country": "TR",
+        "requests": 7
       },
       {
         "country": "NL",
         "requests": 5
       },
       {
-        "country": "SG",
-        "requests": 3
+        "country": "FR",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "DE",
+        "requests": 137
+      },
+      {
+        "country": "SE",
+        "requests": 85
+      },
+      {
+        "country": "PL",
+        "requests": 52
       },
       {
         "country": "United States",
-        "requests": 3
+        "requests": 6
       },
       {
         "country": "RU",
-        "requests": 2
+        "requests": 4
+      },
+      {
+        "country": "NL",
+        "requests": 1
       },
       {
         "country": "BE",
@@ -156,35 +142,47 @@
     ]
   },
   {
-    "since": 1784552400,
-    "until": 1784556000,
-    "total_requests": 98,
-    "total_bytes": 1082908,
-    "total_megabytes": 1.03,
-    "waf_mitigated_requests": 78,
+    "since": 1786129200,
+    "until": 1786132800,
+    "total_requests": 327,
+    "total_bytes": 2815678,
+    "total_megabytes": 2.69,
+    "waf_mitigated_requests": 188,
     "top_user_agents": [
       {
+        "browser": "Other Bot",
+        "requests": 5
+      },
+      {
         "browser": "Safari",
-        "requests": 10
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 2
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 2
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 1
+        "requests": 4
       },
       {
         "browser": "Chrome",
+        "requests": 4
+      },
+      {
+        "browser": "BingBot",
+        "requests": 2
+      },
+      {
+        "browser": "Firefox",
+        "requests": 2
+      },
+      {
+        "browser": "Yandex",
         "requests": 1
       },
       {
-        "browser": "Microsoft Edge",
+        "browser": "GPTBot",
+        "requests": 1
+      },
+      {
+        "browser": "Perplexity",
+        "requests": 1
+      },
+      {
+        "browser": "ChatGPT-User",
         "requests": 1
       },
       {
@@ -192,283 +190,600 @@
         "requests": 1
       }
     ],
-    "top_countries": [
+    "top_bots": [
       {
-        "country": "United States",
-        "requests": 8
-      },
-      {
-        "country": "SG",
-        "requests": 4
-      },
-      {
-        "country": "China",
-        "requests": 2
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "GB",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      },
-      {
-        "country": "MX",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "CA",
-        "requests": 68
-      },
-      {
-        "country": "United States",
-        "requests": 8
-      },
-      {
-        "country": "China",
-        "requests": 1
-      },
-      {
-        "country": "BR",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784556000,
-    "until": 1784559600,
-    "total_requests": 244,
-    "total_bytes": 1783463,
-    "total_megabytes": 1.7,
-    "waf_mitigated_requests": 221,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 7
-      },
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "Firefox",
-        "requests": 3
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 2
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 1
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 8
-      },
-      {
-        "country": "DE",
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
         "requests": 5
       },
       {
-        "country": "BR",
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
         "requests": 2
       },
       {
-        "country": "CA",
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
         "requests": 1
       },
       {
-        "country": "China",
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
         "requests": 1
       },
       {
-        "country": "GB",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "CA",
-        "requests": 175
-      },
-      {
-        "country": "SG",
-        "requests": 42
-      },
-      {
-        "country": "United States",
-        "requests": 4
-      }
-    ]
-  },
-  {
-    "since": 1784559600,
-    "until": 1784563200,
-    "total_requests": 386,
-    "total_bytes": 4563506,
-    "total_megabytes": 4.35,
-    "waf_mitigated_requests": 174,
-    "top_user_agents": [
-      {
-        "browser": "Microsoft Edge",
-        "requests": 79
-      },
-      {
-        "browser": "BingBot",
-        "requests": 4
-      },
-      {
-        "browser": "Chrome",
-        "requests": 2
-      },
-      {
-        "browser": "Safari",
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
         "requests": 1
       },
       {
-        "browser": "AhrefsBot",
-        "requests": 1
-      },
-      {
-        "browser": "Meta-ExternalAgent",
+        "name": "ChatGPT-User",
+        "operator": "OpenAI",
+        "classification": "AI 助手",
+        "signature": "ChatGPT-User",
         "requests": 1
       }
     ],
     "top_countries": [
       {
+        "country": "NL",
+        "requests": 10
+      },
+      {
         "country": "China",
-        "requests": 81
+        "requests": 4
+      },
+      {
+        "country": "SG",
+        "requests": 3
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "TR",
+        "requests": 2
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "CH",
+        "requests": 113
+      },
+      {
+        "country": "SE",
+        "requests": 57
+      },
+      {
+        "country": "DE",
+        "requests": 11
+      },
+      {
+        "country": "NL",
+        "requests": 5
+      },
+      {
+        "country": "NI",
+        "requests": 1
+      },
+      {
+        "country": "United States",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786132800,
+    "until": 1786136400,
+    "total_requests": 709,
+    "total_bytes": 5213458,
+    "total_megabytes": 4.97,
+    "waf_mitigated_requests": 467,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 11
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 1
+      }
+    ],
+    "top_bots": [],
+    "top_countries": [
+      {
+        "country": "TR",
+        "requests": 4
+      },
+      {
+        "country": "ES",
+        "requests": 4
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "United States",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "NO",
+        "requests": 211
+      },
+      {
+        "country": "DE",
+        "requests": 131
+      },
+      {
+        "country": "SE",
+        "requests": 42
+      },
+      {
+        "country": "CH",
+        "requests": 39
+      },
+      {
+        "country": "ES",
+        "requests": 34
       },
       {
         "country": "United States",
         "requests": 6
       },
       {
-        "country": "PL",
-        "requests": 2
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "BR",
-        "requests": 103
-      },
-      {
-        "country": "CA",
-        "requests": 70
-      },
-      {
-        "country": "United States",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784563200,
-    "until": 1784566800,
-    "total_requests": 206,
-    "total_bytes": 1905156,
-    "total_megabytes": 1.82,
-    "waf_mitigated_requests": 181,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 15
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 3
-      },
-      {
-        "browser": "Chrome",
-        "requests": 1
-      },
-      {
-        "browser": "BingBot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 17
-      },
-      {
-        "country": "JP",
-        "requests": 2
-      },
-      {
-        "country": "China",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
         "country": "NL",
-        "requests": 170
-      },
-      {
-        "country": "United States",
-        "requests": 7
-      },
-      {
-        "country": "BR",
-        "requests": 2
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      },
-      {
-        "country": "FR",
-        "requests": 1
+        "requests": 4
       }
     ]
   },
   {
-    "since": 1784566800,
-    "until": 1784570400,
-    "total_requests": 1014,
-    "total_bytes": 7521434,
-    "total_megabytes": 7.17,
-    "waf_mitigated_requests": 888,
+    "since": 1786136400,
+    "until": 1786140000,
+    "total_requests": 334,
+    "total_bytes": 2770190,
+    "total_megabytes": 2.64,
+    "waf_mitigated_requests": 92,
     "top_user_agents": [
       {
         "browser": "Chrome",
         "requests": 25
       },
       {
-        "browser": "Other Bot",
-        "requests": 16
+        "browser": "Yandex",
+        "requests": 8
       },
       {
-        "browser": "Safari",
-        "requests": 6
+        "browser": "Amazonbot",
+        "requests": 5
+      },
+      {
+        "browser": "Majestic SEO",
+        "requests": 4
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 4
       },
       {
         "browser": "BingBot",
+        "requests": 4
+      },
+      {
+        "browser": "Applebot",
+        "requests": 3
+      },
+      {
+        "browser": "BaiduSpider",
         "requests": 2
       },
       {
-        "browser": "Opera",
+        "browser": "Safari",
+        "requests": 2
+      },
+      {
+        "browser": "Perplexity",
+        "requests": 2
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 8
+      },
+      {
+        "name": "Amazonbot",
+        "operator": "Amazon",
+        "classification": "AI 爬虫",
+        "signature": "Amazonbot",
+        "requests": 5
+      },
+      {
+        "name": "Majestic SEO",
+        "operator": "Majestic",
+        "classification": "SEO 工具",
+        "signature": "MJ12bot",
+        "requests": 4
+      },
+      {
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
+        "requests": 4
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 4
+      },
+      {
+        "name": "Applebot",
+        "operator": "Apple",
+        "classification": "AI 搜索",
+        "signature": "Applebot",
+        "requests": 3
+      },
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 2
+      },
+      {
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
+        "requests": 2
+      },
+      {
+        "name": "GoogleOther",
+        "operator": "Google",
+        "classification": "自动化客户端",
+        "signature": "GoogleOther",
+        "requests": 2
+      },
+      {
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
+        "requests": 2
+      },
+      {
+        "name": "ChatGPT-User",
+        "operator": "OpenAI",
+        "classification": "AI 助手",
+        "signature": "ChatGPT-User",
+        "requests": 2
+      },
+      {
+        "name": "CCBot",
+        "operator": "Common Crawl",
+        "classification": "网页归档",
+        "signature": "CCBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "NL",
+        "requests": 29
+      },
+      {
+        "country": "China",
+        "requests": 13
+      },
+      {
+        "country": "TR",
+        "requests": 9
+      },
+      {
+        "country": "SG",
+        "requests": 7
+      },
+      {
+        "country": "FR",
+        "requests": 4
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "CH",
+        "requests": 87
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "RU",
+        "requests": 2
+      }
+    ]
+  },
+  {
+    "since": 1786140000,
+    "until": 1786143600,
+    "total_requests": 388,
+    "total_bytes": 2938570,
+    "total_megabytes": 2.8,
+    "waf_mitigated_requests": 235,
+    "top_user_agents": [
+      {
+        "browser": "Uncharted",
+        "requests": 18
+      },
+      {
+        "browser": "BingBot",
+        "requests": 3
+      },
+      {
+        "browser": "Chrome",
+        "requests": 3
+      },
+      {
+        "browser": "Headless Chrome",
+        "requests": 1
+      },
+      {
+        "browser": "Yandex",
+        "requests": 1
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 1
+      },
+      {
+        "browser": "Internet Explorer",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 3
+      },
+      {
+        "name": "Headless Chrome",
+        "operator": "Unknown",
+        "classification": "无头浏览器",
+        "signature": "HeadlessChrome",
+        "requests": 1
+      },
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 1
+      },
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "CA",
+        "requests": 19
+      },
+      {
+        "country": "United States",
+        "requests": 6
+      },
+      {
+        "country": "TR",
+        "requests": 2
+      },
+      {
+        "country": "NL",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "CH",
+        "requests": 131
+      },
+      {
+        "country": "PL",
+        "requests": 100
+      },
+      {
+        "country": "T1",
+        "requests": 2
+      },
+      {
+        "country": "United States",
+        "requests": 1
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786143600,
+    "until": 1786147200,
+    "total_requests": 80,
+    "total_bytes": 466243,
+    "total_megabytes": 0.44,
+    "waf_mitigated_requests": 40,
+    "top_user_agents": [
+      {
+        "browser": "Uncharted",
+        "requests": 6
+      },
+      {
+        "browser": "Python aiohttp",
+        "requests": 3
+      },
+      {
+        "browser": "Firefox",
+        "requests": 3
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 1
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 1
+      },
+      {
+        "browser": "Meta-ExternalAgent",
+        "requests": 1
+      },
+      {
+        "browser": "Facebook Bot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 1
+      },
+      {
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
+        "requests": 1
+      },
+      {
+        "name": "Meta-ExternalAgent",
+        "operator": "Meta",
+        "classification": "AI 爬虫",
+        "signature": "meta-externalagent",
+        "requests": 1
+      },
+      {
+        "name": "Facebook Bot",
+        "operator": "Meta",
+        "classification": "社交媒体",
+        "signature": "facebookexternalhit",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "NL",
+        "requests": 8
+      },
+      {
+        "country": "United States",
+        "requests": 7
+      },
+      {
+        "country": "TN",
+        "requests": 1
+      },
+      {
+        "country": "CO",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "NO",
+        "requests": 29
+      },
+      {
+        "country": "United States",
+        "requests": 7
+      },
+      {
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "UA",
+        "requests": 1
+      },
+      {
+        "country": "RU",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786147200,
+    "until": 1786150800,
+    "total_requests": 617,
+    "total_bytes": 4095221,
+    "total_megabytes": 3.91,
+    "waf_mitigated_requests": 455,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 36
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 20
+      },
+      {
+        "browser": "Firefox",
+        "requests": 12
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 5
+      },
+      {
+        "browser": "Safari",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
         "requests": 2
       },
       {
@@ -476,190 +791,208 @@
         "requests": 1
       },
       {
-        "browser": "Firefox",
+        "browser": "BingBot",
+        "requests": 1
+      },
+      {
+        "browser": "Headless Chrome",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "AhrefsBot",
+        "operator": "Ahrefs",
+        "classification": "SEO 工具",
+        "signature": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "name": "ByteSpider",
+        "operator": "ByteDance",
+        "classification": "AI 爬虫",
+        "signature": "Bytespider",
+        "requests": 1
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
+      },
+      {
+        "name": "Headless Chrome",
+        "operator": "Unknown",
+        "classification": "无头浏览器",
+        "signature": "HeadlessChrome",
         "requests": 1
       }
     ],
     "top_countries": [
       {
+        "country": "United States",
+        "requests": 29
+      },
+      {
+        "country": "FR",
+        "requests": 13
+      },
+      {
+        "country": "DE",
+        "requests": 12
+      },
+      {
+        "country": "NL",
+        "requests": 6
+      },
+      {
         "country": "China",
-        "requests": 40
+        "requests": 5
+      },
+      {
+        "country": "SG",
+        "requests": 3
+      },
+      {
+        "country": "CY",
+        "requests": 2
+      },
+      {
+        "country": "BR",
+        "requests": 2
+      },
+      {
+        "country": "EC",
+        "requests": 2
+      },
+      {
+        "country": "VN",
+        "requests": 1
+      },
+      {
+        "country": "AT",
+        "requests": 1
+      },
+      {
+        "country": "PE",
+        "requests": 1
+      },
+      {
+        "country": "FI",
+        "requests": 1
+      },
+      {
+        "country": "GB",
+        "requests": 1
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      },
+      {
+        "country": "IN",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SE",
+        "requests": 166
+      },
+      {
+        "country": "NO",
+        "requests": 159
+      },
+      {
+        "country": "IT",
+        "requests": 71
+      },
+      {
+        "country": "NL",
+        "requests": 31
       },
       {
         "country": "United States",
         "requests": 9
       },
       {
-        "country": "NL",
-        "requests": 2
-      },
-      {
         "country": "DE",
-        "requests": 2
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "NL",
-        "requests": 787
-      },
-      {
-        "country": "United States",
-        "requests": 99
-      },
-      {
-        "country": "BE",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1784570400,
-    "until": 1784574000,
-    "total_requests": 421,
-    "total_bytes": 3067973,
-    "total_megabytes": 2.93,
-    "waf_mitigated_requests": 335,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 2
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 1
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 1
-      },
-      {
-        "browser": "Chrome",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 2
-      },
-      {
-        "country": "SG",
-        "requests": 2
-      },
-      {
-        "country": "China",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "NL",
-        "requests": 228
-      },
-      {
-        "country": "BR",
-        "requests": 103
+        "requests": 8
       },
       {
         "country": "UA",
         "requests": 3
       },
       {
-        "country": "United States",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784574000,
-    "until": 1784577600,
-    "total_requests": 152,
-    "total_bytes": 2079662,
-    "total_megabytes": 1.98,
-    "waf_mitigated_requests": 102,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 39
-      },
-      {
-        "browser": "Meta-ExternalAgent",
+        "country": "AT",
         "requests": 2
       },
       {
-        "browser": "Safari",
+        "country": "T1",
         "requests": 1
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 36
-      },
-      {
-        "country": "United States",
-        "requests": 3
-      },
-      {
-        "country": "DE",
-        "requests": 3
-      },
-      {
-        "country": "TR",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "CA",
-        "requests": 92
-      },
-      {
-        "country": "United States",
-        "requests": 5
       },
       {
         "country": "SG",
-        "requests": 2
-      },
-      {
-        "country": "FR",
         "requests": 1
       },
       {
-        "country": "ID",
+        "country": "IM",
         "requests": 1
       },
       {
-        "country": "DE",
+        "country": "AE",
+        "requests": 1
+      },
+      {
+        "country": "JP",
+        "requests": 1
+      },
+      {
+        "country": "HR",
         "requests": 1
       }
     ]
   },
   {
-    "since": 1784577600,
-    "until": 1784581200,
-    "total_requests": 35,
-    "total_bytes": 246597,
-    "total_megabytes": 0.24,
-    "waf_mitigated_requests": 26,
+    "since": 1786150800,
+    "until": 1786154400,
+    "total_requests": 102,
+    "total_bytes": 629160,
+    "total_megabytes": 0.6,
+    "waf_mitigated_requests": 54,
     "top_user_agents": [
+      {
+        "browser": "Yandex",
+        "requests": 7
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 5
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 3
+      },
       {
         "browser": "Chrome",
         "requests": 3
       },
       {
-        "browser": "BingBot",
+        "browser": "Firefox",
         "requests": 2
       },
       {
         "browser": "Safari",
         "requests": 2
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 1
       },
       {
         "browser": "ByteSpider",
@@ -670,57 +1003,468 @@
         "requests": 1
       }
     ],
-    "top_countries": [
+    "top_bots": [
       {
-        "country": "United States",
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 7
+      },
+      {
+        "name": "AhrefsBot",
+        "operator": "Ahrefs",
+        "classification": "SEO 工具",
+        "signature": "AhrefsBot",
         "requests": 5
       },
       {
-        "country": "China",
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
         "requests": 3
       },
       {
-        "country": "RO",
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 1
+      },
+      {
+        "name": "ByteSpider",
+        "operator": "ByteDance",
+        "classification": "AI 爬虫",
+        "signature": "Bytespider",
+        "requests": 1
+      },
+      {
+        "name": "Meta-ExternalAgent",
+        "operator": "Meta",
+        "classification": "AI 爬虫",
+        "signature": "meta-externalagent",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 8
+      },
+      {
+        "country": "TR",
+        "requests": 7
+      },
+      {
+        "country": "FR",
+        "requests": 5
+      },
+      {
+        "country": "GB",
+        "requests": 3
+      },
+      {
+        "country": "CA",
+        "requests": 2
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "NL",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "CA",
-        "requests": 23
+        "country": "PL",
+        "requests": 29
       },
       {
-        "country": "BR",
-        "requests": 3
+        "country": "NL",
+        "requests": 15
+      },
+      {
+        "country": "United States",
+        "requests": 6
+      },
+      {
+        "country": "RU",
+        "requests": 2
+      },
+      {
+        "country": "UA",
+        "requests": 2
       }
     ]
   },
   {
-    "since": 1784581200,
-    "until": 1784584800,
-    "total_requests": 270,
-    "total_bytes": 2088871,
-    "total_megabytes": 1.99,
-    "waf_mitigated_requests": 28,
+    "since": 1786154400,
+    "until": 1786158000,
+    "total_requests": 594,
+    "total_bytes": 5354765,
+    "total_megabytes": 5.11,
+    "waf_mitigated_requests": 194,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 13
+        "requests": 70
       },
       {
-        "browser": "Uncharted",
-        "requests": 11
-      },
-      {
-        "browser": "Safari",
-        "requests": 5
-      },
-      {
-        "browser": "Other Bot",
+        "browser": "Yandex",
         "requests": 3
       },
       {
-        "browser": "AhrefsBot",
+        "browser": "YouBot",
+        "requests": 3
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "Safari",
+        "requests": 2
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 3
+      },
+      {
+        "name": "YouBot",
+        "operator": "You.com",
+        "classification": "AI 搜索",
+        "signature": "YouBot",
+        "requests": 3
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 67
+      },
+      {
+        "country": "TR",
+        "requests": 3
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "FI",
+        "requests": 2
+      },
+      {
+        "country": "SG",
+        "requests": 2
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "PL",
+        "requests": 98
+      },
+      {
+        "country": "NO",
+        "requests": 56
+      },
+      {
+        "country": "DE",
+        "requests": 21
+      },
+      {
+        "country": "CH",
+        "requests": 14
+      },
+      {
+        "country": "United States",
+        "requests": 3
+      },
+      {
+        "country": "SG",
+        "requests": 1
+      },
+      {
+        "country": "RU",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786158000,
+    "until": 1786161600,
+    "total_requests": 902,
+    "total_bytes": 6562681,
+    "total_megabytes": 6.26,
+    "waf_mitigated_requests": 752,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 33
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 6
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 5
+      },
+      {
+        "browser": "BaiduSpider",
+        "requests": 4
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "Googlebot",
+        "requests": 4
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 4
+      },
+      {
+        "browser": "YouBot",
+        "requests": 3
+      },
+      {
+        "browser": "BingBot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 4
+      },
+      {
+        "name": "Googlebot",
+        "operator": "Google",
+        "classification": "搜索引擎爬虫",
+        "signature": "Googlebot/",
+        "requests": 4
+      },
+      {
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
+        "requests": 4
+      },
+      {
+        "name": "YouBot",
+        "operator": "You.com",
+        "classification": "AI 搜索",
+        "signature": "YouBot",
+        "requests": 3
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 46
+      },
+      {
+        "country": "China",
+        "requests": 14
+      },
+      {
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "SG",
+        "requests": 2
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "DE",
+        "requests": 265
+      },
+      {
+        "country": "IT",
+        "requests": 183
+      },
+      {
+        "country": "PL",
+        "requests": 146
+      },
+      {
+        "country": "SE",
+        "requests": 145
+      },
+      {
+        "country": "United States",
+        "requests": 9
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "RU",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786161600,
+    "until": 1786165200,
+    "total_requests": 278,
+    "total_bytes": 1907329,
+    "total_megabytes": 1.82,
+    "waf_mitigated_requests": 62,
+    "top_user_agents": [
+      {
+        "browser": "Yandex",
+        "requests": 28
+      },
+      {
+        "browser": "Safari",
+        "requests": 27
+      },
+      {
+        "browser": "Chrome",
+        "requests": 19
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 8
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 28
+      },
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "TR",
+        "requests": 28
+      },
+      {
+        "country": "United States",
+        "requests": 24
+      },
+      {
+        "country": "DE",
+        "requests": 21
+      },
+      {
+        "country": "China",
+        "requests": 7
+      },
+      {
+        "country": "PL",
+        "requests": 3
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SE",
+        "requests": 39
+      },
+      {
+        "country": "United States",
+        "requests": 8
+      },
+      {
+        "country": "DE",
+        "requests": 6
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "PL",
+        "requests": 3
+      },
+      {
+        "country": "RU",
+        "requests": 2
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786165200,
+    "until": 1786168800,
+    "total_requests": 485,
+    "total_bytes": 3683321,
+    "total_megabytes": 3.51,
+    "waf_mitigated_requests": 261,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 44
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 14
+      },
+      {
+        "browser": "Firefox",
+        "requests": 10
+      },
+      {
+        "browser": "Safari",
+        "requests": 9
+      },
+      {
+        "browser": "Yandex",
+        "requests": 8
+      },
+      {
+        "browser": "Opera",
         "requests": 2
       },
       {
@@ -728,86 +1472,35 @@
         "requests": 1
       },
       {
-        "browser": "GPTBot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "SG",
-        "requests": 11
-      },
-      {
-        "country": "NL",
-        "requests": 8
-      },
-      {
-        "country": "China",
-        "requests": 6
-      },
-      {
-        "country": "United States",
-        "requests": 5
-      },
-      {
-        "country": "BR",
-        "requests": 2
-      },
-      {
-        "country": "RO",
-        "requests": 1
-      },
-      {
-        "country": "GB",
-        "requests": 1
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "United States",
-        "requests": 27
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784584800,
-    "until": 1784588400,
-    "total_requests": 212,
-    "total_bytes": 1730777,
-    "total_megabytes": 1.65,
-    "waf_mitigated_requests": 159,
-    "top_user_agents": [
-      {
-        "browser": "Other Bot",
-        "requests": 13
-      },
-      {
-        "browser": "Chrome",
-        "requests": 8
-      },
-      {
         "browser": "BingBot",
-        "requests": 7
+        "requests": 1
       },
       {
-        "browser": "Safari",
-        "requests": 4
+        "browser": "Microsoft Edge",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 8
       },
       {
-        "browser": "Uncharted",
-        "requests": 2
+        "name": "Meta-ExternalAgent",
+        "operator": "Meta",
+        "classification": "AI 爬虫",
+        "signature": "meta-externalagent",
+        "requests": 1
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
       }
     ],
     "top_countries": [
@@ -816,171 +1509,175 @@
         "requests": 17
       },
       {
-        "country": "China",
-        "requests": 16
+        "country": "NL",
+        "requests": 14
       },
       {
-        "country": "RO",
+        "country": "DE",
+        "requests": 10
+      },
+      {
+        "country": "TR",
+        "requests": 8
+      },
+      {
+        "country": "China",
+        "requests": 7
+      },
+      {
+        "country": "FR",
+        "requests": 6
+      },
+      {
+        "country": "CA",
+        "requests": 4
+      },
+      {
+        "country": "EC",
+        "requests": 3
+      },
+      {
+        "country": "BE",
+        "requests": 2
+      },
+      {
+        "country": "NZ",
+        "requests": 2
+      },
+      {
+        "country": "IT",
+        "requests": 2
+      },
+      {
+        "country": "PL",
+        "requests": 2
+      },
+      {
+        "country": "GB",
+        "requests": 2
+      },
+      {
+        "country": "BO",
+        "requests": 2
+      },
+      {
+        "country": "SG",
+        "requests": 1
+      },
+      {
+        "country": "KR",
+        "requests": 1
+      },
+      {
+        "country": "FI",
+        "requests": 1
+      },
+      {
+        "country": "TH",
+        "requests": 1
+      },
+      {
+        "country": "GR",
+        "requests": 1
+      },
+      {
+        "country": "SE",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "HR",
+        "requests": 1
+      },
+      {
+        "country": "AU",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "BR",
-        "requests": 138
+        "country": "IT",
+        "requests": 136
+      },
+      {
+        "country": "DE",
+        "requests": 51
       },
       {
         "country": "FR",
+        "requests": 26
+      },
+      {
+        "country": "CH",
         "requests": 21
-      }
-    ]
-  },
-  {
-    "since": 1784588400,
-    "until": 1784592000,
-    "total_requests": 184,
-    "total_bytes": 2817052,
-    "total_megabytes": 2.69,
-    "waf_mitigated_requests": 25,
-    "top_user_agents": [
-      {
-        "browser": "Safari",
-        "requests": 20
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 13
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 9
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 4
-      },
-      {
-        "browser": "Chrome",
-        "requests": 2
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 19
-      },
-      {
-        "country": "China",
-        "requests": 16
-      },
-      {
-        "country": "GB",
-        "requests": 9
       },
       {
         "country": "NL",
+        "requests": 18
+      },
+      {
+        "country": "UA",
+        "requests": 4
+      },
+      {
+        "country": "GR",
         "requests": 2
       },
       {
-        "country": "RO",
+        "country": "PL",
         "requests": 1
       },
       {
         "country": "SG",
         "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "United States",
-        "requests": 14
       },
       {
-        "country": "CA",
-        "requests": 11
+        "country": "United States",
+        "requests": 1
       }
     ]
   },
   {
-    "since": 1784592000,
-    "until": 1784595600,
-    "total_requests": 62,
-    "total_bytes": 575518,
-    "total_megabytes": 0.55,
-    "waf_mitigated_requests": 47,
+    "since": 1786168800,
+    "until": 1786172400,
+    "total_requests": 554,
+    "total_bytes": 3650038,
+    "total_megabytes": 3.48,
+    "waf_mitigated_requests": 306,
     "top_user_agents": [
       {
-        "browser": "Chrome",
+        "browser": "Other Bot",
+        "requests": 7
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 6
+      },
+      {
+        "browser": "Yandex",
+        "requests": 6
+      },
+      {
+        "browser": "Perplexity",
+        "requests": 4
+      },
+      {
+        "browser": "CCBot",
+        "requests": 4
+      },
+      {
+        "browser": "BaiduSpider",
+        "requests": 4
+      },
+      {
+        "browser": "GPTBot",
         "requests": 3
       },
       {
         "browser": "Applebot",
-        "requests": 2
-      },
-      {
-        "browser": "Safari",
-        "requests": 2
-      },
-      {
-        "browser": "Amazonbot",
-        "requests": 2
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 1
-      },
-      {
-        "browser": "Firefox",
-        "requests": 1
-      },
-      {
-        "browser": "BingBot",
-        "requests": 1
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "United States",
-        "requests": 11
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "China",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "CA",
-        "requests": 42
-      },
-      {
-        "country": "United States",
-        "requests": 5
-      }
-    ]
-  },
-  {
-    "since": 1784595600,
-    "until": 1784599200,
-    "total_requests": 75,
-    "total_bytes": 1262034,
-    "total_megabytes": 1.2,
-    "waf_mitigated_requests": 38,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 15
-      },
-      {
-        "browser": "Safari",
         "requests": 3
       },
       {
@@ -988,480 +1685,139 @@
         "requests": 2
       },
       {
-        "browser": "Microsoft Edge",
-        "requests": 1
+        "browser": "ChatGPT-User",
+        "requests": 2
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
+        "requests": 7
       },
       {
-        "browser": "Meta-ExternalAgent",
-        "requests": 1
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 6
       },
       {
-        "browser": "Firefox",
-        "requests": 1
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
+        "requests": 4
+      },
+      {
+        "name": "CCBot",
+        "operator": "Common Crawl",
+        "classification": "网页归档",
+        "signature": "CCBot",
+        "requests": 4
+      },
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 4
+      },
+      {
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
+        "requests": 3
+      },
+      {
+        "name": "Applebot",
+        "operator": "Apple",
+        "classification": "AI 搜索",
+        "signature": "Applebot",
+        "requests": 3
+      },
+      {
+        "name": "AhrefsBot",
+        "operator": "Ahrefs",
+        "classification": "SEO 工具",
+        "signature": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "name": "ChatGPT-User",
+        "operator": "OpenAI",
+        "classification": "AI 助手",
+        "signature": "ChatGPT-User",
+        "requests": 2
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 2
+      },
+      {
+        "name": "GoogleOther",
+        "operator": "Google",
+        "classification": "自动化客户端",
+        "signature": "GoogleOther",
+        "requests": 2
       }
     ],
     "top_countries": [
       {
-        "country": "China",
-        "requests": 12
+        "country": "NL",
+        "requests": 37
       },
       {
         "country": "United States",
-        "requests": 7
+        "requests": 3
+      },
+      {
+        "country": "TR",
+        "requests": 2
       },
       {
         "country": "CA",
         "requests": 2
       },
       {
-        "country": "DE",
+        "country": "China",
         "requests": 2
+      },
+      {
+        "country": "CL",
+        "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "GB",
-        "requests": 32
+        "country": "NO",
+        "requests": 136
+      },
+      {
+        "country": "PL",
+        "requests": 50
+      },
+      {
+        "country": "DE",
+        "requests": 45
       },
       {
         "country": "NL",
-        "requests": 5
+        "requests": 39
       },
       {
-        "country": "FR",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784599200,
-    "until": 1784602800,
-    "total_requests": 597,
-    "total_bytes": 5011603,
-    "total_megabytes": 4.78,
-    "waf_mitigated_requests": 213,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 11
-      },
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 2
-      },
-      {
-        "browser": "BingBot",
-        "requests": 2
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 1
-      },
-      {
-        "browser": "Opera",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 11
-      },
-      {
-        "country": "United States",
-        "requests": 7
-      },
-      {
-        "country": "BR",
-        "requests": 2
-      },
-      {
-        "country": "AZ",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "BR",
-        "requests": 105
-      },
-      {
-        "country": "United States",
-        "requests": 87
-      },
-      {
-        "country": "FR",
+        "country": "CH",
         "requests": 17
       },
       {
-        "country": "CA",
-        "requests": 4
-      }
-    ]
-  },
-  {
-    "since": 1784602800,
-    "until": 1784606400,
-    "total_requests": 99,
-    "total_bytes": 1102420,
-    "total_megabytes": 1.05,
-    "waf_mitigated_requests": 75,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 10
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 3
-      },
-      {
-        "browser": "Safari",
-        "requests": 3
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 3
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 2
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "SG",
-        "requests": 9
-      },
-      {
-        "country": "United States",
-        "requests": 8
-      },
-      {
-        "country": "CA",
-        "requests": 3
-      },
-      {
-        "country": "China",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "CA",
-        "requests": 69
-      },
-      {
-        "country": "United States",
-        "requests": 4
-      },
-      {
-        "country": "FR",
-        "requests": 1
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784606400,
-    "until": 1784610000,
-    "total_requests": 604,
-    "total_bytes": 3888848,
-    "total_megabytes": 3.71,
-    "waf_mitigated_requests": 204,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 21
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 10
-      },
-      {
-        "browser": "GPTBot",
-        "requests": 6
-      },
-      {
-        "browser": "Firefox",
-        "requests": 6
-      },
-      {
-        "browser": "Safari",
-        "requests": 3
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 20
-      },
-      {
-        "country": "United States",
-        "requests": 15
-      },
-      {
-        "country": "SG",
-        "requests": 9
-      },
-      {
-        "country": "DE",
-        "requests": 3
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "BR",
-        "requests": 178
-      },
-      {
-        "country": "United States",
-        "requests": 20
-      },
-      {
-        "country": "NL",
-        "requests": 4
-      },
-      {
-        "country": "DE",
-        "requests": 2
-      }
-    ]
-  },
-  {
-    "since": 1784610000,
-    "until": 1784613600,
-    "total_requests": 1149,
-    "total_bytes": 6718995,
-    "total_megabytes": 6.41,
-    "waf_mitigated_requests": 88,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 4
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 2
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 2
-      },
-      {
-        "browser": "Safari",
-        "requests": 2
-      },
-      {
-        "browser": "ByteSpider",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 6
-      },
-      {
-        "country": "TR",
-        "requests": 2
-      },
-      {
-        "country": "CA",
-        "requests": 2
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "FR",
-        "requests": 75
-      },
-      {
-        "country": "United States",
-        "requests": 11
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      },
-      {
-        "country": "ID",
-        "requests": 1
-      }
-    ]
-  },
-  {
-    "since": 1784613600,
-    "until": 1784617200,
-    "total_requests": 739,
-    "total_bytes": 5499663,
-    "total_megabytes": 5.24,
-    "waf_mitigated_requests": 113,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 16
-      },
-      {
-        "browser": "Safari",
-        "requests": 4
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 4
-      },
-      {
-        "browser": "Firefox",
-        "requests": 2
-      },
-      {
-        "browser": "Meta-ExternalAgent",
-        "requests": 2
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "SG",
-        "requests": 10
-      },
-      {
-        "country": "DE",
-        "requests": 6
-      },
-      {
-        "country": "China",
-        "requests": 6
-      },
-      {
-        "country": "GB",
-        "requests": 4
-      },
-      {
-        "country": "United States",
-        "requests": 2
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "BR",
-        "requests": 82
-      },
-      {
-        "country": "NL",
-        "requests": 27
-      },
-      {
-        "country": "United States",
-        "requests": 4
-      }
-    ]
-  },
-  {
-    "since": 1784617200,
-    "until": 1784620800,
-    "total_requests": 452,
-    "total_bytes": 4125666,
-    "total_megabytes": 3.93,
-    "waf_mitigated_requests": 369,
-    "top_user_agents": [
-      {
-        "browser": "Chrome",
-        "requests": 27
-      },
-      {
-        "browser": "Uncharted",
-        "requests": 10
-      },
-      {
-        "browser": "Firefox",
-        "requests": 5
-      },
-      {
-        "browser": "Microsoft Edge",
-        "requests": 3
-      },
-      {
-        "browser": "Safari",
-        "requests": 3
-      },
-      {
-        "browser": "Other Bot",
-        "requests": 2
-      },
-      {
-        "browser": "AhrefsBot",
-        "requests": 1
-      }
-    ],
-    "top_countries": [
-      {
-        "country": "China",
-        "requests": 29
-      },
-      {
-        "country": "United States",
-        "requests": 9
-      },
-      {
-        "country": "NL",
-        "requests": 8
-      },
-      {
-        "country": "SG",
-        "requests": 2
-      },
-      {
-        "country": "DE",
-        "requests": 1
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "TR",
-        "requests": 1
-      }
-    ],
-    "top_waf_countries": [
-      {
-        "country": "CA",
-        "requests": 203
-      },
-      {
-        "country": "BR",
-        "requests": 154
+        "country": "IT",
+        "requests": 12
       },
       {
         "country": "United States",
@@ -1470,108 +1826,480 @@
       {
         "country": "RU",
         "requests": 2
-      },
-      {
-        "country": "BE",
-        "requests": 2
-      },
-      {
-        "country": "China",
-        "requests": 2
-      },
-      {
-        "country": "DE",
-        "requests": 1
       }
     ]
   },
   {
-    "since": 1784620800,
-    "until": 1784624400,
-    "total_requests": 511,
-    "total_bytes": 5509756,
-    "total_megabytes": 5.25,
-    "waf_mitigated_requests": 408,
+    "since": 1786172400,
+    "until": 1786176000,
+    "total_requests": 280,
+    "total_bytes": 1914773,
+    "total_megabytes": 1.83,
+    "waf_mitigated_requests": 162,
     "top_user_agents": [
       {
         "browser": "Chrome",
-        "requests": 45
+        "requests": 16
       },
       {
-        "browser": "BaiduSpider",
-        "requests": 13
+        "browser": "Uncharted",
+        "requests": 4
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 4
       },
       {
         "browser": "Safari",
         "requests": 4
       },
       {
-        "browser": "Other Bot",
+        "browser": "YouBot",
         "requests": 3
       },
       {
-        "browser": "GPTBot",
+        "browser": "Facebook Bot",
+        "requests": 2
+      },
+      {
+        "browser": "BingBot",
+        "requests": 1
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 1
+      },
+      {
+        "browser": "Firefox",
         "requests": 1
       },
       {
         "browser": "ByteSpider",
         "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
+        "requests": 4
       },
       {
-        "browser": "AhrefsBot",
+        "name": "YouBot",
+        "operator": "You.com",
+        "classification": "AI 搜索",
+        "signature": "YouBot",
+        "requests": 3
+      },
+      {
+        "name": "Facebook Bot",
+        "operator": "Meta",
+        "classification": "社交媒体",
+        "signature": "facebookexternalhit",
+        "requests": 2
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
+      },
+      {
+        "name": "ByteSpider",
+        "operator": "ByteDance",
+        "classification": "AI 爬虫",
+        "signature": "Bytespider",
         "requests": 1
       }
     ],
     "top_countries": [
       {
-        "country": "China",
-        "requests": 62
+        "country": "United States",
+        "requests": 23
       },
       {
-        "country": "SG",
-        "requests": 2
+        "country": "China",
+        "requests": 11
+      },
+      {
+        "country": "BR",
+        "requests": 3
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "DE",
+        "requests": 71
+      },
+      {
+        "country": "SE",
+        "requests": 46
+      },
+      {
+        "country": "NL",
+        "requests": 36
       },
       {
         "country": "United States",
+        "requests": 6
+      },
+      {
+        "country": "China",
         "requests": 2
       },
       {
-        "country": "TR",
+        "country": "BE",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786176000,
+    "until": 1786179600,
+    "total_requests": 32,
+    "total_bytes": 244929,
+    "total_megabytes": 0.23,
+    "waf_mitigated_requests": 15,
+    "top_user_agents": [
+      {
+        "browser": "YouBot",
+        "requests": 3
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "BingBot",
+        "requests": 2
+      },
+      {
+        "browser": "Applebot",
+        "requests": 2
+      },
+      {
+        "browser": "Yandex",
+        "requests": 2
+      },
+      {
+        "browser": "Perplexity",
         "requests": 1
       },
       {
-        "country": "CA",
+        "browser": "360Spider",
+        "requests": 1
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 1
+      },
+      {
+        "browser": "Facebook Bot",
+        "requests": 1
+      },
+      {
+        "browser": "Chrome",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "YouBot",
+        "operator": "You.com",
+        "classification": "AI 搜索",
+        "signature": "YouBot",
+        "requests": 3
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 2
+      },
+      {
+        "name": "Applebot",
+        "operator": "Apple",
+        "classification": "AI 搜索",
+        "signature": "Applebot",
+        "requests": 2
+      },
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 2
+      },
+      {
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
+        "requests": 1
+      },
+      {
+        "name": "360Spider",
+        "operator": "Qihoo 360",
+        "classification": "搜索引擎爬虫",
+        "signature": "360Spider",
+        "requests": 1
+      },
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 1
+      },
+      {
+        "name": "Facebook Bot",
+        "operator": "Meta",
+        "classification": "社交媒体",
+        "signature": "facebookexternalhit",
+        "requests": 1
+      },
+      {
+        "name": "GoogleOther",
+        "operator": "Google",
+        "classification": "自动化客户端",
+        "signature": "GoogleOther",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 9
+      },
+      {
+        "country": "NL",
+        "requests": 7
+      },
+      {
+        "country": "China",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "BR",
-        "requests": 139
-      },
-      {
-        "country": "SG",
-        "requests": 129
-      },
-      {
-        "country": "CA",
-        "requests": 58
-      },
-      {
-        "country": "FR",
-        "requests": 42
-      },
-      {
-        "country": "GB",
-        "requests": 32
-      },
-      {
         "country": "United States",
-        "requests": 5
+        "requests": 4
       },
       {
         "country": "BE",
+        "requests": 3
+      },
+      {
+        "country": "China",
+        "requests": 3
+      },
+      {
+        "country": "NL",
         "requests": 2
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "LU",
+        "requests": 1
+      },
+      {
+        "country": "RU",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786179600,
+    "until": 1786183200,
+    "total_requests": 102,
+    "total_bytes": 1021518,
+    "total_megabytes": 0.97,
+    "waf_mitigated_requests": 22,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 27
+      },
+      {
+        "browser": "Perplexity",
+        "requests": 4
+      },
+      {
+        "browser": "Other Bot",
+        "requests": 4
+      },
+      {
+        "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 4
+      },
+      {
+        "browser": "Yandex",
+        "requests": 4
+      },
+      {
+        "browser": "BingBot",
+        "requests": 4
+      },
+      {
+        "browser": "CCBot",
+        "requests": 3
+      },
+      {
+        "browser": "BaiduSpider",
+        "requests": 3
+      },
+      {
+        "browser": "Amazonbot",
+        "requests": 3
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
+        "requests": 4
+      },
+      {
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
+        "requests": 4
+      },
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 4
+      },
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 4
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 4
+      },
+      {
+        "name": "CCBot",
+        "operator": "Common Crawl",
+        "classification": "网页归档",
+        "signature": "CCBot",
+        "requests": 3
+      },
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 3
+      },
+      {
+        "name": "Amazonbot",
+        "operator": "Amazon",
+        "classification": "AI 爬虫",
+        "signature": "Amazonbot",
+        "requests": 3
+      },
+      {
+        "name": "ChatGPT-User",
+        "operator": "OpenAI",
+        "classification": "AI 助手",
+        "signature": "ChatGPT-User",
+        "requests": 2
+      },
+      {
+        "name": "Applebot",
+        "operator": "Apple",
+        "classification": "AI 搜索",
+        "signature": "Applebot",
+        "requests": 2
+      },
+      {
+        "name": "GoogleOther",
+        "operator": "Google",
+        "classification": "自动化客户端",
+        "signature": "GoogleOther",
+        "requests": 2
+      },
+      {
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "NL",
+        "requests": 29
+      },
+      {
+        "country": "United States",
+        "requests": 25
+      },
+      {
+        "country": "SG",
+        "requests": 8
+      },
+      {
+        "country": "TR",
+        "requests": 4
+      },
+      {
+        "country": "CH",
+        "requests": 2
+      },
+      {
+        "country": "FR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "United States",
+        "requests": 11
+      },
+      {
+        "country": "BE",
+        "requests": 3
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "RU",
+        "requests": 2
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "SG",
+        "requests": 1
       },
       {
         "country": "China",
@@ -1580,54 +2308,155 @@
     ]
   },
   {
-    "since": 1784624400,
-    "until": 1784628000,
-    "total_requests": 574,
-    "total_bytes": 20607838,
-    "total_megabytes": 19.65,
-    "waf_mitigated_requests": 222,
+    "since": 1786183200,
+    "until": 1786186800,
+    "total_requests": 355,
+    "total_bytes": 3217023,
+    "total_megabytes": 3.07,
+    "waf_mitigated_requests": 85,
     "top_user_agents": [
       {
-        "browser": "Microsoft Edge",
-        "requests": 240
-      },
-      {
         "browser": "Uncharted",
-        "requests": 9
-      },
-      {
-        "browser": "Googlebot",
-        "requests": 6
+        "requests": 36
       },
       {
         "browser": "Chrome",
-        "requests": 6
+        "requests": 15
+      },
+      {
+        "browser": "CCBot",
+        "requests": 8
       },
       {
         "browser": "Other Bot",
-        "requests": 3
+        "requests": 6
       },
       {
-        "browser": "Meta-ExternalAgent",
-        "requests": 3
+        "browser": "BingBot",
+        "requests": 6
+      },
+      {
+        "browser": "Amazonbot",
+        "requests": 5
+      },
+      {
+        "browser": "ChatGPT-User",
+        "requests": 5
+      },
+      {
+        "browser": "Yandex",
+        "requests": 5
       },
       {
         "browser": "Safari",
+        "requests": 4
+      },
+      {
+        "browser": "BaiduSpider",
+        "requests": 4
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "CCBot",
+        "operator": "Common Crawl",
+        "classification": "网页归档",
+        "signature": "CCBot",
+        "requests": 8
+      },
+      {
+        "name": "Other Bot",
+        "operator": "Unknown",
+        "classification": "其他自动化客户端",
+        "signature": "bot / crawler / spider / scraper",
+        "requests": 6
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 6
+      },
+      {
+        "name": "Amazonbot",
+        "operator": "Amazon",
+        "classification": "AI 爬虫",
+        "signature": "Amazonbot",
+        "requests": 5
+      },
+      {
+        "name": "ChatGPT-User",
+        "operator": "OpenAI",
+        "classification": "AI 助手",
+        "signature": "ChatGPT-User",
+        "requests": 5
+      },
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 5
+      },
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 4
+      },
+      {
+        "name": "Applebot",
+        "operator": "Apple",
+        "classification": "AI 搜索",
+        "signature": "Applebot",
+        "requests": 3
+      },
+      {
+        "name": "GoogleOther",
+        "operator": "Google",
+        "classification": "自动化客户端",
+        "signature": "GoogleOther",
+        "requests": 3
+      },
+      {
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
+        "requests": 3
+      },
+      {
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
         "requests": 2
       },
       {
-        "browser": "AhrefsBot",
-        "requests": 1
+        "name": "SEMrush",
+        "operator": "Semrush",
+        "classification": "SEO 工具",
+        "signature": "SemrushBot",
+        "requests": 2
       },
       {
-        "browser": "GPTBot",
-        "requests": 1
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 2
       }
     ],
     "top_countries": [
       {
+        "country": "NL",
+        "requests": 51
+      },
+      {
         "country": "China",
-        "requests": 241
+        "requests": 36
       },
       {
         "country": "United States",
@@ -1635,123 +2464,915 @@
       },
       {
         "country": "DE",
-        "requests": 3
-      },
-      {
-        "country": "BR",
         "requests": 2
       },
       {
-        "country": "SG",
-        "requests": 2
-      },
-      {
-        "country": "CA",
-        "requests": 1
-      },
-      {
-        "country": "TR",
+        "country": "GB",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "BR",
-        "requests": 104
-      },
-      {
-        "country": "CA",
-        "requests": 94
+        "country": "IT",
+        "requests": 53
       },
       {
         "country": "United States",
-        "requests": 17
+        "requests": 11
       },
       {
-        "country": "China",
+        "country": "DE",
+        "requests": 5
+      },
+      {
+        "country": "AT",
         "requests": 3
+      },
+      {
+        "country": "SG",
+        "requests": 2
       },
       {
         "country": "BE",
         "requests": 2
       },
       {
-        "country": "SG",
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "JP",
+        "requests": 2
+      },
+      {
+        "country": "HU",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "SE",
+        "requests": 1
+      },
+      {
+        "country": "IL",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786186800,
+    "until": 1786190400,
+    "total_requests": 349,
+    "total_bytes": 2576811,
+    "total_megabytes": 2.46,
+    "waf_mitigated_requests": 140,
+    "top_user_agents": [
+      {
+        "browser": "Yandex",
+        "requests": 15
+      },
+      {
+        "browser": "Chrome",
+        "requests": 3
+      },
+      {
+        "browser": "Safari",
+        "requests": 3
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "Meta-ExternalAgent",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 15
+      },
+      {
+        "name": "Meta-ExternalAgent",
+        "operator": "Meta",
+        "classification": "AI 爬虫",
+        "signature": "meta-externalagent",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "TR",
+        "requests": 15
+      },
+      {
+        "country": "United States",
+        "requests": 4
+      },
+      {
+        "country": "China",
+        "requests": 3
+      },
+      {
+        "country": "IE",
         "requests": 1
       },
       {
         "country": "DE",
         "requests": 1
       }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "SE",
+        "requests": 64
+      },
+      {
+        "country": "PL",
+        "requests": 60
+      },
+      {
+        "country": "BE",
+        "requests": 7
+      },
+      {
+        "country": "United States",
+        "requests": 4
+      },
+      {
+        "country": "RU",
+        "requests": 3
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "NL",
+        "requests": 1
+      }
     ]
   },
   {
-    "since": 1784628000,
-    "until": 1784631600,
-    "total_requests": 929,
-    "total_bytes": 7346257,
-    "total_megabytes": 7.01,
-    "waf_mitigated_requests": 758,
+    "since": 1786190400,
+    "until": 1786194000,
+    "total_requests": 610,
+    "total_bytes": 4312875,
+    "total_megabytes": 4.11,
+    "waf_mitigated_requests": 412,
     "top_user_agents": [
+      {
+        "browser": "Uncharted",
+        "requests": 13
+      },
       {
         "browser": "Chrome",
         "requests": 12
       },
       {
-        "browser": "Safari",
+        "browser": "Yandex",
+        "requests": 9
+      },
+      {
+        "browser": "Applebot",
+        "requests": 8
+      },
+      {
+        "browser": "ChatGPT-User",
         "requests": 4
       },
       {
-        "browser": "Meta-ExternalAgent",
+        "browser": "GoogleOther",
+        "requests": 4
+      },
+      {
+        "browser": "Perplexity",
+        "requests": 4
+      },
+      {
+        "browser": "BaiduSpider",
         "requests": 3
       },
       {
-        "browser": "AhrefsBot",
+        "browser": "Amazonbot",
+        "requests": 3
+      },
+      {
+        "browser": "GPTBot",
+        "requests": 3
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 9
+      },
+      {
+        "name": "Applebot",
+        "operator": "Apple",
+        "classification": "AI 搜索",
+        "signature": "Applebot",
+        "requests": 8
+      },
+      {
+        "name": "ChatGPT-User",
+        "operator": "OpenAI",
+        "classification": "AI 助手",
+        "signature": "ChatGPT-User",
+        "requests": 4
+      },
+      {
+        "name": "GoogleOther",
+        "operator": "Google",
+        "classification": "自动化客户端",
+        "signature": "GoogleOther",
+        "requests": 4
+      },
+      {
+        "name": "Perplexity",
+        "operator": "Perplexity",
+        "classification": "AI 搜索",
+        "signature": "PerplexityBot",
+        "requests": 4
+      },
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 3
+      },
+      {
+        "name": "Amazonbot",
+        "operator": "Amazon",
+        "classification": "AI 爬虫",
+        "signature": "Amazonbot",
+        "requests": 3
+      },
+      {
+        "name": "GPTBot",
+        "operator": "OpenAI",
+        "classification": "AI 爬虫",
+        "signature": "GPTBot",
+        "requests": 3
+      },
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 3
+      },
+      {
+        "name": "CCBot",
+        "operator": "Common Crawl",
+        "classification": "网页归档",
+        "signature": "CCBot",
         "requests": 2
       },
       {
-        "browser": "Other Bot",
+        "name": "Meta-ExternalAgent",
+        "operator": "Meta",
+        "classification": "AI 爬虫",
+        "signature": "meta-externalagent",
+        "requests": 2
+      },
+      {
+        "name": "AhrefsBot",
+        "operator": "Ahrefs",
+        "classification": "SEO 工具",
+        "signature": "AhrefsBot",
+        "requests": 2
+      },
+      {
+        "name": "Facebook Bot",
+        "operator": "Meta",
+        "classification": "社交媒体",
+        "signature": "facebookexternalhit",
+        "requests": 1
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "NL",
+        "requests": 38
+      },
+      {
+        "country": "United States",
+        "requests": 14
+      },
+      {
+        "country": "China",
+        "requests": 12
+      },
+      {
+        "country": "TR",
+        "requests": 8
+      },
+      {
+        "country": "SG",
+        "requests": 2
+      },
+      {
+        "country": "IN",
+        "requests": 1
+      },
+      {
+        "country": "CA",
+        "requests": 1
+      },
+      {
+        "country": "GB",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "NO",
+        "requests": 352
+      },
+      {
+        "country": "DE",
+        "requests": 47
+      },
+      {
+        "country": "United States",
+        "requests": 9
+      },
+      {
+        "country": "NL",
+        "requests": 3
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786194000,
+    "until": 1786197600,
+    "total_requests": 910,
+    "total_bytes": 5211712,
+    "total_megabytes": 4.97,
+    "waf_mitigated_requests": 664,
+    "top_user_agents": [
+      {
+        "browser": "Safari",
+        "requests": 81
+      },
+      {
+        "browser": "Chrome",
+        "requests": 70
+      },
+      {
+        "browser": "Firefox",
+        "requests": 54
+      },
+      {
+        "browser": "Yandex",
+        "requests": 6
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 4
+      },
+      {
+        "browser": "BaiduSpider",
+        "requests": 1
+      },
+      {
+        "browser": "Amazonbot",
+        "requests": 1
+      },
+      {
+        "browser": "Microsoft Edge",
+        "requests": 1
+      },
+      {
+        "browser": "BingBot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "Yandex",
+        "operator": "Yandex",
+        "classification": "搜索引擎爬虫",
+        "signature": "YandexBot",
+        "requests": 6
+      },
+      {
+        "name": "BaiduSpider",
+        "operator": "Baidu",
+        "classification": "搜索引擎爬虫",
+        "signature": "Baiduspider",
+        "requests": 1
+      },
+      {
+        "name": "Amazonbot",
+        "operator": "Amazon",
+        "classification": "AI 爬虫",
+        "signature": "Amazonbot",
+        "requests": 1
+      },
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "NL",
+        "requests": 191
+      },
+      {
+        "country": "China",
+        "requests": 10
+      },
+      {
+        "country": "TR",
+        "requests": 6
+      },
+      {
+        "country": "United States",
+        "requests": 5
+      },
+      {
+        "country": "SG",
+        "requests": 4
+      },
+      {
+        "country": "DE",
+        "requests": 1
+      },
+      {
+        "country": "KR",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "United States",
+        "requests": 499
+      },
+      {
+        "country": "NO",
+        "requests": 142
+      },
+      {
+        "country": "NL",
+        "requests": 17
+      },
+      {
+        "country": "RU",
+        "requests": 2
+      },
+      {
+        "country": "BR",
+        "requests": 2
+      },
+      {
+        "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786197600,
+    "until": 1786201200,
+    "total_requests": 592,
+    "total_bytes": 4673476,
+    "total_megabytes": 4.46,
+    "waf_mitigated_requests": 302,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 18
+      },
+      {
+        "browser": "Safari",
+        "requests": 8
+      },
+      {
+        "browser": "BingBot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "BingBot",
+        "operator": "Microsoft",
+        "classification": "搜索引擎爬虫",
+        "signature": "bingbot/",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 10
+      },
+      {
+        "country": "United States",
+        "requests": 6
+      },
+      {
+        "country": "IT",
+        "requests": 6
+      },
+      {
+        "country": "SG",
+        "requests": 3
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "TH",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "PL",
+        "requests": 144
+      },
+      {
+        "country": "United States",
+        "requests": 83
+      },
+      {
+        "country": "DE",
+        "requests": 49
+      },
+      {
+        "country": "IT",
+        "requests": 15
+      },
+      {
+        "country": "NL",
+        "requests": 6
+      },
+      {
+        "country": "LT",
+        "requests": 2
+      },
+      {
+        "country": "BE",
+        "requests": 1
+      },
+      {
+        "country": "SG",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786201200,
+    "until": 1786204800,
+    "total_requests": 225,
+    "total_bytes": 1851193,
+    "total_megabytes": 1.77,
+    "waf_mitigated_requests": 175,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 25
+      },
+      {
+        "browser": "Safari",
+        "requests": 7
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 2
+      },
+      {
+        "browser": "OAI-SearchBot",
+        "requests": 2
+      },
+      {
+        "browser": "Googlebot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "OAI-SearchBot",
+        "operator": "OpenAI",
+        "classification": "AI 搜索",
+        "signature": "OAI-SearchBot",
+        "requests": 2
+      },
+      {
+        "name": "Googlebot",
+        "operator": "Google",
+        "classification": "搜索引擎爬虫",
+        "signature": "Googlebot/",
         "requests": 1
       }
     ],
     "top_countries": [
       {
         "country": "SG",
-        "requests": 9
+        "requests": 25
       },
       {
         "country": "United States",
-        "requests": 8
+        "requests": 10
       },
       {
-        "country": "CA",
+        "country": "NL",
+        "requests": 2
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "PL",
+        "requests": 143
+      },
+      {
+        "country": "DE",
+        "requests": 25
+      },
+      {
+        "country": "BR",
         "requests": 2
       },
       {
-        "country": "TR",
+        "country": "United States",
         "requests": 2
+      },
+      {
+        "country": "BE",
+        "requests": 1
       },
       {
         "country": "China",
+        "requests": 1
+      },
+      {
+        "country": "BD",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786204800,
+    "until": 1786208400,
+    "total_requests": 366,
+    "total_bytes": 2756505,
+    "total_megabytes": 2.63,
+    "waf_mitigated_requests": 203,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 20
+      },
+      {
+        "browser": "Safari",
+        "requests": 9
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 3
+      },
+      {
+        "browser": "AhrefsBot",
+        "requests": 1
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "AhrefsBot",
+        "operator": "Ahrefs",
+        "classification": "SEO 工具",
+        "signature": "AhrefsBot",
+        "requests": 1
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "China",
+        "requests": 12
+      },
+      {
+        "country": "JP",
+        "requests": 7
+      },
+      {
+        "country": "United States",
+        "requests": 6
+      },
+      {
+        "country": "NL",
+        "requests": 2
+      },
+      {
+        "country": "BR",
+        "requests": 2
+      },
+      {
+        "country": "KR",
+        "requests": 1
+      },
+      {
+        "country": "GB",
+        "requests": 1
+      },
+      {
+        "country": "TH",
+        "requests": 1
+      },
+      {
+        "country": "SG",
         "requests": 1
       }
     ],
     "top_waf_countries": [
       {
-        "country": "BR",
-        "requests": 617
+        "country": "DE",
+        "requests": 125
       },
       {
-        "country": "CA",
-        "requests": 120
+        "country": "SE",
+        "requests": 33
+      },
+      {
+        "country": "IT",
+        "requests": 22
+      },
+      {
+        "country": "JP",
+        "requests": 12
       },
       {
         "country": "United States",
-        "requests": 19
+        "requests": 4
       },
       {
         "country": "BE",
+        "requests": 3
+      },
+      {
+        "country": "NL",
         "requests": 2
+      },
+      {
+        "country": "SG",
+        "requests": 1
+      },
+      {
+        "country": "China",
+        "requests": 1
+      }
+    ]
+  },
+  {
+    "since": 1786208400,
+    "until": 1786212000,
+    "total_requests": 520,
+    "total_bytes": 4042803,
+    "total_megabytes": 3.86,
+    "waf_mitigated_requests": 330,
+    "top_user_agents": [
+      {
+        "browser": "Chrome",
+        "requests": 18
+      },
+      {
+        "browser": "Safari",
+        "requests": 8
+      },
+      {
+        "browser": "Uncharted",
+        "requests": 5
+      },
+      {
+        "browser": "YouBot",
+        "requests": 3
+      },
+      {
+        "browser": "Googlebot",
+        "requests": 3
+      }
+    ],
+    "top_bots": [
+      {
+        "name": "YouBot",
+        "operator": "You.com",
+        "classification": "AI 搜索",
+        "signature": "YouBot",
+        "requests": 3
+      },
+      {
+        "name": "Googlebot",
+        "operator": "Google",
+        "classification": "搜索引擎爬虫",
+        "signature": "Googlebot/",
+        "requests": 3
+      }
+    ],
+    "top_countries": [
+      {
+        "country": "United States",
+        "requests": 25
+      },
+      {
+        "country": "China",
+        "requests": 4
+      },
+      {
+        "country": "CH",
+        "requests": 2
+      },
+      {
+        "country": "SG",
+        "requests": 2
+      },
+      {
+        "country": "NL",
+        "requests": 1
+      },
+      {
+        "country": "BR",
+        "requests": 1
+      },
+      {
+        "country": "TH",
+        "requests": 1
+      },
+      {
+        "country": "JP",
+        "requests": 1
+      }
+    ],
+    "top_waf_countries": [
+      {
+        "country": "IT",
+        "requests": 140
+      },
+      {
+        "country": "NO",
+        "requests": 92
+      },
+      {
+        "country": "PL",
+        "requests": 52
+      },
+      {
+        "country": "SE",
+        "requests": 37
+      },
+      {
+        "country": "United States",
+        "requests": 5
+      },
+      {
+        "country": "BR",
+        "requests": 3
+      },
+      {
+        "country": "BE",
+        "requests": 1
       }
     ]
   }

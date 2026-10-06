@@ -294,6 +294,15 @@
     .chart-meta { font: 10px/1 monospace; color: var(--muted); text-transform: uppercase; }
     .chart { width: 100%; height: 286px; }
     .chart.tall { height: 330px; }
+    .zone-filter { display: flex; align-items: center; gap: 6px; }
+    .zone-filter label { font: 10px/1 monospace; color: var(--muted); letter-spacing: .09em; text-transform: uppercase; white-space: nowrap; }
+    .zone-filter select {
+      height: 29px; padding: 0 24px 0 9px; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+      font: 10px/1 monospace; letter-spacing: .05em; cursor: pointer; appearance: none; border-radius: 0; outline: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-position: calc(100% - 13px) 12px, calc(100% - 9px) 12px; background-size: 4px 4px; background-repeat: no-repeat;
+    }
+    .zone-filter select:focus { border-color: var(--ink); }
     .switcher { display: flex; border: 1px solid var(--line); }
     .switcher button { width: 36px; height: 29px; border: 0; border-right: 1px solid var(--line); background: transparent; cursor: pointer; font: 10px/1 monospace; }
     .switcher button:last-child { border-right: 0; }
@@ -851,7 +860,7 @@
               <article class="kpi"><div class="kpi-top"><span class="kpi-label">Mitigation rate</span><span class="kpi-index">004</span></div><div class="kpi-value" id="kpi-rate"><div class="skeleton"></div></div><div class="kpi-unit">平均安全拦截率</div></article>
             </div>
             <div class="chart-grid" id="traffic">
-              <article class="chart-card"><div class="chart-head"><h3 class="chart-title"><small>Request vector / 24H</small>请求量与 WAF 趋势</h3><span class="chart-meta">REQ // WAF</span></div><div class="chart" id="requests-chart"></div></article>
+              <article class="chart-card"><div class="chart-head"><h3 class="chart-title"><small>Request vector / 24H</small>请求量与 WAF 趋势</h3><div class="zone-filter"><label for="zone-select">DOMAIN</label><select id="zone-select"><option value="all">ALL DOMAINS</option></select></div></div><div class="chart" id="requests-chart"></div></article>
               <article class="chart-card"><div class="chart-head"><h3 class="chart-title"><small>Bandwidth telemetry</small>流量变化趋势</h3><span class="chart-meta">AUTO SCALE</span></div><div class="chart" id="traffic-chart"></div></article>
             </div>
           </div>
@@ -898,6 +907,7 @@
     let charts = [];
     let rawData = [];
     let browserMode = 'bar';
+    let activeZone = 'all';
     let loadStart = performance.now();
     let currentBootProgress = 0;
 
@@ -989,9 +999,51 @@
       }
       const old = echarts.getInstanceByDom(element);
       if (old) old.dispose();
+      element.innerHTML = '';
       const chart = echarts.init(element, null, { renderer: 'canvas' });
       charts.push(chart);
       return chart;
+    }
+
+    // 当前筛选视图的数据：all = 聚合数据；单域名 = 用该域名的小时明细合成同构数据
+    function viewData() {
+      if (activeZone === 'all') return rawData;
+      return rawData
+        .map(item => (item.zones || []).find(zone => zone.zone_id === activeZone))
+        .filter(Boolean)
+        .map(zone => ({
+          since: zone.since,
+          until: zone.until,
+          total_requests: zone.total_requests,
+          total_bytes: zone.total_bytes,
+          waf_mitigated_requests: zone.waf_mitigated_requests,
+          top_user_agents: zone.top_user_agents || [],
+          top_bots: zone.top_bots || [],
+          top_countries: zone.top_countries || [],
+          top_waf_countries: zone.top_waf_countries || []
+        }));
+    }
+
+    // 按数据里的 zones 明细构建域名筛选下拉（只在首次加载时填充）
+    function buildZoneFilter() {
+      const select = $('#zone-select');
+      const seen = new Map();
+      rawData.forEach(item => (item.zones || []).forEach(zone => {
+        if (!seen.has(zone.zone_id)) seen.set(zone.zone_id, zone.name || zone.zone_id);
+      }));
+      if (!seen.size) {
+        // 兼容旧版单域名数据文件：隐藏筛选器
+        select.closest('.zone-filter').style.display = 'none';
+        return;
+      }
+      [...select.querySelectorAll('option:not([value="all"])')].forEach(node => node.remove());
+      seen.forEach((name, zoneId) => {
+        const option = document.createElement('option');
+        option.value = zoneId;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+      select.style.display = '';
     }
 
     function updateKpis(data) {
@@ -1046,9 +1098,15 @@
       return Object.entries(counts).map(([name, value]) => ({ name, value })).sort((a,b) => b.value - a.value);
     }
 
-    function renderBrowserChart() {
+    function renderBrowserChart(source) {
       const colors = themeColors();
-      const data = aggregateNested(rawData, 'top_user_agents', 'browser').slice(0, 10);
+      const data = aggregateNested(source, 'top_user_agents', 'browser').slice(0, 10);
+      if (!data.length) {
+        const chart = initChart('browser-chart');
+        if (chart) chart.clear();
+        document.getElementById('browser-chart').innerHTML = '<div class="error-box">' + (activeZone === 'all' ? 'NO SIGNATURE DATA' : '该域名暂无 UA 明细数据') + '</div>';
+        return;
+      }
       const chart = initChart('browser-chart');
       if (!chart) return;
       if (browserMode === 'pie') {
@@ -1067,9 +1125,15 @@
       }
     }
 
-    function renderCountryChart() {
+    function renderCountryChart(source) {
       const colors = themeColors();
-      const data = aggregateNested(rawData, 'top_countries', 'country');
+      const data = aggregateNested(source, 'top_countries', 'country');
+      if (!data.length) {
+        const chart = initChart('country-chart');
+        if (chart) chart.clear();
+        document.getElementById('country-chart').innerHTML = '<div class="error-box">' + (activeZone === 'all' ? 'NO GEO DATA' : '该域名暂无地区明细数据') + '</div>';
+        return;
+      }
       const chart = initChart('country-chart');
       if (!chart) return;
       const aliases = { CN: 'China', US: 'United States', JP: 'Japan', KR: 'Korea', GB: 'United Kingdom', FR: 'France', DE: 'Germany', CA: 'Canada', AU: 'Australia', IN: 'India', BR: 'Brazil', NL: 'Netherlands', SG: 'Singapore', RU: 'Russia', TW: 'China', HK: 'China' };
@@ -1097,9 +1161,12 @@
     function renderAllCharts() {
       charts.forEach(chart => chart.dispose());
       charts = [];
-      renderTrendCharts(rawData);
-      renderBrowserChart();
-      renderCountryChart();
+      const view = viewData();
+      updateKpis(view);
+      renderTrendCharts(view);
+      renderBrowserChart(view);
+      renderCountryChart(view);
+      populateBots(view);
     }
 
     function populateBots(data) {
@@ -1138,7 +1205,7 @@
         const row = body.insertRow();
         const cell = row.insertCell();
         cell.colSpan = 5;
-        cell.textContent = '当前数据窗口未识别到自动化客户端';
+        cell.textContent = activeZone === 'all' ? '当前数据窗口未识别到自动化客户端' : '当前域名暂无自动化客户端明细数据';
         return;
       }
 
@@ -1183,9 +1250,8 @@
         const data = await response.json();
         if (!Array.isArray(data) || !data.length) throw new Error('EMPTY DATASET');
         rawData = [...data].sort((a,b) => a.since - b.since);
-        updateKpis(rawData);
+        buildZoneFilter();
         updateTimestamp(rawData);
-        populateBots(rawData);
         renderAllCharts();
         setBootProgress(92, 'Rendering intelligence surface...');
       } catch (error) {
@@ -1287,8 +1353,12 @@
 
     function initInteractions() {
       $('#refresh').addEventListener('click', () => loadStats(true));
-      $('#bar-mode').addEventListener('click', () => { browserMode = 'bar'; $('#bar-mode').classList.add('active'); $('#pie-mode').classList.remove('active'); renderBrowserChart(); });
-      $('#pie-mode').addEventListener('click', () => { browserMode = 'pie'; $('#pie-mode').classList.add('active'); $('#bar-mode').classList.remove('active'); renderBrowserChart(); });
+      $('#zone-select').addEventListener('change', event => {
+        activeZone = event.target.value || 'all';
+        renderAllCharts();
+      });
+      $('#bar-mode').addEventListener('click', () => { browserMode = 'bar'; $('#bar-mode').classList.add('active'); $('#pie-mode').classList.remove('active'); renderBrowserChart(viewData()); });
+      $('#pie-mode').addEventListener('click', () => { browserMode = 'pie'; $('#pie-mode').classList.add('active'); $('#bar-mode').classList.remove('active'); renderBrowserChart(viewData()); });
       let resizeTimer;
       window.addEventListener('resize', () => {
         positionBootReadout(currentBootProgress);

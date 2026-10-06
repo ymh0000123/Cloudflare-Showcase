@@ -5,6 +5,9 @@ on:
     workflow_dispatch:
 env:
     CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    # 多域名：逗号分隔多个 Zone ID，可带可选标签，如 "abc123:example.com,def456:foo.net"
+    # 仍兼容旧的 ZONE_ID secret（单域名）
+    ZONE_IDS: ${{ secrets.ZONE_IDS }}
     ZONE_ID: ${{ secrets.ZONE_ID }}
 
 jobs:

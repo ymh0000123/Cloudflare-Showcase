@@ -9,10 +9,37 @@ from user_agent_parser import process_bot_stats, process_user_agent_stats
 load_dotenv()
 
 API_TOKEN = os.getenv('CLOUDFLARE_API_TOKEN')
-ZONE_ID = os.getenv('ZONE_ID')
 
-if not API_TOKEN or not ZONE_ID:
-    sys.exit("请设置环境变量 CLOUDFLARE_API_TOKEN 和 ZONE_ID")
+# 支持多域名：ZONE_IDS 支持逗号分隔的多个 Zone ID，可带可选展示标签，如 "abc123:example.com,def456:foo.net"
+# 兼容旧配置：未设置 ZONE_IDS 时回退到单域名变量 ZONE_ID
+ZONE_IDS = os.getenv('ZONE_IDS') or os.getenv('ZONE_ID')
+
+if not API_TOKEN or not ZONE_IDS:
+    sys.exit("请设置环境变量 CLOUDFLARE_API_TOKEN 和 ZONE_IDS（多个 Zone ID 用英文逗号分隔，旧变量 ZONE_ID 仍兼容）")
+
+
+def parse_zone_ids(raw):
+    """解析 ZONE_IDS 配置，支持 zone_id 或 zone_id:标签 两种格式，返回 [(zone_id, label), ...]。"""
+    zones = []
+    for part in raw.split(','):
+        part = part.strip()
+        if not part:
+            continue
+        if ':' in part:
+            zone_id, label = part.split(':', 1)
+            zone_id, label = zone_id.strip(), label.strip()
+        else:
+            zone_id, label = part, part
+        if not zone_id:
+            continue
+        if not any(z[0] == zone_id for z in zones):
+            zones.append((zone_id, label))
+    return zones
+
+
+zones = parse_zone_ids(ZONE_IDS)
+if not zones:
+    sys.exit("ZONE_IDS 中没有有效的 Zone ID")
 
 headers = {
     "Authorization": f"Bearer {API_TOKEN}",
@@ -23,6 +50,7 @@ traffic_query = """
 query GetZoneAnalytics($zoneTag: String!, $since: DateTime!, $until: DateTime!) {
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
+      zoneTag
       httpRequests1hGroups(
         limit: 1,
         filter: { datetime_geq: $since, datetime_lt: $until }
@@ -41,6 +69,7 @@ waf_query = """
 query GetWAFMitigatedRequests($zoneTag: String!, $since: DateTime!, $until: DateTime!) {
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
+      zoneTag
       firewallEventsAdaptive(
         filter: {
           datetime_geq: $since,
@@ -62,10 +91,11 @@ normal_requests_query = """
 query GetNormalUserAgentStats($zoneTag: String!, $since: DateTime!, $until: DateTime!) {
   viewer {
     zones(filter: { zoneTag: $zoneTag }) {
+      zoneTag
       httpRequestsAdaptive(
         limit: 5000,
-        filter: { 
-          datetime_geq: $since, 
+        filter: {
+          datetime_geq: $since,
           datetime_lt: $until,
           edgeResponseStatus_in: [200, 201, 202, 204, 206, 301, 302, 304, 307, 308]
         }
@@ -98,11 +128,125 @@ def fetch_graphql(query, variables):
                 continue
             sys.exit(f"请求异常（重试后仍失败）: {e}")
 
+
+def extract_zone(payload, zone_id):
+    """从 GraphQL 响应中取出指定 zone 的数据容器；取不到时返回 None。"""
+    try:
+        zone_list = payload["data"]["viewer"]["zones"]
+    except (KeyError, TypeError, IndexError):
+        return None
+    if not zone_list:
+        return None
+    matched = next((z for z in zone_list if z and z.get("zoneTag") == zone_id), None)
+    return matched if matched is not None else zone_list[0]
+
+
+def normalize_country(country):
+    """将港澳台归为中国，并统一常见国家代码。"""
+    if country in ["Taiwan", "Hong Kong", "Macao", "TW", "HK", "MO"]:
+        return "China"
+    if country == "CN":
+        return "China"
+    if country == "US":
+        return "United States"
+    return country
+
+
+def count_countries(events):
+    """按国家归一化统计事件数量，返回降序排行。"""
+    counts = {}
+    for event in events:
+        country = normalize_country(event.get("clientCountryName", "Unknown"))
+        counts[country] = counts.get(country, 0) + 1
+    return [
+        {"country": country, "requests": count}
+        for country, count in sorted(counts.items(), key=lambda x: x[1], reverse=True)
+    ]
+
+
+def fetch_traffic(zone_id, since, until):
+    data = fetch_graphql(traffic_query, {"zoneTag": zone_id, "since": since, "until": until})
+    try:
+        zone = extract_zone(data, zone_id)
+        http_data = zone["httpRequests1hGroups"] if zone else None
+        if http_data:
+            return http_data[0]["sum"]["requests"], http_data[0]["sum"]["bytes"]
+    except Exception:
+        pass
+    return 0, 0
+
+
+def fetch_waf(zone_id, since, until):
+    data = fetch_graphql(waf_query, {"zoneTag": zone_id, "since": since, "until": until})
+    try:
+        zone = extract_zone(data, zone_id)
+        firewall_events = zone["firewallEventsAdaptive"] if zone else []
+        return len(firewall_events), count_countries(firewall_events)
+    except Exception:
+        return 0, []
+
+
+def fetch_ua(zone_id, since, until):
+    data = fetch_graphql(normal_requests_query, {"zoneTag": zone_id, "since": since, "until": until})
+    try:
+        if data.get("errors"):
+            print(f"GraphQL错误: {data['errors']}")
+            return [], [], []
+        zone = extract_zone(data, zone_id)
+        if not zone or not zone.get("httpRequestsAdaptive"):
+            return [], [], []
+        user_agent_events = zone["httpRequestsAdaptive"]
+        # 浏览器图表保留前 10 项，Bot 表格使用单独的完整分类结果。
+        top_user_agents = process_user_agent_stats(user_agent_events)
+        top_bots = process_bot_stats(user_agent_events)
+        top_countries = count_countries(user_agent_events)
+        return top_user_agents, top_bots, top_countries
+    except Exception as e:
+        print(f"获取数据时出错: {e}")
+        if 'data' in locals():
+            print(f"UA数据结构: {data}")
+        return [], [], []
+
+
+def merge_named_stats(existing, incoming, name_key):
+    """合并两份 [{name_key, requests}] 排行并按数量降序排序。"""
+    counts = {}
+    for entry in list(existing) + list(incoming):
+        name = entry.get(name_key) or "Unknown"
+        counts[name] = counts.get(name, 0) + int(entry.get("requests") or 0)
+    return [
+        {name_key: name, "requests": count}
+        for name, count in sorted(counts.items(), key=lambda x: x[1], reverse=True)
+    ]
+
+
+def merge_browser_stats(existing, incoming):
+    return merge_named_stats(existing, incoming, "browser")
+
+
+def merge_bot_stats(existing, incoming):
+    """合并 Bot 统计：同名 Bot 请求累加，元数据（operator/classification/signature）取首次出现的值。"""
+    bots = {}
+    for entry in list(existing) + list(incoming):
+        name = entry.get("name") or "Unknown"
+        if name not in bots:
+            bots[name] = {
+                "name": name,
+                "operator": entry.get("operator", "—"),
+                "classification": entry.get("classification", "自动化客户端"),
+                "signature": entry.get("signature", name),
+                "requests": 0,
+            }
+        bots[name]["requests"] += entry.get("requests") or 0
+    return sorted(bots.values(), key=lambda x: x["requests"], reverse=True)
+
+
+# 按小时逐点统计，每个小时把所有域名的查询结果聚合到同一时间点
 now = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
 
 results = []
 total_hours = 24
-print(f"开始获取过去 {total_hours} 小时的数据...")
+print(f"开始获取过去 {total_hours} 小时的数据，共 {len(zones)} 个域名...")
 
 for i in range(total_hours, 0, -1):
     # 打印进度条
@@ -120,111 +264,50 @@ for i in range(total_hours, 0, -1):
     since_ts = int(since_time.timestamp())
     until_ts = int(until_time.timestamp())
 
-    variables = {
-        "zoneTag": ZONE_ID,
-        "since": since,
-        "until": until
-    }
-
-    # 流量与请求数
-    traffic_data = fetch_graphql(traffic_query, variables)
-    try:
-        http_data = traffic_data["data"]["viewer"]["zones"][0]["httpRequests1hGroups"]
-        if http_data:
-            total_requests = http_data[0]["sum"]["requests"]
-            total_bytes = http_data[0]["sum"]["bytes"]
-        else:
-            total_requests = 0
-            total_bytes = 0
-    except Exception:
-        total_requests = 0
-        total_bytes = 0    # WAF缓解数
-    waf_data = fetch_graphql(waf_query, variables)
-    try:
-        firewall_events = waf_data["data"]["viewer"]["zones"][0]["firewallEventsAdaptive"]
-        waf_mitigated_requests = len(firewall_events)
-        # 统计 WAF 来源国家
-        waf_country_counts = {}
-        for event in firewall_events:
-            country = event.get("clientCountryName", "Unknown")
-            # 将港澳台归为中国 (同时处理名称和代码)
-            if country in ["Taiwan", "Hong Kong", "Macao", "TW", "HK", "MO"]:
-                country = "China"
-            # 处理常见代码
-            elif country == "CN":
-                country = "China"
-            elif country == "US":
-                country = "United States"
-            waf_country_counts[country] = waf_country_counts.get(country, 0) + 1
-        top_waf_countries = [
-            {"country": country, "requests": count}
-            for country, count in sorted(waf_country_counts.items(), key=lambda x: x[1], reverse=True)
-        ]
-    except Exception:
-        waf_mitigated_requests = 0
-        top_waf_countries = []
-
-    # User-Agent统计（仅获取正常响应的请求，排除WAF拦截）
-    ua_data = fetch_graphql(normal_requests_query, variables)
-    try:
-        # 检查是否有错误
-        if ua_data.get("errors"):
-            print(f"GraphQL错误: {ua_data['errors']}")
-            top_user_agents = []
-            top_bots = []
-            top_countries = []
-        elif not ua_data.get("data") or not ua_data["data"]["viewer"]["zones"]:
-            print("UA数据为空或zone不存在")
-            top_user_agents = []
-            top_bots = []
-            top_countries = []
-        else:
-            user_agent_events = ua_data["data"]["viewer"]["zones"][0]["httpRequestsAdaptive"]
-            # 浏览器图表保留前 10 项，Bot 表格使用单独的完整分类结果。
-            top_user_agents = process_user_agent_stats(user_agent_events)
-            top_bots = process_bot_stats(user_agent_events)
-            
-            # 统计国家排行
-            country_counts = {}
-            for event in user_agent_events:
-                # 国家排行
-                country = event.get("clientCountryName", "Unknown")
-                # 将港澳台归为中国 (同时处理名称和代码)
-                if country in ["Taiwan", "Hong Kong", "Macao", "TW", "HK", "MO"]:
-                    country = "China"
-                # 处理常见代码
-                elif country == "CN":
-                    country = "China"
-                elif country == "US":
-                    country = "United States"
-                country_counts[country] = country_counts.get(country, 0) + 1
-                
-            top_countries = [
-                {"country": country, "requests": count}
-                for country, count in sorted(country_counts.items(), key=lambda x: x[1], reverse=True)
-            ]
-    except Exception as e:
-        print(f"获取数据时出错: {e}")
-        # 打印调试信息
-        if 'ua_data' in locals():
-            print(f"UA数据结构: {ua_data}")
-        top_user_agents = []
-        top_bots = []
-        top_countries = []
-
-    result = {
+    hour_result = {
         "since": since_ts,
         "until": until_ts,
-        "total_requests": total_requests,
-        "total_bytes": total_bytes,
-        "total_megabytes": round(total_bytes / (1024 ** 2), 2),
-        "waf_mitigated_requests": waf_mitigated_requests,
-        "top_user_agents": top_user_agents,
-        "top_bots": top_bots,
-        "top_countries": top_countries,
-        "top_waf_countries": top_waf_countries
+        "total_requests": 0,
+        "total_bytes": 0,
+        "total_megabytes": 0,
+        "waf_mitigated_requests": 0,
+        "top_user_agents": [],
+        "top_bots": [],
+        "top_countries": [],
+        "top_waf_countries": [],
+        "zones": []
     }
-    results.append(result)
+
+    for zone_id, label in zones:
+        total_requests, total_bytes = fetch_traffic(zone_id, since, until)
+        waf_mitigated_requests, top_waf_countries = fetch_waf(zone_id, since, until)
+        top_user_agents, top_bots, top_countries = fetch_ua(zone_id, since, until)
+
+        hour_result["total_requests"] += total_requests
+        hour_result["total_bytes"] += total_bytes
+        hour_result["waf_mitigated_requests"] += waf_mitigated_requests
+        hour_result["top_user_agents"] = merge_browser_stats(hour_result["top_user_agents"], top_user_agents)
+        hour_result["top_bots"] = merge_bot_stats(hour_result["top_bots"], top_bots)
+        hour_result["top_countries"] = merge_named_stats(hour_result["top_countries"], top_countries, "country")
+        hour_result["top_waf_countries"] = merge_named_stats(hour_result["top_waf_countries"], top_waf_countries, "country")
+
+        # 保留每个域名的小时明细，供前端按域名筛选
+        hour_result["zones"].append({
+            "zone_id": zone_id,
+            "name": label,
+            "since": since_ts,
+            "until": until_ts,
+            "total_requests": total_requests,
+            "total_bytes": total_bytes,
+            "waf_mitigated_requests": waf_mitigated_requests,
+            "top_user_agents": top_user_agents,
+            "top_bots": top_bots,
+            "top_countries": top_countries,
+            "top_waf_countries": top_waf_countries,
+        })
+
+    hour_result["total_megabytes"] = round(hour_result["total_bytes"] / (1024 ** 2), 2)
+    results.append(hour_result)
 
 print("\n数据获取完成！")
 

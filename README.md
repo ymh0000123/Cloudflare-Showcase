@@ -13,6 +13,7 @@ Cloudflare Showcase是一个展示Cloudflare功能和特性的项目。可以在
 - `get.py`: 用于获取数据的Python脚本。
 - `index.html`: 项目的主HTML文件。
 - `requirements.txt`: Python项目的依赖文件。
+- `.env.example`: 环境变量配置模板。
 - `waf.py`: 用于获取WAF的Python脚本。
 
 ## 功能特性
@@ -35,6 +36,14 @@ Cloudflare Showcase是一个展示Cloudflare功能和特性的项目。可以在
 - User-Agent详细信息
 
 ## 使用说明
+
+1. 复制 `.env.example` 为 `.env`，填入你的 Cloudflare API Token 和 Zone ID。
+2. 支持多域名：`ZONE_IDS` 使用逗号分隔多个 Zone ID，可带可选展示标签：
+   ```
+   ZONE_IDS=abc123:example.com,def456:foo.net
+   ```
+   旧的 `ZONE_ID`（单域名）配置仍然兼容。
+3. 运行 `python get.py` 生成 `cloudflare_hourly_stats.json`，前端页面会自动出现"域名筛选"下拉，可切换查看全部域名或单个域名的数据。
 
 [博客文章](https://feishu.xiao-feishu.top/article/Cloudflare-Showcase)
 

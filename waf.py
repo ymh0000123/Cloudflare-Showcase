@@ -40,6 +40,12 @@ if not zones:
     print("ZONE_IDS 中没有有效的 Zone ID")
     raise SystemExit(1)
 
+# Zone ID 基本格式校验：Cloudflare Zone ID 是 32 位十六进制；带前导 = 或空格等常见配置错误在此快速暴露
+for zone_id, label in zones:
+    if len(zone_id) != 32 or not all(c in "0123456789abcdefABCDEF" for c in zone_id):
+        print(f"Zone ID 格式无效: {zone_id!r}（标签 {label!r}）。请检查 ZONE_IDS 配置，确认没有多余的 = 或空格")
+        raise SystemExit(1)
+
 # 设置请求头
 headers = {
     "Authorization": f"Bearer {API_TOKEN}",

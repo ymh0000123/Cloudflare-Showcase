@@ -41,6 +41,11 @@ zones = parse_zone_ids(ZONE_IDS)
 if not zones:
     sys.exit("ZONE_IDS 中没有有效的 Zone ID")
 
+# Zone ID 基本格式校验：Cloudflare Zone ID 是 32 位十六进制；带前导 = 或空格等常见配置错误在此快速暴露
+for zone_id, label in zones:
+    if len(zone_id) != 32 or not all(c in "0123456789abcdefABCDEF" for c in zone_id):
+        sys.exit(f"Zone ID 格式无效: {zone_id!r}（标签 {label!r}）。请检查 ZONE_IDS 配置，确认没有多余的 = 或空格")
+
 headers = {
     "Authorization": f"Bearer {API_TOKEN}",
     "Content-Type": "application/json"
@@ -190,8 +195,8 @@ def fetch_ua(zone_id, since, until):
     data = fetch_graphql(normal_requests_query, {"zoneTag": zone_id, "since": since, "until": until})
     try:
         if data.get("errors"):
-            print(f"GraphQL错误: {data['errors']}")
-            return [], [], []
+            # GraphQL 报错通常是配置问题（如 Zone ID 无效），继续运行只会产出全零数据，直接终止
+            sys.exit(f"GraphQL错误（zone {zone_id}）: {data['errors']}")
         zone = extract_zone(data, zone_id)
         if not zone or not zone.get("httpRequestsAdaptive"):
             return [], [], []
